@@ -1,0 +1,3254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>西综生理学 · 内分泌提纲带背自测</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --accent: #8b5cf6;
+            --border: #334155;
+            
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK SC", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 50px;
+        }
+        
+        /* Sticky Header */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 20px;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background-color: rgba(255,255,255,0.05);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.4s ease;
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+        
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        
+        /* Search and Filters */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .search-box {
+            display: flex;
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            align-items: center;
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            flex: 1;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .filter-row::-webkit-scrollbar {
+            display: none; /* Safari & Chrome */
+        }
+        
+        .tab-btn, .filter-select {
+            background-color: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+        
+        .filter-select {
+            background-color: rgba(30, 41, 59, 0.8);
+            color: var(--text-color);
+            outline: none;
+        }
+        
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .action-btn:hover, .action-btn:active {
+            background-color: rgba(255,255,255,0.05);
+            color: white;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 768px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        
+        /* QA Card */
+        .qa-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        
+        .qa-card.mastered {
+            border-color: rgba(16, 185, 129, 0.3);
+            background-color: rgba(30, 41, 59, 0.6);
+            opacity: 0.8;
+        }
+        
+        .card-header {
+            padding: 12px 16px 8px 16px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+        
+        .sec-badge {
+            background-color: rgba(139, 92, 246, 0.15);
+            color: #c084fc;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-easy { background-color: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .badge-medium { background-color: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .badge-hard { background-color: rgba(239, 68, 68, 0.15); color: #f87171; }
+        
+        .badge-high { background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; }
+        .badge-mod { background-color: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; }
+        .badge-low { background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; }
+        
+        .mastered-label {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        
+        .mastered-label input {
+            accent-color: var(--green);
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+        
+        .card-question {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+        
+        .q-text {
+            font-size: 0.98rem;
+            line-height: 1.5;
+            font-weight: 600;
+            color: #fff;
+            padding-right: 15px;
+        }
+        
+        .toggle-icon {
+            color: var(--text-muted);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .qa-card.expanded .toggle-icon {
+            transform: rotate(180deg);
+            color: var(--primary-hover);
+        }
+        
+        /* Answer Content with Smooth Expand */
+        .card-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #0b0f19;
+            border-top: 1px solid transparent;
+        }
+        
+        .qa-card.expanded .card-answer {
+            border-top-color: var(--border);
+        }
+        
+        .img-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            padding: 10px;
+            align-items: center;
+            background-color: #0b0f19;
+        }
+        
+        .img-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            min-height: 60px;
+        }
+        
+        .img-wrapper img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        /* Loader Animation */
+        .img-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @media (max-width: 480px) {
+            header { padding: 10px 15px; }
+            .container { padding: 0 10px; }
+            .q-text { font-size: 0.92rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <h1>生理学 · 内分泌提纲带背</h1>
+            <button class="action-btn" onclick="resetProgress()">重置状态</button>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-text" id="progress-text">已掌握 0 / 0 (0%)</div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索问题关键字..." oninput="filterCards()">
+            </div>
+            
+            <div class="filter-row">
+                <button class="tab-btn active" onclick="filterSection('all')">全部章节</button>
+<button class="tab-btn" onclick="filterSection('11.1 内分泌概述')">11.1 内分泌概述</button>
+<button class="tab-btn" onclick="filterSection('11.2 钙调节激素')">11.2 钙调节激素</button>
+<button class="tab-btn" onclick="filterSection('11.3 胰岛素与胰高血糖素')">11.3 胰岛素与胰高血糖素</button>
+<button class="tab-btn" onclick="filterSection('11.4 生长激素')">11.4 生长激素</button>
+<button class="tab-btn" onclick="filterSection('11.5 甲状腺激素')">11.5 甲状腺激素</button>
+<button class="tab-btn" onclick="filterSection('11.6 糖皮质激素')">11.6 糖皮质激素</button>
+<button class="tab-btn" onclick="filterSection('11.7 专题串联')">11.7 专题串联</button>
+            </div>
+            
+            <div class="actions-row">
+                <select class="filter-select" id="diff-filter" onchange="filterCards()">
+                    <option value="all">全部难度</option>
+                    <option value="I级">I级 (简单)</option>
+                    <option value="II级">II级 (中等)</option>
+                    <option value="III级">III级 (较难)</option>
+                </select>
+                
+                <select class="filter-select" id="imp-filter" onchange="filterCards()">
+                    <option value="all">全部重要度</option>
+                    <option value="A">A级 (极重要)</option>
+                    <option value="B">B级 (重要)</option>
+                    <option value="C">C级 (一般)</option>
+                </select>
+                
+                <button class="action-btn" id="toggle-all-btn" onclick="toggleAllAnswers()">全部展开</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" id="cards-container">
+        
+        <div class="qa-card" data-id="q1" data-section="11.1 内分泌概述" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q1')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q1')">
+                <div class="q-text">1 激素作用的一般特性有哪些？(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q1">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q1_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q2" data-section="11.1 内分泌概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q2')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q2')">
+                <div class="q-text">2 允许作用举例子(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q2">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q2_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q3" data-section="11.1 内分泌概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q3')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q3')">
+                <div class="q-text">3 激素的分泌方式有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q3">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q3_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q4" data-section="11.1 内分泌概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q4')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q4')">
+                <div class="q-text">4 举例神经内分泌(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q4">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q4_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q5" data-section="11.1 内分泌概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q5')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q5')">
+                <div class="q-text">1 以神经调节为主的激素有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q5">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q5_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q6" data-section="11.1 内分泌概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q6')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q6')">
+                <div class="q-text">2 缩宫素参与什么反射？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q6">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q6_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q7" data-section="11.1 内分泌概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q7')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q7')">
+                <div class="q-text">3 以体液调节为主的有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q7">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q7_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q8" data-section="11.1 内分泌概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q8')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q8')">
+                <div class="q-text">4 直接反馈调节的有哪些？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q8">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q8_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q9" data-section="11.1 内分泌概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q9')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q9')">
+                <div class="q-text">5 腺垂体分泌的有靶腺激素有哪些？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q9">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q9_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q10" data-section="11.1 内分泌概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q10')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q10')">
+                <div class="q-text">6 腺垂体分泌的无靶腺激素有哪些？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q10">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q10_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q11" data-section="11.1 内分泌概述" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q11')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q11')">
+                <div class="q-text">1 肽类与蛋白质类、胺类、类固醇：本质、激素、分泌方式、受体(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q11">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q11_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q12" data-section="11.1 内分泌概述" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.1 内分泌概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q12')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q12')">
+                <div class="q-text">2 脂类激素包括哪些？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q12">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q12_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q13" data-section="11.2 钙调节激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.2 钙调节激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q13')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q13')">
+                <div class="q-text">1 调节钙磷运送代谢的最重要的激素有哪些？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q13">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q13_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q14" data-section="11.2 钙调节激素" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.2 钙调节激素</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q14')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q14')">
+                <div class="q-text">2 甲状腺激素 vs 降钙素 vs 甲状旁腺激素 vs 钙三醇：来源、性质、受体、靶器官、效应、缺乏表现(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q14">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q14_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q15" data-section="11.2 钙调节激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.2 钙调节激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q15')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q15')">
+                <div class="q-text">3 串联：甲状腺髓样癌来源于(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q15">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q15_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q16" data-section="11.2 钙调节激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.2 钙调节激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q16')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q16')">
+                <div class="q-text">1 CT、PTH、钙三醇对溶骨、成骨的作用分别是(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q16">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q16_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q17" data-section="11.2 钙调节激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.2 钙调节激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q17')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q17')">
+                <div class="q-text">1 调节降钙素分泌增加的因素(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q17">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q17_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q18" data-section="11.2 钙调节激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.2 钙调节激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q18')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q18')">
+                <div class="q-text">2 调节PTH 分泌的因素有哪些？最主要的是？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q18">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q18_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q19" data-section="11.2 钙调节激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.2 钙调节激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q19')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q19')">
+                <div class="q-text">3 调节钙三醇分泌的因素有哪些？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q19">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q19_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q20" data-section="11.2 钙调节激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.2 钙调节激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q20')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q20')">
+                <div class="q-text">4 PTH 激活肾小管上皮细胞的什么？从而发挥什么作用？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q20">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q20_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q21" data-section="11.2 钙调节激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.2 钙调节激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q21')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q21')">
+                <div class="q-text">5 钙三醇与PTH 的关系(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q21">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q21_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q22" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q22')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q22')">
+                <div class="q-text">1 不同的胰岛素受体底物分别表达于哪些部位：IRS-1、IRS-2、IRS-3、IRS-4(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q22">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q22_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q23" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="C">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-low">C级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q23')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q23')">
+                <div class="q-text">2 IRS-1 和IRS-2 如何变化可以导致胰岛素抵抗？(II C)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q23">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q23_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q24" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q24')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q24')">
+                <div class="q-text">3 胰岛素促进生长的作用是如何发挥的？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q24">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q24_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q25" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q25')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q25')">
+                <div class="q-text">1 胰岛素对血糖、脂类、蛋白质的影响(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q25">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q25_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q26" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q26')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q26')">
+                <div class="q-text">1 胰岛素分泌的影响因素有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q26">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q26_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q27" data-section="11.3 胰岛素与胰高血糖素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q27')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q27')">
+                <div class="q-text">2 胰岛素分泌最主要的因素是？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q27">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q27_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q28" data-section="11.3 胰岛素与胰高血糖素" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q28')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q28')">
+                <div class="q-text">3 血糖刺激胰岛素分泌的两个阶段(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q28">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q28_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q29" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q29')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q29')">
+                <div class="q-text">4 葡萄糖刺激胰岛B 细胞分泌胰岛素的机制(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q29">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q29_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q30" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q30')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q30')">
+                <div class="q-text">1 串联：促胰岛素分泌剂药物有哪些？发挥作用的机制有哪些(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q30">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q30_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q31" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q31')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q31')">
+                <div class="q-text">2 交感神经和副交感神经分别作用于什么受体、如何调节胰岛素分泌？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q31">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q31_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q32" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q32')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q32')">
+                <div class="q-text">3 胃肠激素如何调节胰岛素分泌？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q32">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q32_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q33" data-section="11.3 胰岛素与胰高血糖素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q33')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q33')">
+                <div class="q-text">4 直接促进胰岛素分泌的物质(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q33">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q33_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q34" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q34')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q34')">
+                <div class="q-text">5 串联：基于肠促胰素的降糖药有哪些？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q34">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q34_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q35" data-section="11.3 胰岛素与胰高血糖素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q35')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q35')">
+                <div class="q-text">6 甲状腺激素、生长激素、糖皮质激素如何调节胰岛素分泌？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q35">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q35_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q36" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q36')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q36')">
+                <div class="q-text">7 胰岛激素的旁分泌如何调节的(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q36">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q36_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q37" data-section="11.3 胰岛素与胰高血糖素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q37')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q37')">
+                <div class="q-text">8 长时间高血糖、高氨基酸、高血脂对胰岛素的影响(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q37">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q37_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q38" data-section="11.3 胰岛素与胰高血糖素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q38')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q38')">
+                <div class="q-text">9 低血钾（醛固酮等）对胰岛素的影响(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q38">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q38_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q39" data-section="11.3 胰岛素与胰高血糖素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q39')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q39')">
+                <div class="q-text">10 小结：抑制胰岛素分泌的物质有哪些(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q39">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q39_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q40" data-section="11.3 胰岛素与胰高血糖素" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.3 胰岛素与胰高血糖素</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q40')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q40')">
+                <div class="q-text">1 来源、受体和通路、主要靶器官、物质代谢、其他作用、影响因素对比(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q40">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q40_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q41" data-section="11.4 生长激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.4 生长激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q41')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q41')">
+                <div class="q-text">1 生长激素 vs 胰岛素样生长因子：产生部位、受体、信号转导途径(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q41">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q41_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q42" data-section="11.4 生长激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.4 生长激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q42')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q42')">
+                <div class="q-text">2 生长激素对物质代谢的影响：血糖、脂类、蛋白质(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q42">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q42_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q43" data-section="11.4 生长激素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.4 生长激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q43')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q43')">
+                <div class="q-text">3 促进GH 分泌 vs 抑制GH 分泌的影响因素有哪些？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q43">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q43_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q44" data-section="11.4 生长激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.4 生长激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q44')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q44')">
+                <div class="q-text">4 幼儿缺乏、幼儿过多、成人过多分别可以导致什么疾病(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q44">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q44_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q45" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q45')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q45')">
+                <div class="q-text">1 甲状腺激素有哪些种类，由谁产生？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q45">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q45_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q46" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q46')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q46')">
+                <div class="q-text">2 与甲状腺激素结合的血浆蛋白质有哪些(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q46">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q46_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q47" data-section="11.5 甲状腺激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q47')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q47')">
+                <div class="q-text">3 活性最大、量最大的甲状腺激素类型分别是(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q47">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q47_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q48" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q48')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q48')">
+                <div class="q-text">1 甲状腺激素的合成过程(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q48">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q48_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q49" data-section="11.5 甲状腺激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q49')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q49')">
+                <div class="q-text">2 串联：抗甲状腺激素药物的机制(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q49">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q49_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q50" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q50')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q50')">
+                <div class="q-text">3 甲状腺激素储存的部位及形式(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q50">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q50_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q51" data-section="11.5 甲状腺激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q51')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q51')">
+                <div class="q-text">4 甲状腺合成过程中不需要酶的催化的步骤是？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q51">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q51_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q52" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q52')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q52')">
+                <div class="q-text">1 甲状腺激素对血糖、脂类、蛋白质的影响(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q52">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q52_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q53" data-section="11.5 甲状腺激素" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q53')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q53')">
+                <div class="q-text">1 甲状腺的其他作用有哪些？机制是？(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q53">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q53_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q54" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q54')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q54')">
+                <div class="q-text">2 甲状腺激素促进产热增加的机制有哪些？最显著的部位是？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q54">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q54_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q55" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q55')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q55')">
+                <div class="q-text">3 甲状腺激素对心脏的效应及发挥作用的机制(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q55">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q55_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q56" data-section="11.5 甲状腺激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q56')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q56')">
+                <div class="q-text">4 甲状腺激素可以导致什么类型心衰？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q56">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q56_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q57" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q57')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q57')">
+                <div class="q-text">5 甲状腺激素对收缩压和舒张压的影响及机制(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q57">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q57_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q58" data-section="11.5 甲状腺激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q58')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q58')">
+                <div class="q-text">6 甲状腺激素对冠脉血流量有何影响？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q58">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q58_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q59" data-section="11.5 甲状腺激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q59')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q59')">
+                <div class="q-text">7 甲状腺激素保持心肌、神经对儿茶酚胺敏感性的机制(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q59">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q59_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q60" data-section="11.5 甲状腺激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q60')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q60')">
+                <div class="q-text">8 甲状腺激素对钠泵有何影响？甲亢可以导致什么瘫痪(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q60">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q60_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q61" data-section="11.5 甲状腺激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q61')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q61')">
+                <div class="q-text">9 甲亢和甲减分别有何表现？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q61">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q61_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q62" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q62')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q62')">
+                <div class="q-text">1 交感神经和副交感神经对甲状腺激素是如何调节的(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q62">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q62_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q63" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q63')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q63')">
+                <div class="q-text">2 通过负反馈调节机制来调节甲状腺激素分泌的有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q63">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q63_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q64" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q64')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q64')">
+                <div class="q-text">3 通过自身调节机制调节甲状腺激素分泌的有哪些？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q64">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q64_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q65" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q65')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q65')">
+                <div class="q-text">4 通过免疫调节调节甲状腺激素分泌的有哪些？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q65">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q65_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q66" data-section="11.5 甲状腺激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q66')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q66')">
+                <div class="q-text">5 串联：普萘洛尔治疗甲亢的机制、甲状腺切除术后使用甲状腺素的作用(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q66">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q66_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q67" data-section="11.5 甲状腺激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.5 甲状腺激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q67')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q67')">
+                <div class="q-text">6 串联：甲状腺危象的治疗药物及机制(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q67">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q67_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q68" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q68')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q68')">
+                <div class="q-text">1 糖皮质激素的类型(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q68">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q68_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q69" data-section="11.6 糖皮质激素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q69')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q69')">
+                <div class="q-text">2 糖皮质激素作用的受体有哪些？介导的是什么效应？最主要的是？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q69">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q69_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q70" data-section="11.6 糖皮质激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q70')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q70')">
+                <div class="q-text">1 糖皮质激素对血糖、脂类、蛋白质是如何影响的？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q70">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q70_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q71" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q71')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q71')">
+                <div class="q-text">2 糖皮质激素可以导致什么糖尿？生长激素呢？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q71">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q71_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q72" data-section="11.6 糖皮质激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q72')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q72')">
+                <div class="q-text">3 糖皮质激素导致脂肪重新分布的表现和机制(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q72">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q72_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q73" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q73')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q73')">
+                <div class="q-text">4 糖皮质激素对血胆固醇的影响(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q73">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q73_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q74" data-section="11.6 糖皮质激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q74')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q74')">
+                <div class="q-text">1 糖皮质激素基础水平和应激水平分别受什么影响？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q74">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q74_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q74_2.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q75" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q75')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q75')">
+                <div class="q-text">2 串联：黎明现象的机制(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q75">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q75_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q76" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q76')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q76')">
+                <div class="q-text">3 长期应用大量糖皮质激素不可以突然停药的原因(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q76">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q76_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q77" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q77')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q77')">
+                <div class="q-text">4 应激最重要的激素是？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q77">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q77_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q78" data-section="11.6 糖皮质激素" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q78')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q78')">
+                <div class="q-text">1 糖皮质激素还有哪些作用？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q78">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q78_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q79" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q79')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q79')">
+                <div class="q-text">2 糖皮质激素的允许作用可以增加什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q79">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q79_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q80" data-section="11.6 糖皮质激素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q80')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q80')">
+                <div class="q-text">3 糖皮质激素可以升高粒细胞数量，所以可以用来治疗什么疾病？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q80">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q80_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q81" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q81')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q81')">
+                <div class="q-text">4 糖皮质激素对血细胞的影响、库欣综合征可以表现(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q81">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q81_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q82" data-section="11.6 糖皮质激素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q82')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q82')">
+                <div class="q-text">5 糖皮质激素对水盐代谢的影响、机制是什么？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q82">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q82_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q83" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q83')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q83')">
+                <div class="q-text">6 糖皮质激素对消化系统有何影响？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q83">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q83_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q84" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q84')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q84')">
+                <div class="q-text">7 糖皮质激素对神经系统有何影响？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q84">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q84_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q85" data-section="11.6 糖皮质激素" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q85')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q85')">
+                <div class="q-text">8 糖皮质激素对呼吸系统有何影响？可以用来治疗新生儿什么疾病？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q85">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q85_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q86" data-section="11.6 糖皮质激素" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">11.6 糖皮质激素</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q86')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q86')">
+                <div class="q-text">9 糖皮质激素对钙磷代谢有何影响？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q86">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q86_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q87" data-section="11.7 专题串联" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.7 专题串联</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q87')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q87')">
+                <div class="q-text">1 主要来源：来源于下丘脑、垂体、甲状腺、肾上腺皮质/髓质、胰岛等的激素分别有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q87">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q87_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q87_2.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q88" data-section="11.7 专题串联" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.7 专题串联</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q88')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q88')">
+                <div class="q-text">2 作用小结：可以导致脂类分解增加的激素有哪些？导致蛋白质分解增加的有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q88">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q88_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q89" data-section="11.7 专题串联" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.7 专题串联</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q89')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q89')">
+                <div class="q-text">3 作用小结：促进生长发育的激素有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q89">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q89_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q90" data-section="11.7 专题串联" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.7 专题串联</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q90')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q90')">
+                <div class="q-text">4 作用小结：保钠保水、排钠排水、保钠排水的激素分别有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q90">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q90_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q91" data-section="11.7 专题串联" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.7 专题串联</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q91')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q91')">
+                <div class="q-text">5 作用小结：参与应激的激素有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q91">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q91_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q92" data-section="11.7 专题串联" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">11.7 专题串联</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q92')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q92')">
+                <div class="q-text">6 作用小结：导致骨质疏松的情况有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q92">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q92_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        let masteredIds = new Set();
+        let currentSection = 'all';
+        let allExpanded = false;
+
+        // Load progress on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('endocrine_mastered_v2');
+            if (saved) {
+                try {
+                    const arr = JSON.parse(saved);
+                    masteredIds = new Set(arr);
+                } catch(e) {}
+            }
+            
+            // Update checkboxes and UI card styling
+            document.querySelectorAll('.qa-card').forEach(card => {
+                const id = card.getAttribute('data-id');
+                const chk = card.querySelector('.mastered-chk');
+                if (masteredIds.has(id)) {
+                    card.classList.add('mastered');
+                    chk.checked = true;
+                }
+            });
+            
+            updateProgress();
+        });
+
+        function toggleAnswer(id) {
+            const card = document.querySelector(`.qa-card[data-id="${id}"]`);
+            const answer = document.getElementById(`ans-${id}`);
+            if (!card || !answer) return;
+            
+            if (card.classList.contains('expanded')) {
+                // Collapse
+                answer.style.maxHeight = '0px';
+                card.classList.remove('expanded');
+            } else {
+                // Expand
+                card.classList.add('expanded');
+                answer.style.maxHeight = 'none';
+                const fullHeight = answer.scrollHeight;
+                answer.style.maxHeight = '0px';
+                answer.offsetHeight; // force reflow
+                answer.style.maxHeight = fullHeight + 'px';
+                
+                setTimeout(() => {
+                    if (card.classList.contains('expanded')) {
+                        answer.style.maxHeight = 'none';
+                    }
+                }, 350);
+            }
+        }
+
+        function hideLoader(img) {
+            img.style.opacity = '1';
+            const loader = img.previousElementSibling;
+            if (loader) loader.style.display = 'none';
+        }
+
+        function showError(img) {
+            const loader = img.previousElementSibling;
+            if (loader) loader.style.display = 'none';
+            img.style.display = 'none';
+            
+            if (img.parentNode.querySelector('.img-error-msg')) return;
+            
+            const errDiv = document.createElement('div');
+            errDiv.className = 'img-error-msg';
+            errDiv.innerHTML = '<div style="color: #ef4444; font-size: 0.88rem; padding: 20px; text-align: center; border: 1px dashed rgba(239,68,68,0.3); border-radius: 6px; background: rgba(239,68,68,0.05); margin: 10px;">图片加载失败<br><span style="font-size: 0.75rem; color: #94a3b8; margin-top: 4px; display: block;">可能原因：您正通过 localhost 端口访问且本地服务已关闭。<br>解决方式：直接双击用浏览器打开该文件夹下的 <b>index.html</b> 本地文件即可。</span></div>';
+            img.parentNode.appendChild(errDiv);
+        }
+
+        function toggleMastered(id) {
+            const card = document.querySelector(`.qa-card[data-id="${id}"]`);
+            const chk = card.querySelector('.mastered-chk');
+            if (!card) return;
+            
+            if (chk.checked) {
+                card.classList.add('mastered');
+                masteredIds.add(id);
+            } else {
+                card.classList.remove('mastered');
+                masteredIds.delete(id);
+            }
+            
+            localStorage.setItem('endocrine_mastered_v2', JSON.stringify(Array.from(masteredIds)));
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = document.querySelectorAll('.qa-card').length;
+            const mastered = masteredIds.size;
+            const pct = total > 0 ? Math.round((mastered / total) * 100) : 0;
+            
+            document.getElementById('progress-bar').style.width = pct + '%';
+            document.getElementById('progress-text').innerText = `已掌握 ${mastered} / ${total} (${pct}%)`;
+        }
+
+        function resetProgress() {
+            if (confirm('确定要清除所有已掌握记录吗？')) {
+                masteredIds.clear();
+                localStorage.removeItem('endocrine_mastered_v2');
+                document.querySelectorAll('.qa-card').forEach(card => {
+                    card.classList.remove('mastered');
+                    card.querySelector('.mastered-chk').checked = false;
+                });
+                updateProgress();
+            }
+        }
+
+        function filterSection(sec) {
+            currentSection = sec;
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText === sec || (sec === 'all' && btn.innerText === '全部章节')) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            filterCards();
+        }
+
+        function filterCards() {
+            const qQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            const diffFilter = document.getElementById('diff-filter').value;
+            const impFilter = document.getElementById('imp-filter').value;
+            
+            document.querySelectorAll('.qa-card').forEach(card => {
+                const sec = card.getAttribute('data-section');
+                const diff = card.getAttribute('data-diff');
+                const imp = card.getAttribute('data-imp');
+                const qText = card.querySelector('.q-text').innerText.toLowerCase();
+                
+                let visible = true;
+                
+                if (currentSection !== 'all' && sec !== currentSection) visible = false;
+                if (diffFilter !== 'all' && diff !== diffFilter) visible = false;
+                if (impFilter !== 'all' && imp !== impFilter) visible = false;
+                if (qQuery.length > 0 && !qText.includes(qQuery)) visible = false;
+                
+                card.style.display = visible ? 'block' : 'none';
+            });
+        }
+
+        function toggleAllAnswers() {
+            allExpanded = !allExpanded;
+            const btn = document.getElementById('toggle-all-btn');
+            btn.innerText = allExpanded ? '全部收起' : '全部展开';
+            
+            document.querySelectorAll('.qa-card').forEach(card => {
+                if (card.style.display === 'none') return;
+                
+                const id = card.getAttribute('data-id');
+                const answer = document.getElementById(`ans-${id}`);
+                const isExpanded = card.classList.contains('expanded');
+                
+                if (allExpanded && !isExpanded) {
+                    card.classList.add('expanded');
+                    answer.style.maxHeight = 'none';
+                    const fullHeight = answer.scrollHeight;
+                    answer.style.maxHeight = '0px';
+                    answer.offsetHeight;
+                    answer.style.maxHeight = fullHeight + 'px';
+                    setTimeout(() => {
+                        if (card.classList.contains('expanded')) answer.style.maxHeight = 'none';
+                    }, 350);
+                } else if (!allExpanded && isExpanded) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    answer.offsetHeight;
+                    answer.style.maxHeight = '0px';
+                    card.classList.remove('expanded');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

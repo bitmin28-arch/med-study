@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>西综带背自测自测系统 · 门户主页</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #1e293b;
+            --card-bg-glass: rgba(30, 41, 59, 0.7);
+            --text-color: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --accent: #8b5cf6;
+            --border: #334155;
+            --green: #10b981;
+            --green-glow: rgba(16, 185, 129, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK SC", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        /* Banner Header */
+        header {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(8, 12, 24, 0.95));
+            border-bottom: 1px solid var(--border);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* Global Progress Card */
+        .global-stats-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 20px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.88rem;
+        }
+
+        .stats-title {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .stats-pct {
+            font-weight: 700;
+            color: #60a5fa;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 4px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* Subject Tab Switcher */
+        .subject-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+            padding: 0 15px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .subject-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .subject-tab {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+
+        .subject-tab.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        .subject-tab.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Chapter Container */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Chapter Card */
+        .chapter-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .chapter-card.active {
+            cursor: pointer;
+            border-color: rgba(96, 165, 250, 0.4);
+        }
+
+        .chapter-card.active:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .chapter-card.disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .chapter-num {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-coming {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .chapter-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-progress-container {
+            margin-top: auto;
+        }
+
+        .card-progress-text {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .card-progress-bar-bg {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .card-progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .card-progress-bar.finished {
+            background-color: var(--green);
+            box-shadow: 0 0 5px var(--green-glow);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.35rem; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>医学提纲带背自测系统</h1>
+        <div class="subtitle">基于记忆卡片与主动回想的西综高效率背诵方案</div>
+        
+        <div class="global-stats-card">
+            <div class="stats-header">
+                <span class="stats-title">生理学总复习进度</span>
+                <span class="stats-pct" id="global-progress-text">已掌握 0 / 92 (0%)</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="global-progress-bar"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="subject-tabs">
+        <div class="subject-tab active" onclick="switchSubject('phys')">生理学</div>
+        <div class="subject-tab disabled" title="待未来制作">病理学</div>
+        <div class="subject-tab disabled" title="待未来制作">内科学</div>
+        <div class="subject-tab disabled" title="待未来制作">外科学</div>
+    </div>
+
+    <div class="container">
+        <!-- Physiology Grid -->
+        <div class="grid-layout" id="phys-grid">
+            
+            <!-- Chapter 1 (Active Chapter) -->
+            <a href="physiology/ch01-intro/index.html" class="chapter-card active">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 01</span>
+                    <span class="status-badge status-active">已开启</span>
+                </div>
+                <div class="chapter-title">第1章 绪论 (30题)</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span id="ch1-progress-text">已掌握 0 / 30</span>
+                        <span id="ch1-progress-pct">0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg">
+                        <div class="card-progress-bar" id="ch1-progress-bar"></div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Chapter 2 -->
+            <div class="chapter-card disabled">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 02</span>
+                    <span class="status-badge status-coming">待制作</span>
+                </div>
+                <div class="chapter-title">第2章 细胞的基本功能</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span>未开始</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+            <!-- Chapter 3 -->
+            <div class="chapter-card disabled">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 03</span>
+                    <span class="status-badge status-coming">待制作</span>
+                </div>
+                <div class="chapter-title">第3章 血液</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span>未开始</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+            <!-- Chapter 4 -->
+            <div class="chapter-card disabled">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 04</span>
+                    <span class="status-badge status-coming">待制作</span>
+                </div>
+                <div class="chapter-title">第4章 血液循环</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span>未开始</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+            <!-- Chapter 5 -->
+            <div class="chapter-card disabled">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 05</span>
+                    <span class="status-badge status-coming">待制作</span>
+                </div>
+                <div class="chapter-title">第5章 呼吸</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span>未开始</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+            <!-- Chapter 6 -->
+            <div class="chapter-card disabled">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 06</span>
+                    <span class="status-badge status-coming">待制作</span>
+                </div>
+                <div class="chapter-title">第6章 消化和吸收</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span>未开始</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+            <!-- Chapter 7 -->
+            <div class="chapter-card disabled">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 07</span>
+                    <span class="status-badge status-coming">待制作</span>
+                </div>
+                <div class="chapter-title">第7章 能量代谢和体温</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span>未开始</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+            <!-- Chapter 8 -->
+            <div class="chapter-card disabled">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 08</span>
+                    <span class="status-badge status-coming">待制作</span>
+                </div>
+                <div class="chapter-title">第8章 尿的生成和排出</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span>未开始</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+            <!-- Chapter 9 -->
+            <div class="chapter-card disabled">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 09</span>
+                    <span class="status-badge status-coming">待制作</span>
+                </div>
+                <div class="chapter-title">第9章 感觉器官的功能</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span>未开始</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+            <!-- Chapter 10 -->
+            <div class="chapter-card disabled">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 10</span>
+                    <span class="status-badge status-coming">待制作</span>
+                </div>
+                <div class="chapter-title">第10章 神经系统的功能</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span>未开始</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+            <!-- Chapter 11 (Active Chapter) -->
+            <a href="physiology/ch11-endocrine/index.html" class="chapter-card active">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 11</span>
+                    <span class="status-badge status-active">已开启</span>
+                </div>
+                <div class="chapter-title">第11章 内分泌 (92题)</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span id="ch11-progress-text">已掌握 0 / 92 (0%)</span>
+                        <span id="ch11-progress-pct">0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg">
+                        <div class="card-progress-bar" id="ch11-progress-bar"></div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Chapter 12 -->
+            <div class="chapter-card disabled">
+                <div class="card-top">
+                    <span class="chapter-num">Chapter 12</span>
+                    <span class="status-badge status-coming">待制作</span>
+                </div>
+                <div class="chapter-title">第12章 生殖</div>
+                <div class="card-progress-container">
+                    <div class="card-progress-text">
+                        <span>未开始</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function switchSubject(sub) {
+            // Placeholder for switching subject lists if needed
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Chapter 1 Progress
+            const savedCh1 = localStorage.getItem('intro_mastered');
+            let ch1Mastered = 0;
+            if (savedCh1) {
+                try {
+                    ch1Mastered = JSON.parse(savedCh1).length;
+                } catch(e) {}
+            }
+            const ch1Total = 30;
+            const ch1Pct = Math.round((ch1Mastered / ch1Total) * 100);
+            
+            document.getElementById('ch1-progress-text').innerText = `已掌握 ${ch1Mastered} / ${ch1Total}`;
+            document.getElementById('ch1-progress-pct').innerText = `${ch1Pct}%`;
+            const ch1Bar = document.getElementById('ch1-progress-bar');
+            ch1Bar.style.width = `${ch1Pct}%`;
+            if (ch1Pct === 100) ch1Bar.classList.add('finished');
+
+            // Chapter 11 Progress
+            const savedCh11 = localStorage.getItem('endocrine_mastered_v2');
+            let ch11Mastered = 0;
+            if (savedCh11) {
+                try {
+                    ch11Mastered = JSON.parse(savedCh11).length;
+                } catch(e) {}
+            }
+            const ch11Total = 92;
+            const ch11Pct = Math.round((ch11Mastered / ch11Total) * 100);
+            
+            document.getElementById('ch11-progress-text').innerText = `已掌握 ${ch11Mastered} / ${ch11Total}`;
+            document.getElementById('ch11-progress-pct').innerText = `${ch11Pct}%`;
+            const ch11Bar = document.getElementById('ch11-progress-bar');
+            ch11Bar.style.width = `${ch11Pct}%`;
+            if (ch11Pct === 100) ch11Bar.classList.add('finished');
+            
+            // Global Statistics
+            const totalMastered = ch1Mastered + ch11Mastered;
+            const totalQuestions = ch1Total + ch11Total;
+            const globalPct = Math.round((totalMastered / totalQuestions) * 100);
+            
+            document.getElementById('global-progress-text').innerText = `已掌握 ${totalMastered} / ${totalQuestions} (${globalPct}%)`;
+            const globalBar = document.getElementById('global-progress-bar');
+            globalBar.style.width = `${globalPct}%`;
+            if (globalPct === 100) {
+                globalBar.style.background = 'var(--green)';
+            }
+        });
+    </script>
+</body>
+</html>

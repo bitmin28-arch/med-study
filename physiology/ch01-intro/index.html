@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>生理学 · 绪论提纲带背</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --accent: #8b5cf6;
+            --border: #334155;
+            --green: #10b981;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK SC", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 50px;
+        }
+        
+        header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 20px;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .header-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-home-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .back-home-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: rgba(255,255,255,0.05);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.4s ease;
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+        
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .search-box {
+            display: flex;
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            align-items: center;
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            flex: 1;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+        }
+        
+        .filter-row::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab-btn, .filter-select {
+            background-color: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+        
+        .filter-select {
+            background-color: rgba(30, 41, 59, 0.8);
+            color: var(--text-color);
+            outline: none;
+        }
+        
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .action-btn:hover, .action-btn:active {
+            background-color: rgba(255,255,255,0.05);
+            color: white;
+        }
+        
+        .container {
+            max-width: 768px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        
+        .qa-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        
+        .qa-card.mastered {
+            border-color: rgba(16, 185, 129, 0.3);
+            background-color: rgba(30, 41, 59, 0.6);
+            opacity: 0.8;
+        }
+        
+        .card-header {
+            padding: 12px 16px 8px 16px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+        
+        .sec-badge {
+            background-color: rgba(139, 92, 246, 0.15);
+            color: #c084fc;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-easy { background-color: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .badge-medium { background-color: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .badge-hard { background-color: rgba(239, 68, 68, 0.15); color: #f87171; }
+        
+        .badge-high { background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; }
+        .badge-mod { background-color: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; }
+        .badge-low { background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; }
+        
+        .mastered-label {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        
+        .mastered-label input {
+            accent-color: var(--green);
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+        
+        .card-question {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+        
+        .q-text {
+            font-size: 0.98rem;
+            line-height: 1.5;
+            font-weight: 600;
+            color: #fff;
+            padding-right: 15px;
+        }
+        
+        .toggle-icon {
+            color: var(--text-muted);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .qa-card.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .card-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #0b0f19;
+            border-top: 1px solid transparent;
+        }
+        
+        .qa-card.expanded .card-answer {
+            border-top-color: var(--border);
+        }
+        
+        .img-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            padding: 10px;
+            align-items: center;
+            background-color: #0b0f19;
+        }
+        
+        .img-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            min-height: 60px;
+        }
+        
+        .img-wrapper img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .img-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @media (max-width: 480px) {
+            header { padding: 10px 15px; }
+            .container { padding: 0 10px; }
+            .q-text { font-size: 0.92rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <div class="header-title-row">
+                <a href="../../index.html" class="back-home-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    返回主页
+                </a>
+                <h1>生理学 · 绪论提纲带背</h1>
+            </div>
+            <button class="action-btn" onclick="resetProgress()">重置状态</button>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-text" id="progress-text">已掌握 0 / 0 (0%)</div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索问题关键字..." oninput="filterCards()">
+            </div>
+            
+            <div class="filter-row">
+                <button class="tab-btn active" onclick="filterSection('all')">全部章节</button>
+<button class="tab-btn" onclick="filterSection('1.1 体液')">1.1 体液</button>
+<button class="tab-btn" onclick="filterSection('1.2 内环境')">1.2 内环境</button>
+<button class="tab-btn" onclick="filterSection('1.3 神经调节')">1.3 神经调节</button>
+<button class="tab-btn" onclick="filterSection('1.4 体液调节')">1.4 体液调节</button>
+<button class="tab-btn" onclick="filterSection('1.5 神经-体液调节')">1.5 神经-体液调节</button>
+<button class="tab-btn" onclick="filterSection('1.6 自身调节')">1.6 自身调节</button>
+<button class="tab-btn" onclick="filterSection('1.7 自动控制系统')">1.7 自动控制系统</button>
+<button class="tab-btn" onclick="filterSection('1.7 自动控制 system')">1.7 自动控制 system</button>
+            </div>
+            
+            <div class="actions-row">
+                <select class="filter-select" id="diff-filter" onchange="filterCards()">
+                    <option value="all">全部难度</option>
+                    <option value="I级">I级 (简单)</option>
+                    <option value="II级">II级 (中等)</option>
+                    <option value="III级">III级 (较难)</option>
+                </select>
+                
+                <select class="filter-select" id="imp-filter" onchange="filterCards()">
+                    <option value="all">全部重要度</option>
+                    <option value="A">A级 (极重要)</option>
+                    <option value="B">B级 (重要)</option>
+                    <option value="C">C级 (一般)</option>
+                </select>
+                
+                <button class="action-btn" id="toggle-all-btn" onclick="toggleAllAnswers()">全部展开</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" id="cards-container">
+        
+        <div class="qa-card" data-id="q1" data-section="1.1 体液" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.1 体液</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q1')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q1')">
+                <div class="q-text">1 体液占体重的百分比？最活跃部分是？分布在各部分的体液容积是否相等？(I A / I A / I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q1">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q1_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q2" data-section="1.1 体液" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.1 体液</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q2')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q2')">
+                <div class="q-text">2 细胞外液的组成及各部分占比？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q2">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q2_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q3" data-section="1.1 体液" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">1.1 体液</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q3')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q3')">
+                <div class="q-text">3 各部分体液成分差别体现在哪些地方？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q3">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q3_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q4" data-section="1.1 体液" data-diff="II级" data-imp="C">
+            <div class="card-header">
+                <span class="sec-badge">1.1 体液</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-low">C级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q4')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q4')">
+                <div class="q-text">4 各部分体液如何实现相互沟通？(IIC)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q4">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q4_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q5" data-section="1.2 内环境" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.2 内环境</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q5')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q5')">
+                <div class="q-text">1 内环境是指体液的哪部分？注意哪些体液不属于内环境 (I A / II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q5">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q5_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q6" data-section="1.2 内环境" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">1.2 内环境</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q6')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q6')">
+                <div class="q-text">2 内环境的稳态的概念及特点 (II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q6">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q6_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q7" data-section="1.2 内环境" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.2 内环境</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q7')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q7')">
+                <div class="q-text">3 内环境稳态于机体而言的作用 (II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q7">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q7_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q8" data-section="1.2 内环境" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">1.2 内环境</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q8')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q8')">
+                <div class="q-text">4 稳态的概念及与内环境稳态的关系 (II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q8">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q8_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q9" data-section="1.2 内环境" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.2 内环境</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q9')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q9')">
+                <div class="q-text">5 稳态的维持依靠什么？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q9">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q9_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q10" data-section="1.3 神经调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.3 神经调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q10')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q10')">
+                <div class="q-text">1 神经调节的结构基础 (I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q10">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q10_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q11" data-section="1.3 神经调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.3 神经调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q11')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q11')">
+                <div class="q-text">2 神经调节的特点 (II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q11">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q11_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q12" data-section="1.3 神经调节" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">1.3 神经调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q12')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q12')">
+                <div class="q-text">3 神经调节举例 (I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q12">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q12_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q13" data-section="1.3 神经调节" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.3 神经调节</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q13')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q13')">
+                <div class="q-text">4 条件反射与非条件反射对比：如何获得、存在目的、控制部位、反射弧、分别举例子 (III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q13">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q13_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q14" data-section="1.4 体液调节" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">1.4 体液调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q14')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q14')">
+                <div class="q-text">1 体液调节概念 (I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q14">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q14_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q15" data-section="1.4 体液调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.4 体液调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q15')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q15')">
+                <div class="q-text">2 体液调节参与物举例、调节途径 (II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q15">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q15_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q16" data-section="1.4 体液调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.4 体液调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q16')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q16')">
+                <div class="q-text">3 体液调节特点及经典例子 (II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q16">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q16_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q17" data-section="1.5 神经-体液调节" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">1.5 神经-体液调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q17')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q17')">
+                <div class="q-text">1 神经-体液调节概念 (I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q17">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q17_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q18" data-section="1.5 神经-体液调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.5 神经-体液调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q18')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q18')">
+                <div class="q-text">2 神经-体液调节举例子（7个）(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q18">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q18_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q19" data-section="1.5 神经-体液调节" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.5 神经-体液调节</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q19')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q19')">
+                <div class="q-text">3 应急与应激区分：概念、目的、启动什么系统、分泌何种物质 (III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q19">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q19_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q20" data-section="1.6 自身调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.6 自身调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q20')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q20')">
+                <div class="q-text">1 自身调节特点 (II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q20">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q20_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q21" data-section="1.6 自身调节" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.6 自身调节</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q21')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q21')">
+                <div class="q-text">2 自身调节举例子（7个）(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q21">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q21_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q22" data-section="1.6 自身调节" data-diff="II级" data-imp="C">
+            <div class="card-header">
+                <span class="sec-badge">1.6 自身调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-low">C级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q22')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q22')">
+                <div class="q-text">3 概念辨析：自身调节、自我调节、局部调节 (II C)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q22">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q22_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q23" data-section="1.7 自动控制系统" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.7 自动控制系统</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q23')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q23')">
+                <div class="q-text">1 反馈信息、偏差信息、前馈信息分别由谁发出并且作用于谁 (II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q23">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q23_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q24" data-section="1.7 自动控制系统" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.7 自动控制系统</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q24')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q24')">
+                <div class="q-text">2 调定点的概念及特点 (I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q24">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q24_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q25" data-section="1.7 自动控制系统" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.7 自动控制系统</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q25')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q25')">
+                <div class="q-text">3 负反馈概念及特点 (II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q25">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q25_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q26" data-section="1.7 自动控制系统" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.7 自动控制系统</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q26')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q26')">
+                <div class="q-text">4 负反馈发挥什么作用？常见例子有哪些？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q26">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q26_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q27" data-section="1.7 自动控制系统" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.7 自动控制系统</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q27')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q27')">
+                <div class="q-text">5 正反馈概念及特点 -> 正反馈存在的意义？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q27">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q27_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q28" data-section="1.7 自动控制系统" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.7 自动控制系统</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q28')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q28')">
+                <div class="q-text">6 正反馈常见例子（9个）(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q28">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q28_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q28_2.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q29" data-section="1.7 自动控制系统" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.7 自动控制系统</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q29')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q29')">
+                <div class="q-text">7 前馈的反馈系统是开环还是闭环？前馈是如何进行调节的？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q29">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q29_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q30" data-section="1.7 自动控制 system" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">1.7 自动控制 system</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q30')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q30')">
+                <div class="q-text">8 前馈的特点及常见例子（4个）(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q30">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q30_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        let masteredIds = new Set();
+        let currentSection = 'all';
+        let allExpanded = false;
+        const storageKey = 'intro_mastered';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem(storageKey);
+            if (saved) {
+                try {
+                    const arr = JSON.parse(saved);
+                    masteredIds = new Set(arr);
+                } catch(e) {}
+            }
+            
+            document.querySelectorAll('.qa-card').forEach(card => {
+                const id = card.getAttribute('data-id');
+                const chk = card.querySelector('.mastered-chk');
+                if (masteredIds.has(id)) {
+                    card.classList.add('mastered');
+                    chk.checked = true;
+                }
+            });
+            
+            updateProgress();
+        });
+
+        function toggleAnswer(id) {
+            const card = document.querySelector(`.qa-card[data-id="${id}"]`);
+            const answer = document.getElementById(`ans-${id}`);
+            if (!card || !answer) return;
+            
+            if (card.classList.contains('expanded')) {
+                answer.style.maxHeight = '0px';
+                card.classList.remove('expanded');
+            } else {
+                card.classList.add('expanded');
+                answer.style.maxHeight = 'none';
+                const fullHeight = answer.scrollHeight;
+                answer.style.maxHeight = '0px';
+                answer.offsetHeight;
+                answer.style.maxHeight = fullHeight + 'px';
+                
+                setTimeout(() => {
+                    if (card.classList.contains('expanded')) {
+                        answer.style.maxHeight = 'none';
+                    }
+                }, 350);
+            }
+        }
+
+        function hideLoader(img) {
+            img.style.opacity = '1';
+            const loader = img.previousElementSibling;
+            if (loader) loader.style.display = 'none';
+        }
+
+        function showError(img) {
+            const loader = img.previousElementSibling;
+            if (loader) loader.style.display = 'none';
+            img.style.display = 'none';
+            
+            if (img.parentNode.querySelector('.img-error-msg')) return;
+            
+            const errDiv = document.createElement('div');
+            errDiv.className = 'img-error-msg';
+            errDiv.innerHTML = '<div style="color: #ef4444; font-size: 0.88rem; padding: 20px; text-align: center; border: 1px dashed rgba(239,68,68,0.3); border-radius: 6px; background: rgba(239,68,68,0.05); margin: 10px;">图片加载失败<br><span style="font-size: 0.75rem; color: #94a3b8; margin-top: 4px; display: block;">可能原因：您正在使用 localhost 并且本地服务被关闭。<br>解决方式：直接双击打开该 HTML 本地文件即可。</span></div>';
+            img.parentNode.appendChild(errDiv);
+        }
+
+        function toggleMastered(id) {
+            const card = document.querySelector(`.qa-card[data-id="${id}"]`);
+            const chk = card.querySelector('.mastered-chk');
+            if (!card) return;
+            
+            if (chk.checked) {
+                card.classList.add('mastered');
+                masteredIds.add(id);
+            } else {
+                card.classList.remove('mastered');
+                masteredIds.delete(id);
+            }
+            
+            localStorage.setItem(storageKey, JSON.stringify(Array.from(masteredIds)));
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = document.querySelectorAll('.qa-card').length;
+            const mastered = masteredIds.size;
+            const pct = total > 0 ? Math.round((mastered / total) * 100) : 0;
+            
+            document.getElementById('progress-bar').style.width = pct + '%';
+            document.getElementById('progress-text').innerText = `已掌握 ${mastered} / ${total} (${pct}%)`;
+        }
+
+        function resetProgress() {
+            if (confirm('确定要清除所有已掌握记录吗？')) {
+                masteredIds.clear();
+                localStorage.removeItem(storageKey);
+                document.querySelectorAll('.qa-card').forEach(card => {
+                    card.classList.remove('mastered');
+                    card.querySelector('.mastered-chk').checked = false;
+                });
+                updateProgress();
+            }
+        }
+
+        function filterSection(sec) {
+            currentSection = sec;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText === sec || (sec === 'all' && btn.innerText === '全部章节')) {
+                    btn.classList.add('active');
+                }
+            });
+            filterCards();
+        }
+
+        function filterCards() {
+            const qQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            const diffFilter = document.getElementById('diff-filter').value;
+            const impFilter = document.getElementById('imp-filter').value;
+            
+            document.querySelectorAll('.qa-card').forEach(card => {
+                const sec = card.getAttribute('data-section');
+                const diff = card.getAttribute('data-diff');
+                const imp = card.getAttribute('data-imp');
+                const qText = card.querySelector('.q-text').innerText.toLowerCase();
+                
+                let visible = true;
+                if (currentSection !== 'all' && sec !== currentSection) visible = false;
+                if (diffFilter !== 'all' && diff !== diffFilter) visible = false;
+                if (impFilter !== 'all' && imp !== impFilter) visible = false;
+                if (qQuery.length > 0 && !qText.includes(qQuery)) visible = false;
+                
+                card.style.display = visible ? 'block' : 'none';
+            });
+        }
+
+        function toggleAllAnswers() {
+            allExpanded = !allExpanded;
+            const btn = document.getElementById('toggle-all-btn');
+            btn.innerText = allExpanded ? '全部收起' : '全部展开';
+            
+            document.querySelectorAll('.qa-card').forEach(card => {
+                if (card.style.display === 'none') return;
+                
+                const id = card.getAttribute('data-id');
+                const answer = document.getElementById(`ans-${id}`);
+                const isExpanded = card.classList.contains('expanded');
+                
+                if (allExpanded && !isExpanded) {
+                    card.classList.add('expanded');
+                    answer.style.maxHeight = 'none';
+                    const fullHeight = answer.scrollHeight;
+                    answer.style.maxHeight = '0px';
+                    answer.offsetHeight;
+                    answer.style.maxHeight = fullHeight + 'px';
+                    setTimeout(() => {
+                        if (card.classList.contains('expanded')) answer.style.maxHeight = 'none';
+                    }, 350);
+                } else if (!allExpanded && isExpanded) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    answer.offsetHeight;
+                    answer.style.maxHeight = '0px';
+                    card.classList.remove('expanded');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
