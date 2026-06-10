@@ -12,8 +12,8 @@ module.exports = async function handler(req, res) {
         return res.status(204).end();
     }
 
-    // 坚果云 WebDAV 目标地址
-    const targetUrl = 'https://dav.jianguoyun.com/dav/med_study_progress.json';
+    // 坚果云 WebDAV 目标地址（文件需放在已有的同步文件夹下，默认为"我的坚果云"）
+    const targetUrl = 'https://dav.jianguoyun.com/dav/\u6211\u7684\u575a\u679c\u4e91/med_study_progress.json';
 
     // 构造转发请求头：只保留必要的认证和内容类型头
     const headers = {};
