@@ -308,22 +308,44 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
             margin-bottom: 18px;
+        }
+        
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
+                gap: 6px !important;
+            }
         }
 
         .stat-box {
             background: rgba(15, 23, 42, 0.35);
             border: 1px solid rgba(255, 255, 255, 0.03);
             border-radius: 10px;
-            padding: 10px 4px;
+            padding: 10px 2px;
             text-align: center;
             transition: transform 0.2s, border-color 0.2s;
         }
         .stat-box:hover {
             transform: translateY(-1px);
             border-color: rgba(96, 165, 250, 0.15);
+        }
+
+        .stat-due-active {
+            background: rgba(239, 68, 68, 0.04) !important;
+            border-color: rgba(239, 68, 68, 0.15) !important;
+        }
+        .stat-due-num {
+            background: linear-gradient(135deg, #f87171, #ef4444) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+        .stat-star-num {
+            background: linear-gradient(135deg, #fcd34d, #f59e0b) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
         }
 
         .stat-num {
@@ -440,6 +462,14 @@
                 <div class="stat-box">
                     <div class="stat-num" id="stat-total-mastered">0</div>
                     <div class="stat-label">已攻克 (题)</div>
+                </div>
+                <div class="stat-box" id="stat-box-due">
+                    <div class="stat-num stat-due-num" id="stat-total-due">0</div>
+                    <div class="stat-label">待复习 (题)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num stat-star-num" id="stat-total-starred">0</div>
+                    <div class="stat-label">已收藏 (题)</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-num" id="stat-total-left">224</div>
@@ -765,12 +795,52 @@
             const totalQuestions = ch1Total + ch8Total + ch11Total;
             const globalPct = totalQuestions > 0 ? Math.round((totalMastered / totalQuestions) * 100) : 0;
             
+            // 计算全局收藏数
+            let totalStarred = 0;
+            ['intro_starred', 'urinary_starred', 'endocrine_starred_v2'].forEach(key => {
+                const saved = localStorage.getItem(key);
+                if (saved) {
+                    try {
+                        totalStarred += JSON.parse(saved).length;
+                    } catch(e) {}
+                }
+            });
+
+            // 计算全局待复习数
+            let totalDue = 0;
+            const now = Date.now();
+            ['intro_ebbinghaus', 'urinary_ebbinghaus', 'endocrine_ebbinghaus_v2'].forEach(key => {
+                const saved = localStorage.getItem(key);
+                if (saved) {
+                    try {
+                        const dict = JSON.parse(saved);
+                        // 遍历字典，如果是到期任务且 stage < 7
+                        for (const id in dict) {
+                            const item = dict[id];
+                            if (item.stage < 7 && item.nextTime <= now) {
+                                totalDue++;
+                            }
+                        }
+                    } catch(e) {}
+                }
+            });
+
             // Render new stat widgets
             document.getElementById('stat-total-mastered').innerText = totalMastered;
+            document.getElementById('stat-total-due').innerText = totalDue;
+            document.getElementById('stat-total-starred').innerText = totalStarred;
             document.getElementById('stat-total-left').innerText = totalQuestions - totalMastered;
             document.getElementById('stat-total-all').innerText = totalQuestions;
             document.getElementById('global-pct-badge').innerText = `总掌握 ${globalPct}%`;
             
+            // 如果有待复习题，给它增加发光特效类，否则移除
+            const dueBox = document.getElementById('stat-box-due');
+            if (totalDue > 0) {
+                dueBox.classList.add('stat-due-active');
+            } else {
+                dueBox.classList.remove('stat-due-active');
+            }
+
             document.getElementById('global-progress-text-new').innerText = `已掌握 ${totalMastered} / ${totalQuestions} (${globalPct}%)`;
             const globalBarNew = document.getElementById('global-progress-bar-new');
             globalBarNew.style.width = `${globalPct}%`;

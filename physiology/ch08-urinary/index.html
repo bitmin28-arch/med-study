@@ -271,6 +271,107 @@
             color: #fff;
             box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
         }
+
+        /* 星标与艾宾浩斯全新样式 */
+        .star-btn {
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: #475569;
+            transition: color 0.2s, transform 0.2s;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+        }
+        .star-btn.starred {
+            color: #fbbf24;
+            transform: scale(1.15);
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+        }
+        .star-btn:hover {
+            transform: scale(1.22);
+            color: #cbd5e1;
+        }
+        .star-btn.starred:hover {
+            color: #f59e0b;
+        }
+
+        .ebbinghaus-badge {
+            font-size: 0.72rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: none;
+            margin-right: 10px;
+        }
+        .ebbinghaus-badge.eb-green {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+        .ebbinghaus-badge.eb-yellow {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+        .ebbinghaus-badge.eb-red {
+            display: inline-block;
+            background: rgba(239, 68, 68, 0.12);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            animation: pulse-glow 2s infinite;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 5px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .ebbinghaus-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin-right: 10px;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+        }
+        .ebbinghaus-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(59, 130, 246, 0.5);
+        }
+
+        .action-btn-toggle {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+        .action-btn-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .action-btn-toggle.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.45);
+            color: #60a5fa;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+        }
         
         .mastered-label {
             margin-left: auto;
@@ -522,6 +623,9 @@
                     <option value="C">C级 (一般)</option>
                 </select>
                 
+                <button class="action-btn-toggle" id="star-filter-btn" onclick="toggleStarFilter()">⭐️ 仅看星标</button>
+                <button class="action-btn-toggle" id="eb-filter-btn" onclick="toggleEbFilter()">🕒 今日待复习</button>
+                
                 <button class="action-btn" id="toggle-all-btn" onclick="toggleAllAnswers()">全部展开</button>
             </div>
         </div>
@@ -531,6 +635,7 @@
         
         <div class="qa-card" data-id="q1" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q1" onclick="event.stopPropagation(); toggleStar('q1')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -539,6 +644,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q1"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q1" onclick="event.stopPropagation(); refreshEbbinghaus('q1')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q1')">
                     <span>已掌握</span>
@@ -565,6 +672,7 @@
 
         <div class="qa-card" data-id="q2" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q2" onclick="event.stopPropagation(); toggleStar('q2')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -573,6 +681,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q2"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q2" onclick="event.stopPropagation(); refreshEbbinghaus('q2')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q2')">
                     <span>已掌握</span>
@@ -599,6 +709,7 @@
 
         <div class="qa-card" data-id="q3" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q3" onclick="event.stopPropagation(); toggleStar('q3')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -607,6 +718,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q3"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q3" onclick="event.stopPropagation(); refreshEbbinghaus('q3')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q3')">
                     <span>已掌握</span>
@@ -633,6 +746,7 @@
 
         <div class="qa-card" data-id="q4" data-section="8.1 泌尿概述" data-diff="II级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q4" onclick="event.stopPropagation(); toggleStar('q4')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -641,6 +755,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q4"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q4" onclick="event.stopPropagation(); refreshEbbinghaus('q4')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q4')">
                     <span>已掌握</span>
@@ -667,6 +783,7 @@
 
         <div class="qa-card" data-id="q5" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q5" onclick="event.stopPropagation(); toggleStar('q5')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -675,6 +792,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q5"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q5" onclick="event.stopPropagation(); refreshEbbinghaus('q5')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q5')">
                     <span>已掌握</span>
@@ -701,6 +820,7 @@
 
         <div class="qa-card" data-id="q6" data-section="8.1 泌尿概述" data-diff="I级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q6" onclick="event.stopPropagation(); toggleStar('q6')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -709,6 +829,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q6"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q6" onclick="event.stopPropagation(); refreshEbbinghaus('q6')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q6')">
                     <span>已掌握</span>
@@ -735,6 +857,7 @@
 
         <div class="qa-card" data-id="q7" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q7" onclick="event.stopPropagation(); toggleStar('q7')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -743,6 +866,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q7"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q7" onclick="event.stopPropagation(); refreshEbbinghaus('q7')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q7')">
                     <span>已掌握</span>
@@ -769,6 +894,7 @@
 
         <div class="qa-card" data-id="q8" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q8" onclick="event.stopPropagation(); toggleStar('q8')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -777,6 +903,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q8"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q8" onclick="event.stopPropagation(); refreshEbbinghaus('q8')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q8')">
                     <span>已掌握</span>
@@ -803,6 +931,7 @@
 
         <div class="qa-card" data-id="q9" data-section="8.1 泌尿概述" data-diff="III级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q9" onclick="event.stopPropagation(); toggleStar('q9')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-hard">III级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -811,6 +940,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q9"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q9" onclick="event.stopPropagation(); refreshEbbinghaus('q9')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q9')">
                     <span>已掌握</span>
@@ -837,6 +968,7 @@
 
         <div class="qa-card" data-id="q10" data-section="8.1 泌尿概述" data-diff="II级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q10" onclick="event.stopPropagation(); toggleStar('q10')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -845,6 +977,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q10"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q10" onclick="event.stopPropagation(); refreshEbbinghaus('q10')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q10')">
                     <span>已掌握</span>
@@ -871,6 +1005,7 @@
 
         <div class="qa-card" data-id="q11" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q11" onclick="event.stopPropagation(); toggleStar('q11')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -879,6 +1014,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q11"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q11" onclick="event.stopPropagation(); refreshEbbinghaus('q11')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q11')">
                     <span>已掌握</span>
@@ -905,6 +1042,7 @@
 
         <div class="qa-card" data-id="q12" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q12" onclick="event.stopPropagation(); toggleStar('q12')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -913,6 +1051,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q12"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q12" onclick="event.stopPropagation(); refreshEbbinghaus('q12')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q12')">
                     <span>已掌握</span>
@@ -939,6 +1079,7 @@
 
         <div class="qa-card" data-id="q13" data-section="8.1 泌尿概述" data-diff="I级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q13" onclick="event.stopPropagation(); toggleStar('q13')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -947,6 +1088,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q13"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q13" onclick="event.stopPropagation(); refreshEbbinghaus('q13')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q13')">
                     <span>已掌握</span>
@@ -973,6 +1116,7 @@
 
         <div class="qa-card" data-id="q14" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q14" onclick="event.stopPropagation(); toggleStar('q14')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -981,6 +1125,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q14"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q14" onclick="event.stopPropagation(); refreshEbbinghaus('q14')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q14')">
                     <span>已掌握</span>
@@ -1007,6 +1153,7 @@
 
         <div class="qa-card" data-id="q15" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q15" onclick="event.stopPropagation(); toggleStar('q15')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1015,6 +1162,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q15"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q15" onclick="event.stopPropagation(); refreshEbbinghaus('q15')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q15')">
                     <span>已掌握</span>
@@ -1041,6 +1190,7 @@
 
         <div class="qa-card" data-id="q16" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q16" onclick="event.stopPropagation(); toggleStar('q16')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1049,6 +1199,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q16"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q16" onclick="event.stopPropagation(); refreshEbbinghaus('q16')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q16')">
                     <span>已掌握</span>
@@ -1075,6 +1227,7 @@
 
         <div class="qa-card" data-id="q17" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q17" onclick="event.stopPropagation(); toggleStar('q17')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1083,6 +1236,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q17"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q17" onclick="event.stopPropagation(); refreshEbbinghaus('q17')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q17')">
                     <span>已掌握</span>
@@ -1109,6 +1264,7 @@
 
         <div class="qa-card" data-id="q18" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q18" onclick="event.stopPropagation(); toggleStar('q18')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1117,6 +1273,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q18"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q18" onclick="event.stopPropagation(); refreshEbbinghaus('q18')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q18')">
                     <span>已掌握</span>
@@ -1143,6 +1301,7 @@
 
         <div class="qa-card" data-id="q19" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q19" onclick="event.stopPropagation(); toggleStar('q19')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1151,6 +1310,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q19"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q19" onclick="event.stopPropagation(); refreshEbbinghaus('q19')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q19')">
                     <span>已掌握</span>
@@ -1177,6 +1338,7 @@
 
         <div class="qa-card" data-id="q20" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q20" onclick="event.stopPropagation(); toggleStar('q20')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1185,6 +1347,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q20"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q20" onclick="event.stopPropagation(); refreshEbbinghaus('q20')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q20')">
                     <span>已掌握</span>
@@ -1211,6 +1375,7 @@
 
         <div class="qa-card" data-id="q21" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q21" onclick="event.stopPropagation(); toggleStar('q21')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1219,6 +1384,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q21"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q21" onclick="event.stopPropagation(); refreshEbbinghaus('q21')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q21')">
                     <span>已掌握</span>
@@ -1245,6 +1412,7 @@
 
         <div class="qa-card" data-id="q22" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q22" onclick="event.stopPropagation(); toggleStar('q22')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1253,6 +1421,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q22"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q22" onclick="event.stopPropagation(); refreshEbbinghaus('q22')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q22')">
                     <span>已掌握</span>
@@ -1279,6 +1449,7 @@
 
         <div class="qa-card" data-id="q23" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q23" onclick="event.stopPropagation(); toggleStar('q23')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1287,6 +1458,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q23"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q23" onclick="event.stopPropagation(); refreshEbbinghaus('q23')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q23')">
                     <span>已掌握</span>
@@ -1313,6 +1486,7 @@
 
         <div class="qa-card" data-id="q24" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q24" onclick="event.stopPropagation(); toggleStar('q24')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1321,6 +1495,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q24"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q24" onclick="event.stopPropagation(); refreshEbbinghaus('q24')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q24')">
                     <span>已掌握</span>
@@ -1347,6 +1523,7 @@
 
         <div class="qa-card" data-id="q25" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q25" onclick="event.stopPropagation(); toggleStar('q25')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1355,6 +1532,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q25"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q25" onclick="event.stopPropagation(); refreshEbbinghaus('q25')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q25')">
                     <span>已掌握</span>
@@ -1381,6 +1560,7 @@
 
         <div class="qa-card" data-id="q26" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q26" onclick="event.stopPropagation(); toggleStar('q26')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.1 泌尿概述</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1389,6 +1569,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q26"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q26" onclick="event.stopPropagation(); refreshEbbinghaus('q26')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q26')">
                     <span>已掌握</span>
@@ -1415,6 +1597,7 @@
 
         <div class="qa-card" data-id="q27" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q27" onclick="event.stopPropagation(); toggleStar('q27')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1423,6 +1606,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q27"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q27" onclick="event.stopPropagation(); refreshEbbinghaus('q27')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q27')">
                     <span>已掌握</span>
@@ -1449,6 +1634,7 @@
 
         <div class="qa-card" data-id="q28" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q28" onclick="event.stopPropagation(); toggleStar('q28')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1457,6 +1643,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q28"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q28" onclick="event.stopPropagation(); refreshEbbinghaus('q28')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q28')">
                     <span>已掌握</span>
@@ -1483,6 +1671,7 @@
 
         <div class="qa-card" data-id="q29" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q29" onclick="event.stopPropagation(); toggleStar('q29')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1491,6 +1680,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q29"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q29" onclick="event.stopPropagation(); refreshEbbinghaus('q29')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q29')">
                     <span>已掌握</span>
@@ -1517,6 +1708,7 @@
 
         <div class="qa-card" data-id="q30" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q30" onclick="event.stopPropagation(); toggleStar('q30')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -1525,6 +1717,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q30"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q30" onclick="event.stopPropagation(); refreshEbbinghaus('q30')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q30')">
                     <span>已掌握</span>
@@ -1551,6 +1745,7 @@
 
         <div class="qa-card" data-id="q31" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q31" onclick="event.stopPropagation(); toggleStar('q31')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1559,6 +1754,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q31"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q31" onclick="event.stopPropagation(); refreshEbbinghaus('q31')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q31')">
                     <span>已掌握</span>
@@ -1585,6 +1782,7 @@
 
         <div class="qa-card" data-id="q32" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q32" onclick="event.stopPropagation(); toggleStar('q32')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1593,6 +1791,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q32"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q32" onclick="event.stopPropagation(); refreshEbbinghaus('q32')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q32')">
                     <span>已掌握</span>
@@ -1619,6 +1819,7 @@
 
         <div class="qa-card" data-id="q33" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q33" onclick="event.stopPropagation(); toggleStar('q33')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -1627,6 +1828,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q33"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q33" onclick="event.stopPropagation(); refreshEbbinghaus('q33')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q33')">
                     <span>已掌握</span>
@@ -1653,6 +1856,7 @@
 
         <div class="qa-card" data-id="q34" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q34" onclick="event.stopPropagation(); toggleStar('q34')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1661,6 +1865,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q34"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q34" onclick="event.stopPropagation(); refreshEbbinghaus('q34')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q34')">
                     <span>已掌握</span>
@@ -1687,6 +1893,7 @@
 
         <div class="qa-card" data-id="q35" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q35" onclick="event.stopPropagation(); toggleStar('q35')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1695,6 +1902,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q35"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q35" onclick="event.stopPropagation(); refreshEbbinghaus('q35')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q35')">
                     <span>已掌握</span>
@@ -1721,6 +1930,7 @@
 
         <div class="qa-card" data-id="q36" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q36" onclick="event.stopPropagation(); toggleStar('q36')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1729,6 +1939,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q36"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q36" onclick="event.stopPropagation(); refreshEbbinghaus('q36')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q36')">
                     <span>已掌握</span>
@@ -1755,6 +1967,7 @@
 
         <div class="qa-card" data-id="q37" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q37" onclick="event.stopPropagation(); toggleStar('q37')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1763,6 +1976,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q37"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q37" onclick="event.stopPropagation(); refreshEbbinghaus('q37')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q37')">
                     <span>已掌握</span>
@@ -1789,6 +2004,7 @@
 
         <div class="qa-card" data-id="q38" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q38" onclick="event.stopPropagation(); toggleStar('q38')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1797,6 +2013,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q38"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q38" onclick="event.stopPropagation(); refreshEbbinghaus('q38')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q38')">
                     <span>已掌握</span>
@@ -1823,6 +2041,7 @@
 
         <div class="qa-card" data-id="q39" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q39" onclick="event.stopPropagation(); toggleStar('q39')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1831,6 +2050,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q39"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q39" onclick="event.stopPropagation(); refreshEbbinghaus('q39')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q39')">
                     <span>已掌握</span>
@@ -1857,6 +2078,7 @@
 
         <div class="qa-card" data-id="q40" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q40" onclick="event.stopPropagation(); toggleStar('q40')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1865,6 +2087,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q40"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q40" onclick="event.stopPropagation(); refreshEbbinghaus('q40')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q40')">
                     <span>已掌握</span>
@@ -1891,6 +2115,7 @@
 
         <div class="qa-card" data-id="q41" data-section="8.2 肾小球滤过" data-diff="III级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q41" onclick="event.stopPropagation(); toggleStar('q41')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-hard">III级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1899,6 +2124,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q41"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q41" onclick="event.stopPropagation(); refreshEbbinghaus('q41')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q41')">
                     <span>已掌握</span>
@@ -1925,6 +2152,7 @@
 
         <div class="qa-card" data-id="q42" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q42" onclick="event.stopPropagation(); toggleStar('q42')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1933,6 +2161,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q42"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q42" onclick="event.stopPropagation(); refreshEbbinghaus('q42')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q42')">
                     <span>已掌握</span>
@@ -1959,6 +2189,7 @@
 
         <div class="qa-card" data-id="q43" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q43" onclick="event.stopPropagation(); toggleStar('q43')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -1967,6 +2198,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q43"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q43" onclick="event.stopPropagation(); refreshEbbinghaus('q43')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q43')">
                     <span>已掌握</span>
@@ -1993,6 +2226,7 @@
 
         <div class="qa-card" data-id="q44" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q44" onclick="event.stopPropagation(); toggleStar('q44')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2001,6 +2235,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q44"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q44" onclick="event.stopPropagation(); refreshEbbinghaus('q44')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q44')">
                     <span>已掌握</span>
@@ -2027,6 +2263,7 @@
 
         <div class="qa-card" data-id="q45" data-section="8.2 肾小球滤过" data-diff="III级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q45" onclick="event.stopPropagation(); toggleStar('q45')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.2 肾小球滤过</span>
                 <span class="badge badge-hard">III级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2035,6 +2272,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q45"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q45" onclick="event.stopPropagation(); refreshEbbinghaus('q45')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q45')">
                     <span>已掌握</span>
@@ -2061,6 +2300,7 @@
 
         <div class="qa-card" data-id="q46" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q46" onclick="event.stopPropagation(); toggleStar('q46')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2069,6 +2309,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q46"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q46" onclick="event.stopPropagation(); refreshEbbinghaus('q46')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q46')">
                     <span>已掌握</span>
@@ -2095,6 +2337,7 @@
 
         <div class="qa-card" data-id="q47" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q47" onclick="event.stopPropagation(); toggleStar('q47')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2103,6 +2346,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q47"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q47" onclick="event.stopPropagation(); refreshEbbinghaus('q47')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q47')">
                     <span>已掌握</span>
@@ -2129,6 +2374,7 @@
 
         <div class="qa-card" data-id="q48" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q48" onclick="event.stopPropagation(); toggleStar('q48')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2137,6 +2383,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q48"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q48" onclick="event.stopPropagation(); refreshEbbinghaus('q48')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q48')">
                     <span>已掌握</span>
@@ -2163,6 +2411,7 @@
 
         <div class="qa-card" data-id="q49" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q49" onclick="event.stopPropagation(); toggleStar('q49')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2171,6 +2420,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q49"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q49" onclick="event.stopPropagation(); refreshEbbinghaus('q49')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q49')">
                     <span>已掌握</span>
@@ -2197,6 +2448,7 @@
 
         <div class="qa-card" data-id="q50" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q50" onclick="event.stopPropagation(); toggleStar('q50')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2205,6 +2457,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q50"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q50" onclick="event.stopPropagation(); refreshEbbinghaus('q50')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q50')">
                     <span>已掌握</span>
@@ -2231,6 +2485,7 @@
 
         <div class="qa-card" data-id="q51" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q51" onclick="event.stopPropagation(); toggleStar('q51')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2239,6 +2494,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q51"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q51" onclick="event.stopPropagation(); refreshEbbinghaus('q51')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q51')">
                     <span>已掌握</span>
@@ -2265,6 +2522,7 @@
 
         <div class="qa-card" data-id="q52" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q52" onclick="event.stopPropagation(); toggleStar('q52')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2273,6 +2531,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q52"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q52" onclick="event.stopPropagation(); refreshEbbinghaus('q52')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q52')">
                     <span>已掌握</span>
@@ -2299,6 +2559,7 @@
 
         <div class="qa-card" data-id="q53" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q53" onclick="event.stopPropagation(); toggleStar('q53')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2307,6 +2568,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q53"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q53" onclick="event.stopPropagation(); refreshEbbinghaus('q53')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q53')">
                     <span>已掌握</span>
@@ -2333,6 +2596,7 @@
 
         <div class="qa-card" data-id="q54" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q54" onclick="event.stopPropagation(); toggleStar('q54')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2341,6 +2605,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q54"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q54" onclick="event.stopPropagation(); refreshEbbinghaus('q54')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q54')">
                     <span>已掌握</span>
@@ -2367,6 +2633,7 @@
 
         <div class="qa-card" data-id="q55" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q55" onclick="event.stopPropagation(); toggleStar('q55')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2375,6 +2642,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q55"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q55" onclick="event.stopPropagation(); refreshEbbinghaus('q55')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q55')">
                     <span>已掌握</span>
@@ -2401,6 +2670,7 @@
 
         <div class="qa-card" data-id="q56" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q56" onclick="event.stopPropagation(); toggleStar('q56')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2409,6 +2679,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q56"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q56" onclick="event.stopPropagation(); refreshEbbinghaus('q56')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q56')">
                     <span>已掌握</span>
@@ -2435,6 +2707,7 @@
 
         <div class="qa-card" data-id="q57" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q57" onclick="event.stopPropagation(); toggleStar('q57')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2443,6 +2716,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q57"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q57" onclick="event.stopPropagation(); refreshEbbinghaus('q57')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q57')">
                     <span>已掌握</span>
@@ -2469,6 +2744,7 @@
 
         <div class="qa-card" data-id="q58" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q58" onclick="event.stopPropagation(); toggleStar('q58')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2477,6 +2753,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q58"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q58" onclick="event.stopPropagation(); refreshEbbinghaus('q58')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q58')">
                     <span>已掌握</span>
@@ -2503,6 +2781,7 @@
 
         <div class="qa-card" data-id="q59" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q59" onclick="event.stopPropagation(); toggleStar('q59')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2511,6 +2790,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q59"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q59" onclick="event.stopPropagation(); refreshEbbinghaus('q59')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q59')">
                     <span>已掌握</span>
@@ -2537,6 +2818,7 @@
 
         <div class="qa-card" data-id="q60" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q60" onclick="event.stopPropagation(); toggleStar('q60')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2545,6 +2827,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q60"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q60" onclick="event.stopPropagation(); refreshEbbinghaus('q60')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q60')">
                     <span>已掌握</span>
@@ -2571,6 +2855,7 @@
 
         <div class="qa-card" data-id="q61" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q61" onclick="event.stopPropagation(); toggleStar('q61')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2579,6 +2864,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q61"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q61" onclick="event.stopPropagation(); refreshEbbinghaus('q61')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q61')">
                     <span>已掌握</span>
@@ -2605,6 +2892,7 @@
 
         <div class="qa-card" data-id="q62" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q62" onclick="event.stopPropagation(); toggleStar('q62')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2613,6 +2901,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q62"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q62" onclick="event.stopPropagation(); refreshEbbinghaus('q62')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q62')">
                     <span>已掌握</span>
@@ -2639,6 +2929,7 @@
 
         <div class="qa-card" data-id="q63" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q63" onclick="event.stopPropagation(); toggleStar('q63')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2647,6 +2938,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q63"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q63" onclick="event.stopPropagation(); refreshEbbinghaus('q63')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q63')">
                     <span>已掌握</span>
@@ -2673,6 +2966,7 @@
 
         <div class="qa-card" data-id="q64" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q64" onclick="event.stopPropagation(); toggleStar('q64')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2681,6 +2975,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q64"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q64" onclick="event.stopPropagation(); refreshEbbinghaus('q64')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q64')">
                     <span>已掌握</span>
@@ -2707,6 +3003,7 @@
 
         <div class="qa-card" data-id="q65" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q65" onclick="event.stopPropagation(); toggleStar('q65')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2715,6 +3012,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q65"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q65" onclick="event.stopPropagation(); refreshEbbinghaus('q65')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q65')">
                     <span>已掌握</span>
@@ -2741,6 +3040,7 @@
 
         <div class="qa-card" data-id="q66" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q66" onclick="event.stopPropagation(); toggleStar('q66')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2749,6 +3049,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q66"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q66" onclick="event.stopPropagation(); refreshEbbinghaus('q66')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q66')">
                     <span>已掌握</span>
@@ -2775,6 +3077,7 @@
 
         <div class="qa-card" data-id="q67" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q67" onclick="event.stopPropagation(); toggleStar('q67')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2783,6 +3086,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q67"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q67" onclick="event.stopPropagation(); refreshEbbinghaus('q67')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q67')">
                     <span>已掌握</span>
@@ -2809,6 +3114,7 @@
 
         <div class="qa-card" data-id="q68" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q68" onclick="event.stopPropagation(); toggleStar('q68')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-hard">III级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2817,6 +3123,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q68"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q68" onclick="event.stopPropagation(); refreshEbbinghaus('q68')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q68')">
                     <span>已掌握</span>
@@ -2843,6 +3151,7 @@
 
         <div class="qa-card" data-id="q69" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q69" onclick="event.stopPropagation(); toggleStar('q69')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2851,6 +3160,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q69"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q69" onclick="event.stopPropagation(); refreshEbbinghaus('q69')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q69')">
                     <span>已掌握</span>
@@ -2877,6 +3188,7 @@
 
         <div class="qa-card" data-id="q70" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q70" onclick="event.stopPropagation(); toggleStar('q70')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2885,6 +3197,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q70"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q70" onclick="event.stopPropagation(); refreshEbbinghaus('q70')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q70')">
                     <span>已掌握</span>
@@ -2911,6 +3225,7 @@
 
         <div class="qa-card" data-id="q71" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q71" onclick="event.stopPropagation(); toggleStar('q71')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2919,6 +3234,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q71"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q71" onclick="event.stopPropagation(); refreshEbbinghaus('q71')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q71')">
                     <span>已掌握</span>
@@ -2945,6 +3262,7 @@
 
         <div class="qa-card" data-id="q72" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q72" onclick="event.stopPropagation(); toggleStar('q72')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -2953,6 +3271,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q72"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q72" onclick="event.stopPropagation(); refreshEbbinghaus('q72')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q72')">
                     <span>已掌握</span>
@@ -2979,6 +3299,7 @@
 
         <div class="qa-card" data-id="q73" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q73" onclick="event.stopPropagation(); toggleStar('q73')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -2987,6 +3308,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q73"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q73" onclick="event.stopPropagation(); refreshEbbinghaus('q73')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q73')">
                     <span>已掌握</span>
@@ -3013,6 +3336,7 @@
 
         <div class="qa-card" data-id="q74" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q74" onclick="event.stopPropagation(); toggleStar('q74')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3021,6 +3345,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q74"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q74" onclick="event.stopPropagation(); refreshEbbinghaus('q74')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q74')">
                     <span>已掌握</span>
@@ -3047,6 +3373,7 @@
 
         <div class="qa-card" data-id="q75" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q75" onclick="event.stopPropagation(); toggleStar('q75')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3055,6 +3382,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q75"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q75" onclick="event.stopPropagation(); refreshEbbinghaus('q75')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q75')">
                     <span>已掌握</span>
@@ -3081,6 +3410,7 @@
 
         <div class="qa-card" data-id="q76" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q76" onclick="event.stopPropagation(); toggleStar('q76')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3089,6 +3419,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q76"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q76" onclick="event.stopPropagation(); refreshEbbinghaus('q76')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q76')">
                     <span>已掌握</span>
@@ -3115,6 +3447,7 @@
 
         <div class="qa-card" data-id="q77" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q77" onclick="event.stopPropagation(); toggleStar('q77')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3123,6 +3456,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q77"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q77" onclick="event.stopPropagation(); refreshEbbinghaus('q77')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q77')">
                     <span>已掌握</span>
@@ -3149,6 +3484,7 @@
 
         <div class="qa-card" data-id="q78" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q78" onclick="event.stopPropagation(); toggleStar('q78')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-hard">III级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3157,6 +3493,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q78"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q78" onclick="event.stopPropagation(); refreshEbbinghaus('q78')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q78')">
                     <span>已掌握</span>
@@ -3183,6 +3521,7 @@
 
         <div class="qa-card" data-id="q79" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q79" onclick="event.stopPropagation(); toggleStar('q79')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3191,6 +3530,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q79"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q79" onclick="event.stopPropagation(); refreshEbbinghaus('q79')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q79')">
                     <span>已掌握</span>
@@ -3217,6 +3558,7 @@
 
         <div class="qa-card" data-id="q80" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q80" onclick="event.stopPropagation(); toggleStar('q80')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3225,6 +3567,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q80"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q80" onclick="event.stopPropagation(); refreshEbbinghaus('q80')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q80')">
                     <span>已掌握</span>
@@ -3251,6 +3595,7 @@
 
         <div class="qa-card" data-id="q81" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q81" onclick="event.stopPropagation(); toggleStar('q81')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3259,6 +3604,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q81"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q81" onclick="event.stopPropagation(); refreshEbbinghaus('q81')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q81')">
                     <span>已掌握</span>
@@ -3285,6 +3632,7 @@
 
         <div class="qa-card" data-id="q82" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q82" onclick="event.stopPropagation(); toggleStar('q82')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3293,6 +3641,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q82"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q82" onclick="event.stopPropagation(); refreshEbbinghaus('q82')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q82')">
                     <span>已掌握</span>
@@ -3319,6 +3669,7 @@
 
         <div class="qa-card" data-id="q83" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q83" onclick="event.stopPropagation(); toggleStar('q83')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3327,6 +3678,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q83"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q83" onclick="event.stopPropagation(); refreshEbbinghaus('q83')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q83')">
                     <span>已掌握</span>
@@ -3353,6 +3706,7 @@
 
         <div class="qa-card" data-id="q84" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q84" onclick="event.stopPropagation(); toggleStar('q84')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-hard">III级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3361,6 +3715,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q84"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q84" onclick="event.stopPropagation(); refreshEbbinghaus('q84')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q84')">
                     <span>已掌握</span>
@@ -3387,6 +3743,7 @@
 
         <div class="qa-card" data-id="q85" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q85" onclick="event.stopPropagation(); toggleStar('q85')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3395,6 +3752,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q85"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q85" onclick="event.stopPropagation(); refreshEbbinghaus('q85')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q85')">
                     <span>已掌握</span>
@@ -3421,6 +3780,7 @@
 
         <div class="qa-card" data-id="q86" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q86" onclick="event.stopPropagation(); toggleStar('q86')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3429,6 +3789,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q86"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q86" onclick="event.stopPropagation(); refreshEbbinghaus('q86')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q86')">
                     <span>已掌握</span>
@@ -3455,6 +3817,7 @@
 
         <div class="qa-card" data-id="q87" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q87" onclick="event.stopPropagation(); toggleStar('q87')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -3463,6 +3826,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q87"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q87" onclick="event.stopPropagation(); refreshEbbinghaus('q87')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q87')">
                     <span>已掌握</span>
@@ -3489,6 +3854,7 @@
 
         <div class="qa-card" data-id="q88" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q88" onclick="event.stopPropagation(); toggleStar('q88')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3497,6 +3863,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q88"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q88" onclick="event.stopPropagation(); refreshEbbinghaus('q88')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q88')">
                     <span>已掌握</span>
@@ -3528,6 +3896,7 @@
 
         <div class="qa-card" data-id="q89" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q89" onclick="event.stopPropagation(); toggleStar('q89')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3536,6 +3905,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q89"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q89" onclick="event.stopPropagation(); refreshEbbinghaus('q89')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q89')">
                     <span>已掌握</span>
@@ -3567,6 +3938,7 @@
 
         <div class="qa-card" data-id="q90" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q90" onclick="event.stopPropagation(); toggleStar('q90')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3575,6 +3947,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q90"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q90" onclick="event.stopPropagation(); refreshEbbinghaus('q90')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q90')">
                     <span>已掌握</span>
@@ -3601,6 +3975,7 @@
 
         <div class="qa-card" data-id="q91" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q91" onclick="event.stopPropagation(); toggleStar('q91')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3609,6 +3984,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q91"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q91" onclick="event.stopPropagation(); refreshEbbinghaus('q91')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q91')">
                     <span>已掌握</span>
@@ -3635,6 +4012,7 @@
 
         <div class="qa-card" data-id="q92" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q92" onclick="event.stopPropagation(); toggleStar('q92')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -3643,6 +4021,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q92"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q92" onclick="event.stopPropagation(); refreshEbbinghaus('q92')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q92')">
                     <span>已掌握</span>
@@ -3669,6 +4049,7 @@
 
         <div class="qa-card" data-id="q93" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q93" onclick="event.stopPropagation(); toggleStar('q93')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -3677,6 +4058,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q93"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q93" onclick="event.stopPropagation(); refreshEbbinghaus('q93')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q93')">
                     <span>已掌握</span>
@@ -3703,6 +4086,7 @@
 
         <div class="qa-card" data-id="q94" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q94" onclick="event.stopPropagation(); toggleStar('q94')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-hard">III级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3711,6 +4095,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q94"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q94" onclick="event.stopPropagation(); refreshEbbinghaus('q94')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q94')">
                     <span>已掌握</span>
@@ -3737,6 +4123,7 @@
 
         <div class="qa-card" data-id="q95" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="B">
             <div class="card-header">
+                <span class="star-btn" id="star-q95" onclick="event.stopPropagation(); toggleStar('q95')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-mod">B级重要</span>
@@ -3745,6 +4132,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q95"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q95" onclick="event.stopPropagation(); refreshEbbinghaus('q95')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q95')">
                     <span>已掌握</span>
@@ -3771,6 +4160,7 @@
 
         <div class="qa-card" data-id="q96" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q96" onclick="event.stopPropagation(); toggleStar('q96')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-easy">I级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3779,6 +4169,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q96"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q96" onclick="event.stopPropagation(); refreshEbbinghaus('q96')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q96')">
                     <span>已掌握</span>
@@ -3805,6 +4197,7 @@
 
         <div class="qa-card" data-id="q97" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q97" onclick="event.stopPropagation(); toggleStar('q97')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3813,6 +4206,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q97"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q97" onclick="event.stopPropagation(); refreshEbbinghaus('q97')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q97')">
                     <span>已掌握</span>
@@ -3839,6 +4234,7 @@
 
         <div class="qa-card" data-id="q98" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q98" onclick="event.stopPropagation(); toggleStar('q98')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3847,6 +4243,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q98"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q98" onclick="event.stopPropagation(); refreshEbbinghaus('q98')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q98')">
                     <span>已掌握</span>
@@ -3873,6 +4271,7 @@
 
         <div class="qa-card" data-id="q99" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q99" onclick="event.stopPropagation(); toggleStar('q99')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-hard">III级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3881,6 +4280,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q99"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q99" onclick="event.stopPropagation(); refreshEbbinghaus('q99')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q99')">
                     <span>已掌握</span>
@@ -3907,6 +4308,7 @@
 
         <div class="qa-card" data-id="q100" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q100" onclick="event.stopPropagation(); toggleStar('q100')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3915,6 +4317,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q100"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q100" onclick="event.stopPropagation(); refreshEbbinghaus('q100')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q100')">
                     <span>已掌握</span>
@@ -3941,6 +4345,7 @@
 
         <div class="qa-card" data-id="q101" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q101" onclick="event.stopPropagation(); toggleStar('q101')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-medium">II级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3949,6 +4354,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q101"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q101" onclick="event.stopPropagation(); refreshEbbinghaus('q101')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q101')">
                     <span>已掌握</span>
@@ -3975,6 +4382,7 @@
 
         <div class="qa-card" data-id="q102" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
             <div class="card-header">
+                <span class="star-btn" id="star-q102" onclick="event.stopPropagation(); toggleStar('q102')" title="收藏此题">☆</span>
                 <span class="sec-badge">8.3 小管物质转运与调节</span>
                 <span class="badge badge-hard">III级</span>
                 <span class="badge badge-high">A级重要</span>
@@ -3983,6 +4391,8 @@
                 🧭 对应导图
             </button>
             
+                <span class="ebbinghaus-badge" id="eb-badge-q102"></span>
+                <button class="ebbinghaus-btn" id="eb-btn-q102" onclick="event.stopPropagation(); refreshEbbinghaus('q102')" style="display: none;">🔄 温故</button>
                 <label class="mastered-label">
                     <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q102')">
                     <span>已掌握</span>
@@ -4026,30 +4436,209 @@
 
     <script>
         let masteredIds = new Set();
+        let starredIds = new Set();
+        let ebbinghausDict = {};
+        
         let currentSection = 'all';
         let allExpanded = false;
+        let starFilterActive = false;
+        let ebFilterActive = false;
+        
         const storageKey = 'urinary_mastered';
+        const starredKey = storageKey.replace('_mastered', '_starred');
+        const ebbinghausKey = storageKey.replace('_mastered', '_ebbinghaus');
+
+        // 艾宾浩斯记忆提醒间隔 (毫秒)
+        const EBBINGHAUS_INTERVALS = {
+            1: 24 * 3600 * 1000,      // 第2天复习（间隔1天）
+            2: 2 * 24 * 3600 * 1000,  // 第4天复习（再隔2天）
+            3: 3 * 24 * 3600 * 1000,  // 第7天复习（再隔3天）
+            4: 8 * 24 * 3600 * 1000,  // 第15天复习（再隔8天）
+            5: 15 * 24 * 3600 * 1000, // 第30天复习（再隔15天）
+            6: 60 * 24 * 3600 * 1000  // 第90天复习（再隔60天）
+        };
+
+        // 极速测试间隔 (秒)
+        const SPEEDY_INTERVALS = {
+            1: 15 * 1000,  // 15秒
+            2: 30 * 1000,  // 30秒
+            3: 60 * 1000,  // 1分钟
+            4: 120 * 1000, // 2分钟
+            5: 300 * 1000, // 5分钟
+            6: 600 * 1000  // 10分钟
+        };
+
+        function isSpeedyMode() {
+            return new URLSearchParams(window.location.search).get('speedy') === '1';
+        }
+
+        function getInterval(stage) {
+            const intervals = isSpeedyMode() ? SPEEDY_INTERVALS : EBBINGHAUS_INTERVALS;
+            return intervals[stage] || (24 * 3600 * 1000);
+        }
+
+        function formatTimeRemaining(ms) {
+            if (ms <= 0) return '待复习';
+            const secs = Math.floor(ms / 1000);
+            if (secs < 60) return `${secs}秒后需复习`;
+            const mins = Math.floor(secs / 60);
+            if (mins < 60) return `${mins}分钟后需复习`;
+            const hrs = Math.floor(mins / 60);
+            if (hrs < 24) return `${hrs}小时后需复习`;
+            const days = Math.floor(hrs / 24);
+            return `${days}天后需复习`;
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem(storageKey);
-            if (saved) {
+            // 1. 加载已掌握
+            const savedMastered = localStorage.getItem(storageKey);
+            if (savedMastered) {
                 try {
-                    const arr = JSON.parse(saved);
-                    masteredIds = new Set(arr);
+                    masteredIds = new Set(JSON.parse(savedMastered));
+                } catch(e) {}
+            }
+
+            // 2. 加载已收藏星标
+            const savedStarred = localStorage.getItem(starredKey);
+            if (savedStarred) {
+                try {
+                    starredIds = new Set(JSON.parse(savedStarred));
+                } catch(e) {}
+            }
+
+            // 3. 加载艾宾浩斯记录
+            const savedEb = localStorage.getItem(ebbinghausKey);
+            if (savedEb) {
+                try {
+                    ebbinghausDict = JSON.parse(savedEb);
                 } catch(e) {}
             }
             
+            // 4. 初始化卡片 UI 状态
             document.querySelectorAll('.qa-card').forEach(card => {
                 const id = card.getAttribute('data-id');
                 const chk = card.querySelector('.mastered-chk');
+                const star = document.getElementById(`star-${id}`);
+                
                 if (masteredIds.has(id)) {
                     card.classList.add('mastered');
                     chk.checked = true;
                 }
+
+                if (starredIds.has(id)) {
+                    star.classList.add('starred');
+                    star.innerText = '⭐️';
+                } else {
+                    star.innerText = '☆';
+                }
             });
             
             updateProgress();
+            updateEbbinghausUI();
+
+            // 定时刷新艾宾浩斯显示 (极速模式下每2秒刷新，普通模式下每30秒刷新)
+            const intervalTime = isSpeedyMode() ? 2000 : 30000;
+            setInterval(updateEbbinghausUI, intervalTime);
         });
+
+        function updateEbbinghausUI() {
+            const now = Date.now();
+            let hasChanges = false;
+
+            document.querySelectorAll('.qa-card').forEach(card => {
+                const id = card.getAttribute('data-id');
+                const badge = document.getElementById(`eb-badge-${id}`);
+                const btn = document.getElementById(`eb-btn-${id}`);
+                
+                if (!badge || !btn) return;
+
+                // 重置状态
+                badge.className = 'ebbinghaus-badge';
+                badge.style.display = 'none';
+                badge.innerText = '';
+                btn.style.display = 'none';
+
+                if (!masteredIds.has(id)) {
+                    if (ebbinghausDict[id]) {
+                        delete ebbinghausDict[id];
+                        hasChanges = true;
+                    }
+                    return;
+                }
+
+                // 如果勾选掌握但没有艾宾浩斯记录，则初始化为第一阶段
+                if (!ebbinghausDict[id]) {
+                    ebbinghausDict[id] = {
+                        stage: 1,
+                        nextTime: now + getInterval(1),
+                        lastTime: now
+                    };
+                    hasChanges = true;
+                }
+
+                const item = ebbinghausDict[id];
+                if (item.stage >= 7) {
+                    badge.classList.add('eb-green');
+                    badge.innerText = '🎉 永久掌握';
+                    return;
+                }
+
+                const timeLeft = item.nextTime - now;
+
+                if (timeLeft <= 0) {
+                    badge.classList.add('eb-red');
+                    badge.innerText = `🔴 需温故 (阶-${item.stage})`;
+                    btn.style.display = 'inline-block';
+                } else if (timeLeft < 3 * 3600 * 1000 || (isSpeedyMode() && timeLeft < 10000)) {
+                    badge.classList.add('eb-yellow');
+                    badge.innerText = `🟡 临界 (${formatTimeRemaining(timeLeft)})`;
+                } else {
+                    badge.classList.add('eb-green');
+                    badge.innerText = `🟢 牢固 (${formatTimeRemaining(timeLeft)})`;
+                }
+            });
+
+            if (hasChanges) {
+                localStorage.setItem(ebbinghausKey, JSON.stringify(ebbinghausDict));
+            }
+        }
+
+        function toggleStar(id) {
+            const star = document.getElementById(`star-${id}`);
+            if (!star) return;
+
+            if (starredIds.has(id)) {
+                starredIds.delete(id);
+                star.classList.remove('starred');
+                star.innerText = '☆';
+            } else {
+                starredIds.add(id);
+                star.classList.add('starred');
+                star.innerText = '⭐️';
+            }
+
+            localStorage.setItem(starredKey, JSON.stringify(Array.from(starredIds)));
+            filterCards();
+        }
+
+        function refreshEbbinghaus(id) {
+            if (!ebbinghausDict[id]) return;
+            const now = Date.now();
+            const item = ebbinghausDict[id];
+
+            item.stage = item.stage + 1;
+            item.lastTime = now;
+
+            if (item.stage >= 7) {
+                item.nextTime = now + 9999 * 24 * 3600 * 1000; // 远期时间
+            } else {
+                item.nextTime = now + getInterval(item.stage);
+            }
+
+            localStorage.setItem(ebbinghausKey, JSON.stringify(ebbinghausDict));
+            updateEbbinghausUI();
+            filterCards();
+        }
 
         function toggleAnswer(id) {
             const card = document.querySelector(`.qa-card[data-id="${id}"]`);
@@ -4102,13 +4691,30 @@
             if (chk.checked) {
                 card.classList.add('mastered');
                 masteredIds.add(id);
+
+                // 首次勾选触发艾宾浩斯初始化
+                const now = Date.now();
+                ebbinghausDict[id] = {
+                    stage: 1,
+                    nextTime: now + getInterval(1),
+                    lastTime: now
+                };
             } else {
                 card.classList.remove('mastered');
                 masteredIds.delete(id);
+
+                // 取消勾选，直接丢弃艾宾浩斯记录
+                if (ebbinghausDict[id]) {
+                    delete ebbinghausDict[id];
+                }
             }
             
             localStorage.setItem(storageKey, JSON.stringify(Array.from(masteredIds)));
+            localStorage.setItem(ebbinghausKey, JSON.stringify(ebbinghausDict));
+
             updateProgress();
+            updateEbbinghausUI();
+            filterCards();
         }
 
         function updateProgress() {
@@ -4121,15 +4727,41 @@
         }
 
         function resetProgress() {
-            if (confirm('确定要清除所有已掌握记录吗？')) {
+            if (confirm('确定要清除所有已掌握和复习进度吗？（这不会影响您的收藏星标卡片）')) {
                 masteredIds.clear();
+                ebbinghausDict = {};
                 localStorage.removeItem(storageKey);
+                localStorage.removeItem(ebbinghausKey);
                 document.querySelectorAll('.qa-card').forEach(card => {
                     card.classList.remove('mastered');
                     card.querySelector('.mastered-chk').checked = false;
                 });
                 updateProgress();
+                updateEbbinghausUI();
+                filterCards();
             }
+        }
+
+        function toggleStarFilter() {
+            starFilterActive = !starFilterActive;
+            const btn = document.getElementById('star-filter-btn');
+            if (starFilterActive) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+            filterCards();
+        }
+
+        function toggleEbFilter() {
+            ebFilterActive = !ebFilterActive;
+            const btn = document.getElementById('eb-filter-btn');
+            if (ebFilterActive) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+            filterCards();
         }
 
         function filterSection(sec) {
@@ -4147,8 +4779,10 @@
             const qQuery = document.getElementById('search-input').value.toLowerCase().trim();
             const diffFilter = document.getElementById('diff-filter').value;
             const impFilter = document.getElementById('imp-filter').value;
+            const now = Date.now();
             
             document.querySelectorAll('.qa-card').forEach(card => {
+                const id = card.getAttribute('data-id');
                 const sec = card.getAttribute('data-section');
                 const diff = card.getAttribute('data-diff');
                 const imp = card.getAttribute('data-imp');
@@ -4159,6 +4793,21 @@
                 if (diffFilter !== 'all' && diff !== diffFilter) visible = false;
                 if (impFilter !== 'all' && imp !== impFilter) visible = false;
                 if (qQuery.length > 0 && !qText.includes(qQuery)) visible = false;
+                
+                // 星标过滤
+                if (starFilterActive && !starredIds.has(id)) visible = false;
+
+                // 艾宾浩斯今日复习过滤
+                if (ebFilterActive) {
+                    if (!masteredIds.has(id)) {
+                        visible = false;
+                    } else {
+                        const item = ebbinghausDict[id];
+                        if (!item || item.stage >= 7 || item.nextTime - now > 0) {
+                            visible = false;
+                        }
+                    }
+                }
                 
                 card.style.display = visible ? 'block' : 'none';
             });
