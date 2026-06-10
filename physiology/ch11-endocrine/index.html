@@ -3199,6 +3199,22 @@
         </div>
         
     </div>
+    
+    <!-- 思维导图灯箱 HTML -->
+    <div id="mindmap-modal" class="modal">
+        <span class="modal-close" onclick="closeMindmap()">&times;</span>
+        <div class="modal-content-wrapper">
+            <div class="modal-controls">
+                <button class="modal-btn" id="prev-map-btn" onclick="changeMap(-1)">上一张</button>
+                <span class="modal-page-num" id="map-page-num">1 / 1</span>
+                <button class="modal-btn" id="next-map-btn" onclick="changeMap(1)">下一张</button>
+                <button class="modal-btn" onclick="resetZoom()">1:1 重置</button>
+            </div>
+            <div class="modal-viewport" id="map-viewport">
+                <img id="mindmap-img" src="" alt="思维导图" draggable="false">
+            </div>
+        </div>
+    </div>
 
     <script>
         let masteredIds = new Set();
@@ -3539,20 +3555,5 @@
             return Math.sqrt((t1.clientX - t2.clientX)**2 + (t1.clientY - t2.clientY)**2);
         }
     </script>
-    
-    <!-- 思维导图灯箱 HTML -->
-    <div id="mindmap-modal" class="modal">
-        <span class="modal-close" onclick="closeMindmap()">&times;</span>
-        <div class="modal-content-wrapper">
-            <div class="modal-controls">
-                <button class="modal-btn" id="prev-map-btn" onclick="changeMap(-1)">上一张</button>
-                <span class="modal-page-num" id="map-page-num">1 / 1</span>
-                <button class="modal-btn" id="next-map-btn" onclick="changeMap(1)">下一张</button>
-                <button class="modal-btn" onclick="resetZoom()">1:1 重置</button>
-            </div>
-            <div class="modal-viewport" id="map-viewport">
-                <img id="mindmap-img" src="" alt="思维导图" draggable="false">
-            </div>
-    </div>
 </body>
 </html>
