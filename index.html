@@ -443,6 +443,172 @@
             h1 { font-size: 1.35rem; }
             .grid-layout { grid-template-columns: 1fr; }
         }
+
+        /* --- WebDAV 云同步磨砂弹窗与状态样式 --- */
+        @keyframes pulse-blue {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+
+        /* Modal 遮罩层 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Modal 窗口体 */
+        .sync-modal {
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 460px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .modal-overlay.active .sync-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 12px;
+        }
+        .modal-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .input-label {
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            font-weight: 600;
+            text-align: left;
+        }
+        .input-field {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+        .input-desc {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+            text-align: left;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1.2;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sync-danger-zone {
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-top: 16px;
+            margin-top: 8px;
+        }
+        .danger-title {
+            font-size: 0.78rem;
+            color: #f87171;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -454,10 +620,20 @@
         <!-- 新版复习进度看板 -->
         <div class="dashboard-panel">
             <div class="dashboard-title-row">
-                <h2>📊 复习进度看板</h2>
-                <div class="global-stats-badge" id="global-pct-badge">总掌握 0%</div>
-            </div>
-            
+                <h2 style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <span>📊 复习进度看板</span>
+                    <span id="sync-status-badge" style="font-size: 0.72rem; font-weight: normal; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px;" onclick="openSyncModal()">
+                        <span class="sync-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #94a3b8; display: inline-block;"></span>
+                        <span class="sync-text">未启用同步</span>
+                    </span>
+                </h2>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <button id="sync-settings-btn" onclick="openSyncModal()" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-color); padding: 4px 10px; border-radius: 6px; font-size: 0.76rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 4px; outline: none;">
+                        <span>⚙️ 同步设置</span>
+                    </button>
+                    <div class="global-stats-badge" id="global-pct-badge">总掌握 0%</div>
+                </div>
+            </div>    
             <div class="stats-grid">
                 <div class="stat-box">
                     <div class="stat-num" id="stat-total-mastered">0</div>
@@ -854,7 +1030,504 @@
             
             document.getElementById('compare-ch11-pct').innerText = `${ch11Pct}%`;
             document.getElementById('compare-ch11-bar').style.width = `${ch11Pct}%`;
+
+            // 页面加载完成后，若配置了 WebDAV 则自动进行一次同步
+            if (WebDAVSync.isEnabled()) {
+                syncProcess();
+            } else {
+                updateSyncStatusUI('disabled');
+            }
         });
+
+        // ==========================================
+        // 坚果云 WebDAV 自动同步核心 JS 模块
+        // ==========================================
+        
+        const WebDAVSync = {
+            // 获取当前配置
+            getConfig() {
+                return {
+                    email: localStorage.getItem('webdav_email') || '',
+                    password: localStorage.getItem('webdav_password') || '',
+                    proxy: localStorage.getItem('webdav_proxy') || '',
+                    serverUrl: 'https://dav.jianguoyun.com/dav/'
+                };
+            },
+            
+            // 是否已配置并启用
+            isEnabled() {
+                const config = this.getConfig();
+                return !!(config.email && config.password);
+            },
+            
+            // 获取 Basic Auth Token
+            getAuthToken(email, password) {
+                return 'Basic ' + btoa(email.trim() + ':' + password.trim());
+            },
+            
+            // 拼接请求 URL
+            getRequestUrl(config) {
+                let serverUrl = config.serverUrl.trim();
+                if (!serverUrl.endsWith('/')) {
+                    serverUrl += '/';
+                }
+                const fileUrl = serverUrl + 'med_study_progress.json';
+                
+                let proxy = config.proxy.trim();
+                if (!proxy) return fileUrl;
+                
+                if (proxy.endsWith('/')) {
+                    proxy = proxy.slice(0, -1);
+                }
+                return proxy + '/' + fileUrl;
+            },
+            
+            // 发起网络请求的通用方法
+            async request(method, config, body = null, extraHeaders = {}) {
+                const url = this.getRequestUrl(config);
+                const headers = {
+                    'Authorization': this.getAuthToken(config.email, config.password),
+                    ...extraHeaders
+                };
+                
+                const options = {
+                    method: method,
+                    headers: headers
+                };
+                if (body) {
+                    options.body = typeof body === 'string' ? body : JSON.stringify(body);
+                    headers['Content-Type'] = 'application/json';
+                }
+                
+                const response = await fetch(url, options);
+                return response;
+            },
+            
+            // 测试连接与账号密码
+            async testConnection(config) {
+                try {
+                    const res = await this.request('GET', config);
+                    if (res.status === 200 || res.status === 404) {
+                        return { success: true, exist: res.status === 200 };
+                    } else if (res.status === 401) {
+                        return { success: false, message: '账号或应用密码不正确' };
+                    } else {
+                        return { success: false, message: `连接失败，状态码: ${res.status}` };
+                    }
+                } catch (e) {
+                    console.error(e);
+                    return { success: false, message: '网络请求失败，请检查跨域代理或网络连接' };
+                }
+            },
+            
+            // 读取云端数据
+            async pull() {
+                if (!this.isEnabled()) return null;
+                const config = this.getConfig();
+                try {
+                    const res = await this.request('GET', config);
+                    if (res.status === 200) {
+                        const cloudJson = await res.json();
+                        return cloudJson;
+                    } else if (res.status === 404) {
+                        return { updatedAt: 0, data: {} };
+                    } else {
+                        throw new Error(`HTTP ${res.status}`);
+                    }
+                } catch (e) {
+                    console.error('WebDAV Pull Failed:', e);
+                    throw e;
+                }
+            },
+            
+            // 写入云端数据
+            async push(progressData) {
+                if (!this.isEnabled()) return false;
+                const config = this.getConfig();
+                try {
+                    const res = await this.request('PUT', config, progressData);
+                    if (res.status === 200 || res.status === 201 || res.status === 204) {
+                        return true;
+                    } else {
+                        throw new Error(`HTTP ${res.status}`);
+                    }
+                } catch (e) {
+                    console.error('WebDAV Push Failed:', e);
+                    throw e;
+                }
+            }
+        };
+
+        const ProgressManager = {
+            keys: [
+                'intro_mastered', 'intro_starred', 'intro_ebbinghaus',
+                'urinary_mastered', 'urinary_starred', 'urinary_ebbinghaus',
+                'endocrine_mastered_v2', 'endocrine_starred_v2', 'endocrine_ebbinghaus_v2'
+            ],
+            
+            getLocal() {
+                const data = {};
+                this.keys.forEach(key => {
+                    const val = localStorage.getItem(key);
+                    if (val) {
+                        try {
+                            data[key] = JSON.parse(val);
+                        } catch(e) {
+                            data[key] = val;
+                        }
+                    } else {
+                        if (key.endsWith('_mastered') || key.endsWith('_starred') || key.endsWith('_mastered_v2') || key.endsWith('_starred_v2')) {
+                            data[key] = [];
+                        } else {
+                            data[key] = {};
+                        }
+                    }
+                });
+                const updatedAt = parseInt(localStorage.getItem('webdav_last_updated')) || 0;
+                return { updatedAt, data };
+            },
+            
+            saveLocal(progress) {
+                if (!progress || !progress.data) return;
+                Object.keys(progress.data).forEach(key => {
+                    if (this.keys.includes(key)) {
+                        localStorage.setItem(key, JSON.stringify(progress.data[key]));
+                    }
+                });
+                const t = progress.updatedAt || Date.now();
+                localStorage.setItem('webdav_last_updated', t.toString());
+            }
+        };
+
+        function mergeProgress(local, cloud) {
+            const merged = {
+                updatedAt: Math.max(local.updatedAt || 0, cloud.updatedAt || 0),
+                data: {}
+            };
+            
+            const allKeys = new Set([
+                ...Object.keys(local.data || {}),
+                ...Object.keys(cloud.data || {})
+            ]);
+            
+            allKeys.forEach(key => {
+                const localVal = local.data ? local.data[key] : undefined;
+                const cloudVal = cloud.data ? cloud.data[key] : undefined;
+                
+                if (key.endsWith('_mastered') || key.endsWith('_starred') || key.endsWith('_mastered_v2') || key.endsWith('_starred_v2')) {
+                    const localArr = Array.isArray(localVal) ? localVal : [];
+                    const cloudArr = Array.isArray(cloudVal) ? cloudVal : [];
+                    merged.data[key] = Array.from(new Set([...localArr, ...cloudArr]));
+                } else if (key.endsWith('_ebbinghaus') || key.endsWith('_ebbinghaus_v2')) {
+                    const localDict = (localVal && typeof localVal === 'object') ? localVal : {};
+                    const cloudDict = (cloudVal && typeof cloudVal === 'object') ? cloudVal : {};
+                    const mergedDict = {};
+                    
+                    const allItemIds = new Set([
+                        ...Object.keys(localDict),
+                        ...Object.keys(cloudDict)
+                    ]);
+                    
+                    allItemIds.forEach(id => {
+                        const localItem = localDict[id];
+                        const cloudItem = cloudDict[id];
+                        
+                        if (localItem && cloudItem) {
+                            const localTime = localItem.lastTime || 0;
+                            const cloudTime = cloudItem.lastTime || 0;
+                            if (localTime >= cloudTime) {
+                                mergedDict[id] = localItem;
+                            } else {
+                                mergedDict[id] = cloudItem;
+                            }
+                        } else if (localItem) {
+                            mergedDict[id] = localItem;
+                        } else if (cloudItem) {
+                            mergedDict[id] = cloudItem;
+                        }
+                    });
+                    merged.data[key] = mergedDict;
+                } else {
+                    merged.data[key] = cloudVal !== undefined ? cloudVal : localVal;
+                }
+            });
+            
+            return merged;
+        }
+
+        let isSyncing = false;
+
+        async function syncProcess(forceDirection = null) {
+            if (isSyncing) return;
+            if (!WebDAVSync.isEnabled()) {
+                updateSyncStatusUI('disabled');
+                return;
+            }
+            
+            isSyncing = true;
+            updateSyncStatusUI('syncing');
+            
+            try {
+                const local = ProgressManager.getLocal();
+                
+                if (forceDirection === 'push') {
+                    local.updatedAt = Date.now();
+                    const ok = await WebDAVSync.push(local);
+                    if (ok) {
+                        ProgressManager.saveLocal(local);
+                        updateSyncStatusUI('success', '上传成功');
+                    } else {
+                        updateSyncStatusUI('error', '上传失败');
+                    }
+                    isSyncing = false;
+                    return;
+                }
+                
+                if (forceDirection === 'pull') {
+                    const cloud = await WebDAVSync.pull();
+                    if (cloud) {
+                        ProgressManager.saveLocal(cloud);
+                        updateSyncStatusUI('success', '下载成功');
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        updateSyncStatusUI('error', '下载失败');
+                    }
+                    isSyncing = false;
+                    return;
+                }
+                
+                const cloud = await WebDAVSync.pull();
+                if (!cloud) {
+                    updateSyncStatusUI('error', '连接云端失败');
+                    isSyncing = false;
+                    return;
+                }
+                
+                const localTime = local.updatedAt;
+                const cloudTime = cloud.updatedAt || 0;
+                
+                if (cloudTime > localTime) {
+                    console.log('Cloud newer than local. Merging...');
+                    const merged = mergeProgress(local, cloud);
+                    ProgressManager.saveLocal(merged);
+                    updateSyncStatusUI('success', '已合并云端进度');
+                    setTimeout(() => location.reload(), 1200);
+                } else if (localTime > cloudTime) {
+                    console.log('Local newer than cloud. Uploading...');
+                    const ok = await WebDAVSync.push(local);
+                    if (ok) {
+                        updateSyncStatusUI('success', '已上传最新进度');
+                    } else {
+                        updateSyncStatusUI('error', '上传进度失败');
+                    }
+                } else {
+                    updateSyncStatusUI('success', '已是最新');
+                }
+            } catch (e) {
+                console.error('Sync failed:', e);
+                updateSyncStatusUI('error', '同步失败');
+            } finally {
+                isSyncing = false;
+            }
+        }
+
+        function updateSyncStatusUI(status, message = '') {
+            const badge = document.getElementById('sync-status-badge');
+            if (!badge) return;
+            const dot = badge.querySelector('.sync-dot');
+            const text = badge.querySelector('.sync-text');
+            
+            if (dot.style.animation) {
+                dot.style.animation = '';
+            }
+            
+            switch (status) {
+                case 'disabled':
+                    dot.style.backgroundColor = '#94a3b8';
+                    text.innerText = '未启用同步';
+                    badge.style.borderColor = 'rgba(255,255,255,0.1)';
+                    badge.style.background = 'rgba(255,255,255,0.05)';
+                    badge.title = '点击配置坚果云 WebDAV 以开启自动同步';
+                    break;
+                case 'syncing':
+                    dot.style.backgroundColor = '#3b82f6';
+                    dot.style.animation = 'pulse-blue 1s infinite alternate';
+                    text.innerText = '正在同步...';
+                    badge.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                    badge.style.background = 'rgba(59, 130, 246, 0.1)';
+                    break;
+                case 'success':
+                    dot.style.backgroundColor = '#10b981';
+                    text.innerText = message || '已是最新';
+                    badge.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                    badge.style.background = 'rgba(16, 185, 129, 0.1)';
+                    break;
+                case 'error':
+                    dot.style.backgroundColor = '#ef4444';
+                    text.innerText = message || '同步失败';
+                    badge.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                    badge.style.background = 'rgba(239, 68, 68, 0.1)';
+                    break;
+            }
+        }
+
+        // --- 弹窗逻辑 ---
+        function openSyncModal() {
+            const overlay = document.getElementById('sync-modal-overlay');
+            overlay.classList.add('active');
+            
+            const config = WebDAVSync.getConfig();
+            document.getElementById('sync-email').value = config.email;
+            document.getElementById('sync-password').value = config.password;
+            document.getElementById('sync-proxy').value = config.proxy;
+            
+            const dangerZone = document.getElementById('sync-danger-zone');
+            if (WebDAVSync.isEnabled()) {
+                dangerZone.style.display = 'block';
+            } else {
+                dangerZone.style.display = 'none';
+            }
+        }
+
+        function closeSyncModal(event) {
+            const overlay = document.getElementById('sync-modal-overlay');
+            if (event) {
+                if (event.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            } else {
+                overlay.classList.remove('active');
+            }
+        }
+
+        async function saveSyncSettings() {
+            const email = document.getElementById('sync-email').value.trim();
+            const password = document.getElementById('sync-password').value.trim();
+            const proxy = document.getElementById('sync-proxy').value.trim();
+            
+            if (!email || !password) {
+                alert('请输入坚果云账号及应用密码！');
+                return;
+            }
+            
+            const tempConfig = {
+                email,
+                password,
+                proxy,
+                serverUrl: 'https://dav.jianguoyun.com/dav/'
+            };
+            
+            updateSyncStatusUI('syncing');
+            
+            const testResult = await WebDAVSync.testConnection(tempConfig);
+            if (!testResult.success) {
+                alert('保存失败，连接测试未通过：\n' + testResult.message);
+                updateSyncStatusUI('error', '测试未通过');
+                return;
+            }
+            
+            localStorage.setItem('webdav_email', email);
+            localStorage.setItem('webdav_password', password);
+            localStorage.setItem('webdav_proxy', proxy);
+            
+            if (!testResult.exist) {
+                const local = ProgressManager.getLocal();
+                local.updatedAt = Date.now();
+                await WebDAVSync.push(local);
+                ProgressManager.saveLocal(local);
+            }
+            
+            alert('同步配置保存成功并已启用！🎉');
+            closeSyncModal();
+            syncProcess();
+        }
+
+        async function testSyncConnection() {
+            const email = document.getElementById('sync-email').value.trim();
+            const password = document.getElementById('sync-password').value.trim();
+            const proxy = document.getElementById('sync-proxy').value.trim();
+            
+            if (!email || !password) {
+                alert('请输入账号及应用密码！');
+                return;
+            }
+            
+            const tempConfig = {
+                email,
+                password,
+                proxy,
+                serverUrl: 'https://dav.jianguoyun.com/dav/'
+            };
+            
+            updateSyncStatusUI('syncing');
+            
+            const testResult = await WebDAVSync.testConnection(tempConfig);
+            if (testResult.success) {
+                alert('连接测试成功！🎉\n云端备份文件状态: ' + (testResult.exist ? '已存在' : '尚未创建 (保存后将自动创建)'));
+                updateSyncStatusUI('success', '测试成功');
+            } else {
+                alert('连接测试失败 ❌\n' + testResult.message);
+                updateSyncStatusUI('error', '测试失败');
+            }
+        }
+
+        async function forcePushLocalData() {
+            if (confirm('⚠️ 警告！此操作将以当前设备的本地进度完全覆写坚果云端的进度，确定要上传吗？')) {
+                await syncProcess('push');
+                closeSyncModal();
+            }
+        }
+
+        async function forcePullCloudData() {
+            if (confirm('⚠️ 警告！此操作将从云端下载进度，并完全覆盖本地已保存的学习进度，确定要下载吗？')) {
+                await syncProcess('pull');
+                closeSyncModal();
+            }
+        }
     </script>
+
+    <!-- 坚果云 WebDAV 同步设置弹窗 -->
+    <div class="modal-overlay" id="sync-modal-overlay" onclick="closeSyncModal(event)">
+        <div class="sync-modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span>☁️ 坚果云 WebDAV 同步设置</span>
+                </div>
+                <button class="modal-close" onclick="closeSyncModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label">坚果云账号 (邮箱)</label>
+                    <input type="email" id="sync-email" class="input-field" placeholder="例如: name@example.com">
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">坚果云应用密码</label>
+                    <input type="password" id="sync-password" class="input-field" placeholder="生成的 16 位第三方应用密码">
+                    <div class="input-desc">出于安全考虑，请勿填写您的坚果云登录密码！请在坚果云网页版“账户信息 -> 安全设置 -> 第三方应用管理”中添加应用并生成授权密码。</div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">CORS 跨域代理地址 (选填)</label>
+                    <input type="text" id="sync-proxy" class="input-field" placeholder="如 https://cors-anywhere.herokuapp.com/">
+                    <div class="input-desc">因浏览器跨域限制，若直连坚果云失败，可配置跨域代理（如：https://cors-anywhere.herokuapp.com/ 或自建代理）。留空为直连。</div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="testSyncConnection()">🔌 测试连接</button>
+                    <button class="btn-primary" onclick="saveSyncSettings()">💾 保存并启用</button>
+                </div>
+
+                <div class="sync-danger-zone" id="sync-danger-zone" style="display: none;">
+                    <div class="danger-title">⚡ 强制手动覆盖</div>
+                    <div class="input-desc" style="margin-bottom: 10px;">如果发生同步冲突或需手动订正数据，请使用以下覆盖选项：</div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-secondary" style="flex: 1; font-size: 0.78rem; border-color: rgba(248, 113, 113, 0.25); color: #f87171;" onclick="forcePushLocalData()">📤 强制上传本地</button>
+                        <button class="btn-secondary" style="flex: 1; font-size: 0.78rem; border-color: rgba(96, 165, 250, 0.25); color: #60a5fa;" onclick="forcePullCloudData()">📥 强制下载云端</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

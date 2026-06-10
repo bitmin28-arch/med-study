@@ -4183,6 +4183,11 @@
             // 定时刷新艾宾浩斯显示 (极速模式下每2秒刷新，普通模式下每30秒刷新)
             const intervalTime = isSpeedyMode() ? 2000 : 30000;
             setInterval(updateEbbinghausUI, intervalTime);
+
+            // 页面加载完成后，若配置了 WebDAV 则自动在后台静默同步一次
+            if (WebDAVSync.isEnabled()) {
+                syncProcessSilent();
+            }
         });
 
         function updateEbbinghausUI() {
@@ -4263,6 +4268,7 @@
 
             localStorage.setItem(starredKey, JSON.stringify(Array.from(starredIds)));
             filterCards();
+            triggerDebouncedSync();
         }
 
         function refreshEbbinghaus(id) {
@@ -4282,6 +4288,7 @@
             localStorage.setItem(ebbinghausKey, JSON.stringify(ebbinghausDict));
             updateEbbinghausUI();
             filterCards();
+            triggerDebouncedSync();
         }
 
         function toggleAnswer(id) {
@@ -4359,6 +4366,7 @@
             updateProgress();
             updateEbbinghausUI();
             filterCards();
+            triggerDebouncedSync();
         }
 
         function updateProgress() {
@@ -4383,6 +4391,7 @@
                 updateProgress();
                 updateEbbinghausUI();
                 filterCards();
+                triggerDebouncedSync();
             }
         }
 
@@ -4661,6 +4670,279 @@
 
         function getDistance(t1, t2) {
             return Math.sqrt((t1.clientX - t2.clientX)**2 + (t1.clientY - t2.clientY)**2);
+        }
+
+        // ==========================================
+        // 坚果云 WebDAV 自动同步核心 JS 模块 (静默同步版)
+        // ==========================================
+        
+        const WebDAVSync = {
+            getConfig() {
+                return {
+                    email: localStorage.getItem('webdav_email') || '',
+                    password: localStorage.getItem('webdav_password') || '',
+                    proxy: localStorage.getItem('webdav_proxy') || '',
+                    serverUrl: 'https://dav.jianguoyun.com/dav/'
+                };
+            },
+            
+            isEnabled() {
+                const config = this.getConfig();
+                return !!(config.email && config.password);
+            },
+            
+            getAuthToken(email, password) {
+                return 'Basic ' + btoa(email.trim() + ':' + password.trim());
+            },
+            
+            getRequestUrl(config) {
+                let serverUrl = config.serverUrl.trim();
+                if (!serverUrl.endsWith('/')) {
+                    serverUrl += '/';
+                }
+                const fileUrl = serverUrl + 'med_study_progress.json';
+                
+                let proxy = config.proxy.trim();
+                if (!proxy) return fileUrl;
+                
+                if (proxy.endsWith('/')) {
+                    proxy = proxy.slice(0, -1);
+                }
+                return proxy + '/' + fileUrl;
+            },
+            
+            async request(method, config, body = null, extraHeaders = {}) {
+                const url = this.getRequestUrl(config);
+                const headers = {
+                    'Authorization': this.getAuthToken(config.email, config.password),
+                    ...extraHeaders
+                };
+                
+                const options = {
+                    method: method,
+                    headers: headers
+                };
+                if (body) {
+                    options.body = typeof body === 'string' ? body : JSON.stringify(body);
+                    headers['Content-Type'] = 'application/json';
+                }
+                
+                const response = await fetch(url, options);
+                return response;
+            },
+            
+            async pull() {
+                if (!this.isEnabled()) return null;
+                const config = this.getConfig();
+                try {
+                    const res = await this.request('GET', config);
+                    if (res.status === 200) {
+                        const cloudJson = await res.json();
+                        return cloudJson;
+                    } else if (res.status === 404) {
+                        return { updatedAt: 0, data: {} };
+                    } else {
+                        throw new Error(`HTTP ${res.status}`);
+                    }
+                } catch (e) {
+                    console.error('WebDAV Pull Failed:', e);
+                    throw e;
+                }
+            },
+            
+            async push(progressData) {
+                if (!this.isEnabled()) return false;
+                const config = this.getConfig();
+                try {
+                    const res = await this.request('PUT', config, progressData);
+                    if (res.status === 200 || res.status === 201 || res.status === 204) {
+                        return true;
+                    } else {
+                        throw new Error(`HTTP ${res.status}`);
+                    }
+                } catch (e) {
+                    console.error('WebDAV Push Failed:', e);
+                    throw e;
+                }
+            }
+        };
+
+        const ProgressManager = {
+            keys: [
+                'intro_mastered', 'intro_starred', 'intro_ebbinghaus',
+                'urinary_mastered', 'urinary_starred', 'urinary_ebbinghaus',
+                'endocrine_mastered_v2', 'endocrine_starred_v2', 'endocrine_ebbinghaus_v2'
+            ],
+            
+            getLocal() {
+                const data = {};
+                this.keys.forEach(key => {
+                    const val = localStorage.getItem(key);
+                    if (val) {
+                        try {
+                            data[key] = JSON.parse(val);
+                        } catch(e) {
+                            data[key] = val;
+                        }
+                    } else {
+                        if (key.endsWith('_mastered') || key.endsWith('_starred') || key.endsWith('_mastered_v2') || key.endsWith('_starred_v2')) {
+                            data[key] = [];
+                        } else {
+                            data[key] = {};
+                        }
+                    }
+                });
+                const updatedAt = parseInt(localStorage.getItem('webdav_last_updated')) || 0;
+                return { updatedAt, data };
+            },
+            
+            saveLocal(progress) {
+                if (!progress || !progress.data) return;
+                Object.keys(progress.data).forEach(key => {
+                    if (this.keys.includes(key)) {
+                        localStorage.setItem(key, JSON.stringify(progress.data[key]));
+                    }
+                });
+                const t = progress.updatedAt || Date.now();
+                localStorage.setItem('webdav_last_updated', t.toString());
+            }
+        };
+
+        function mergeProgress(local, cloud) {
+            const merged = {
+                updatedAt: Math.max(local.updatedAt || 0, cloud.updatedAt || 0),
+                data: {}
+            };
+            
+            const allKeys = new Set([
+                ...Object.keys(local.data || {}),
+                ...Object.keys(cloud.data || {})
+            ]);
+            
+            allKeys.forEach(key => {
+                const localVal = local.data ? local.data[key] : undefined;
+                const cloudVal = cloud.data ? cloud.data[key] : undefined;
+                
+                if (key.endsWith('_mastered') || key.endsWith('_starred') || key.endsWith('_mastered_v2') || key.endsWith('_starred_v2')) {
+                    const localArr = Array.isArray(localVal) ? localVal : [];
+                    const cloudArr = Array.isArray(cloudVal) ? cloudVal : [];
+                    merged.data[key] = Array.from(new Set([...localArr, ...cloudArr]));
+                } else if (key.endsWith('_ebbinghaus') || key.endsWith('_ebbinghaus_v2')) {
+                    const localDict = (localVal && typeof localVal === 'object') ? localVal : {};
+                    const cloudDict = (cloudVal && typeof cloudVal === 'object') ? cloudVal : {};
+                    const mergedDict = {};
+                    
+                    const allItemIds = new Set([
+                        ...Object.keys(localDict),
+                        ...Object.keys(cloudDict)
+                    ]);
+                    
+                    allItemIds.forEach(id => {
+                        const localItem = localDict[id];
+                        const cloudItem = cloudDict[id];
+                        
+                        if (localItem && cloudItem) {
+                            const localTime = localItem.lastTime || 0;
+                            const cloudTime = cloudItem.lastTime || 0;
+                            if (localTime >= cloudTime) {
+                                mergedDict[id] = localItem;
+                            } else {
+                                mergedDict[id] = cloudItem;
+                            }
+                        } else if (localItem) {
+                            mergedDict[id] = localItem;
+                        } else if (cloudItem) {
+                            mergedDict[id] = cloudItem;
+                        }
+                    });
+                    merged.data[key] = mergedDict;
+                } else {
+                    merged.data[key] = cloudVal !== undefined ? cloudVal : localVal;
+                }
+            });
+            
+            return merged;
+        }
+
+        let isSyncing = false;
+        let debounceTimer = null;
+
+        function triggerDebouncedSync() {
+            localStorage.setItem('webdav_last_updated', Date.now().toString());
+            if (!WebDAVSync.isEnabled()) return;
+            
+            if (debounceTimer) {
+                clearTimeout(debounceTimer);
+            }
+            debounceTimer = setTimeout(() => {
+                console.log('Debounced sync triggered...');
+                syncProcessSilent();
+            }, 3000);
+        }
+
+        async function syncProcessSilent() {
+            if (isSyncing) return;
+            isSyncing = true;
+            
+            try {
+                const local = ProgressManager.getLocal();
+                const cloud = await WebDAVSync.pull();
+                if (!cloud) {
+                    console.warn('Silent sync: pull failed');
+                    isSyncing = false;
+                    return;
+                }
+                
+                const localTime = local.updatedAt;
+                const cloudTime = cloud.updatedAt || 0;
+                
+                if (cloudTime > localTime) {
+                    console.log('Silent sync: cloud is newer. Merging...');
+                    const merged = mergeProgress(local, cloud);
+                    ProgressManager.saveLocal(merged);
+                    showSyncToast('☁️ 检测到其他设备的新进度，已自动合并。页面即将刷新...');
+                    setTimeout(() => location.reload(), 2500);
+                } else if (localTime > cloudTime) {
+                    console.log('Silent sync: local is newer. Uploading...');
+                    const ok = await WebDAVSync.push(local);
+                    if (ok) {
+                        console.log('Silent sync: progress uploaded.');
+                    }
+                }
+            } catch (e) {
+                console.error('Silent sync failed:', e);
+            } finally {
+                isSyncing = false;
+            }
+        }
+
+        function showSyncToast(message) {
+            let toast = document.getElementById('sync-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'sync-toast';
+                toast.style.position = 'fixed';
+                toast.style.bottom = '20px';
+                toast.style.left = '50%';
+                toast.style.transform = 'translateX(-50%)';
+                toast.style.background = 'rgba(15, 23, 42, 0.9)';
+                toast.style.border = '1px solid rgba(59, 130, 246, 0.4)';
+                toast.style.color = '#fff';
+                toast.style.padding = '10px 20px';
+                toast.style.borderRadius = '20px';
+                toast.style.fontSize = '0.85rem';
+                toast.style.zIndex = '9999';
+                toast.style.boxShadow = '0 10px 25px rgba(0,0,0,0.5)';
+                toast.style.backdropFilter = 'blur(10px)';
+                toast.style.webkitBackdropFilter = 'blur(10px)';
+                toast.style.transition = 'opacity 0.3s';
+                document.body.appendChild(toast);
+            }
+            toast.innerText = message;
+            toast.style.opacity = '1';
+            setTimeout(() => {
+                toast.style.opacity = '0';
+            }, 4000);
         }
     </script>
 </body>
