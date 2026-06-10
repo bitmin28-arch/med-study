@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>西综生理学 · 内分泌提纲带背自测</title>
+    <title>生理学 · 内分泌提纲带背</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -14,10 +14,7 @@
             --primary-glow: rgba(59, 130, 246, 0.5);
             --accent: #8b5cf6;
             --border: #334155;
-            
             --green: #10b981;
-            --yellow: #f59e0b;
-            --red: #ef4444;
         }
         
         * {
@@ -34,7 +31,6 @@
             padding-bottom: 50px;
         }
         
-        /* Sticky Header */
         header {
             position: sticky;
             top: 0;
@@ -54,6 +50,31 @@
             margin-bottom: 12px;
         }
         
+        .header-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-home-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .back-home-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
         h1 {
             font-size: 1.25rem;
             font-weight: 700;
@@ -62,7 +83,6 @@
             -webkit-text-fill-color: transparent;
         }
         
-        /* Progress Bar */
         .progress-container {
             width: 100%;
             background-color: rgba(255,255,255,0.05);
@@ -88,7 +108,6 @@
             margin-bottom: 10px;
         }
         
-        /* Search and Filters */
         .controls {
             display: flex;
             flex-direction: column;
@@ -122,11 +141,11 @@
             gap: 8px;
             overflow-x: auto;
             padding-bottom: 5px;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
         }
         
         .filter-row::-webkit-scrollbar {
-            display: none; /* Safari & Chrome */
+            display: none;
         }
         
         .tab-btn, .filter-select {
@@ -176,14 +195,12 @@
             color: white;
         }
         
-        /* Container */
         .container {
             max-width: 768px;
             margin: 20px auto;
             padding: 0 15px;
         }
         
-        /* QA Card */
         .qa-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border);
@@ -275,10 +292,8 @@
         
         .qa-card.expanded .toggle-icon {
             transform: rotate(180deg);
-            color: var(--primary-hover);
         }
         
-        /* Answer Content with Smooth Expand */
         .card-answer {
             max-height: 0;
             overflow: hidden;
@@ -318,7 +333,6 @@
             transition: opacity 0.3s;
         }
         
-        /* Loader Animation */
         .img-loader {
             position: absolute;
             top: 50%;
@@ -347,7 +361,13 @@
 
     <header>
         <div class="header-top">
-            <h1>生理学 · 内分泌提纲带背</h1>
+            <div class="header-title-row">
+                <a href="../../index.html" class="back-home-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    返回主页
+                </a>
+                <h1>生理学 · 内分泌提纲带背</h1>
+            </div>
             <button class="action-btn" onclick="resetProgress()">重置状态</button>
         </div>
         
@@ -1141,6 +1161,16 @@
             <div class="img-wrapper">
                 <div class="img-loader"></div>
                 <img src="images/q26_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q26_2.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q26_3.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
             </div>
             
                 </div>
@@ -3077,10 +3107,10 @@
         let masteredIds = new Set();
         let currentSection = 'all';
         let allExpanded = false;
+        const storageKey = 'endocrine_mastered_v2';
 
-        // Load progress on startup
         window.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem('endocrine_mastered_v2');
+            const saved = localStorage.getItem(storageKey);
             if (saved) {
                 try {
                     const arr = JSON.parse(saved);
@@ -3088,7 +3118,6 @@
                 } catch(e) {}
             }
             
-            // Update checkboxes and UI card styling
             document.querySelectorAll('.qa-card').forEach(card => {
                 const id = card.getAttribute('data-id');
                 const chk = card.querySelector('.mastered-chk');
@@ -3107,16 +3136,14 @@
             if (!card || !answer) return;
             
             if (card.classList.contains('expanded')) {
-                // Collapse
                 answer.style.maxHeight = '0px';
                 card.classList.remove('expanded');
             } else {
-                // Expand
                 card.classList.add('expanded');
                 answer.style.maxHeight = 'none';
                 const fullHeight = answer.scrollHeight;
                 answer.style.maxHeight = '0px';
-                answer.offsetHeight; // force reflow
+                answer.offsetHeight;
                 answer.style.maxHeight = fullHeight + 'px';
                 
                 setTimeout(() => {
@@ -3142,7 +3169,7 @@
             
             const errDiv = document.createElement('div');
             errDiv.className = 'img-error-msg';
-            errDiv.innerHTML = '<div style="color: #ef4444; font-size: 0.88rem; padding: 20px; text-align: center; border: 1px dashed rgba(239,68,68,0.3); border-radius: 6px; background: rgba(239,68,68,0.05); margin: 10px;">图片加载失败<br><span style="font-size: 0.75rem; color: #94a3b8; margin-top: 4px; display: block;">可能原因：您正通过 localhost 端口访问且本地服务已关闭。<br>解决方式：直接双击用浏览器打开该文件夹下的 <b>index.html</b> 本地文件即可。</span></div>';
+            errDiv.innerHTML = '<div style="color: #ef4444; font-size: 0.88rem; padding: 20px; text-align: center; border: 1px dashed rgba(239,68,68,0.3); border-radius: 6px; background: rgba(239,68,68,0.05); margin: 10px;">图片加载失败<br><span style="font-size: 0.75rem; color: #94a3b8; margin-top: 4px; display: block;">可能原因：您正在使用 localhost 并且本地服务被关闭。<br>解决方式：直接双击打开该 HTML 本地文件即可。</span></div>';
             img.parentNode.appendChild(errDiv);
         }
 
@@ -3159,7 +3186,7 @@
                 masteredIds.delete(id);
             }
             
-            localStorage.setItem('endocrine_mastered_v2', JSON.stringify(Array.from(masteredIds)));
+            localStorage.setItem(storageKey, JSON.stringify(Array.from(masteredIds)));
             updateProgress();
         }
 
@@ -3175,7 +3202,7 @@
         function resetProgress() {
             if (confirm('确定要清除所有已掌握记录吗？')) {
                 masteredIds.clear();
-                localStorage.removeItem('endocrine_mastered_v2');
+                localStorage.removeItem(storageKey);
                 document.querySelectorAll('.qa-card').forEach(card => {
                     card.classList.remove('mastered');
                     card.querySelector('.mastered-chk').checked = false;
@@ -3186,14 +3213,12 @@
 
         function filterSection(sec) {
             currentSection = sec;
-            
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.innerText === sec || (sec === 'all' && btn.innerText === '全部章节')) {
                     btn.classList.add('active');
                 }
             });
-            
             filterCards();
         }
 
@@ -3209,7 +3234,6 @@
                 const qText = card.querySelector('.q-text').innerText.toLowerCase();
                 
                 let visible = true;
-                
                 if (currentSection !== 'all' && sec !== currentSection) visible = false;
                 if (diffFilter !== 'all' && diff !== diffFilter) visible = false;
                 if (impFilter !== 'all' && imp !== impFilter) visible = false;
