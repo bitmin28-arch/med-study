@@ -355,6 +355,97 @@
             .container { padding: 0 10px; }
             .q-text { font-size: 0.92rem; }
         }
+        
+        /* 思维导图 Modal 样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(3, 7, 18, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #94a3b8;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+            z-index: 1010;
+        }
+        .modal-close:hover {
+            color: #f3f4f6;
+        }
+        .modal-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 95%;
+            height: 90%;
+            max-width: 1200px;
+            position: relative;
+        }
+        .modal-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            z-index: 1005;
+        }
+        .modal-btn {
+            background-color: #1e293b;
+            color: #f3f4f6;
+            border: 1px solid #334155;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .modal-btn:hover {
+            background-color: #334155;
+            border-color: #475569;
+        }
+        .modal-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .modal-page-num {
+            color: #94a3b8;
+            font-size: 0.88rem;
+        }
+        .modal-viewport {
+            flex: 1;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid #1e293b;
+            background-color: #030712;
+            position: relative;
+            cursor: grab;
+        }
+        .modal-viewport:active {
+            cursor: grabbing;
+        }
+        #mindmap-img {
+            position: absolute;
+            max-width: none;
+            max-height: none;
+            transform-origin: 0 0;
+            transition: transform 0.05s ease-out;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
     </style>
 </head>
 <body>
@@ -367,6 +458,12 @@
                     返回主页
                 </a>
                 <h1>生理学 · 尿的生成和排出提纲带背</h1>
+                
+        <button class="back-home-btn" onclick="openMindmap()" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15)); border-color: rgba(59, 130, 246, 0.4); color: #fff;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            思维导图
+        </button>
+        
             </div>
             <button class="action-btn" onclick="resetProgress()">重置状态</button>
         </div>
@@ -3549,6 +3646,189 @@
                 }
             });
         }
+        
+        // 思维导图灯箱缩放交互逻辑
+        const mapImages = ["images/mindmap_0.png", "images/mindmap_1.png", "images/mindmap_2.png", "images/mindmap_3.png", "images/mindmap_4.png"];
+        let zoom = 1;
+        let panX = 0;
+        let panY = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let currentMapIdx = 0;
+
+        const viewport = document.getElementById('map-viewport');
+        const img = document.getElementById('mindmap-img');
+
+        function openMindmap() {
+            if (mapImages.length === 0) return;
+            document.getElementById('mindmap-modal').style.display = 'flex';
+            currentMapIdx = 0;
+            updateMapDisplay();
+        }
+
+        function closeMindmap() {
+            document.getElementById('mindmap-modal').style.display = 'none';
+        }
+
+        function updateMapDisplay() {
+            if (mapImages.length === 0) return;
+            img.src = mapImages[currentMapIdx];
+            document.getElementById('map-page-num').innerText = `${currentMapIdx + 1} / ${mapImages.length}`;
+            document.getElementById('prev-map-btn').disabled = currentMapIdx === 0;
+            document.getElementById('next-map-btn').disabled = currentMapIdx === mapImages.length - 1;
+            zoom = 1;
+            panX = 0;
+            panY = 0;
+            img.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+            setTimeout(centerImage, 100);
+        }
+
+        function changeMap(dir) {
+            currentMapIdx += dir;
+            if (currentMapIdx < 0) currentMapIdx = 0;
+            if (currentMapIdx >= mapImages.length) currentMapIdx = mapImages.length - 1;
+            updateMapDisplay();
+        }
+
+        function centerImage() {
+            const vpWidth = viewport.clientWidth;
+            const vpHeight = viewport.clientHeight;
+            const imgWidth = img.naturalWidth || img.clientWidth || 800;
+            const imgHeight = img.naturalHeight || img.clientHeight || 600;
+            
+            const scaleX = vpWidth / imgWidth;
+            const scaleY = vpHeight / imgHeight;
+            zoom = Math.min(scaleX, scaleY, 1) * 0.95;
+            if (zoom < 0.1) zoom = 0.5;
+
+            panX = (vpWidth - imgWidth * zoom) / 2;
+            panY = (vpHeight - imgHeight * zoom) / 2;
+            
+            updateTransform();
+        }
+
+        function updateTransform() {
+            img.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+        }
+
+        function resetZoom() {
+            centerImage();
+        }
+
+        viewport.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return;
+            isDragging = true;
+            startX = e.clientX - panX;
+            startY = e.clientY - panY;
+            e.preventDefault();
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            panX = e.clientX - startX;
+            panY = e.clientY - startY;
+            updateTransform();
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        viewport.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const zoomFactor = 1.1;
+            const rect = viewport.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            const imgX = (mouseX - panX) / zoom;
+            const imgY = (mouseY - panY) / zoom;
+
+            if (e.deltaY < 0) {
+                zoom *= zoomFactor;
+            } else {
+                zoom /= zoomFactor;
+            }
+            zoom = Math.min(Math.max(zoom, 0.05), 10);
+
+            panX = mouseX - imgX * zoom;
+            panY = mouseY - imgY * zoom;
+
+            updateTransform();
+        }, { passive: false });
+
+        let lastTouchX = 0;
+        let lastTouchY = 0;
+        let initialPinchDist = 0;
+        let initialZoom = 1;
+
+        viewport.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                lastTouchX = e.touches[0].clientX;
+                lastTouchY = e.touches[0].clientY;
+            } else if (e.touches.length === 2) {
+                isDragging = false;
+                initialPinchDist = getDistance(e.touches[0], e.touches[1]);
+                initialZoom = zoom;
+            }
+        });
+
+        viewport.addEventListener('touchmove', (e) => {
+            if (isDragging && e.touches.length === 1) {
+                const dx = e.touches[0].clientX - lastTouchX;
+                const dy = e.touches[0].clientY - lastTouchY;
+                panX += dx;
+                panY += dy;
+                lastTouchX = e.touches[0].clientX;
+                lastTouchY = e.touches[0].clientY;
+                updateTransform();
+            } else if (e.touches.length === 2) {
+                const dist = getDistance(e.touches[0], e.touches[1]);
+                const factor = dist / initialPinchDist;
+                const newZoom = Math.min(Math.max(initialZoom * factor, 0.05), 10);
+                
+                const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                const rect = viewport.getBoundingClientRect();
+                const localX = midX - rect.left;
+                const localY = midY - rect.top;
+                
+                const imgX = (localX - panX) / zoom;
+                const imgY = (localY - panY) / zoom;
+                
+                zoom = newZoom;
+                panX = localX - imgX * zoom;
+                panY = localY - imgY * zoom;
+                
+                updateTransform();
+            }
+            e.preventDefault();
+        }, { passive: false });
+
+        viewport.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        function getDistance(t1, t2) {
+            return Math.sqrt((t1.clientX - t2.clientX)**2 + (t1.clientY - t2.clientY)**2);
+        }
     </script>
+    
+    <!-- 思维导图灯箱 HTML -->
+    <div id="mindmap-modal" class="modal">
+        <span class="modal-close" onclick="closeMindmap()">&times;</span>
+        <div class="modal-content-wrapper">
+            <div class="modal-controls">
+                <button class="modal-btn" id="prev-map-btn" onclick="changeMap(-1)">上一张</button>
+                <span class="modal-page-num" id="map-page-num">1 / 1</span>
+                <button class="modal-btn" id="next-map-btn" onclick="changeMap(1)">下一张</button>
+                <button class="modal-btn" onclick="resetZoom()">1:1 重置</button>
+            </div>
+            <div class="modal-viewport" id="map-viewport">
+                <img id="mindmap-img" src="" alt="思维导图" draggable="false">
+            </div>
+    </div>
 </body>
 </html>
