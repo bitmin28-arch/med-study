@@ -4705,6 +4705,10 @@
                 let proxy = config.proxy.trim();
                 if (!proxy) return fileUrl;
                 
+                if (proxy.endsWith('?')) {
+                    return proxy + fileUrl;
+                }
+                
                 if (proxy.endsWith('/')) {
                     proxy = proxy.slice(0, -1);
                 }

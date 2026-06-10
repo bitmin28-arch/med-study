@@ -1076,6 +1076,10 @@
                 let proxy = config.proxy.trim();
                 if (!proxy) return fileUrl;
                 
+                if (proxy.endsWith('?')) {
+                    return proxy + fileUrl;
+                }
+                
                 if (proxy.endsWith('/')) {
                     proxy = proxy.slice(0, -1);
                 }
@@ -1521,8 +1525,8 @@
 
                 <div class="input-group">
                     <label class="input-label">CORS 跨域代理地址 (选填)</label>
-                    <input type="text" id="sync-proxy" class="input-field" placeholder="如 https://cors-anywhere.herokuapp.com/">
-                    <div class="input-desc">因浏览器跨域限制，若直连坚果云失败，可配置跨域代理（如：https://cors-anywhere.herokuapp.com/ 或自建代理）。留空为直连。</div>
+                    <input type="text" id="sync-proxy" class="input-field" placeholder="如 https://corsproxy.io/?">
+                    <div class="input-desc">因浏览器跨域限制，若直连坚果云失败，请配置跨域代理（推荐配置免激活直接可用的代理：<code>https://corsproxy.io/?</code>）。留空为直连。</div>
                 </div>
                 
                 <div class="modal-actions">
