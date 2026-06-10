@@ -414,21 +414,23 @@
                 </div>
             </div>
 
-            <!-- Chapter 8 -->
-            <div class="chapter-card disabled">
+            <!-- Chapter 8 (Active Chapter) -->
+            <a href="physiology/ch08-urinary/index.html" class="chapter-card active">
                 <div class="card-top">
                     <span class="chapter-num">Chapter 08</span>
-                    <span class="status-badge status-coming">待制作</span>
+                    <span class="status-badge status-active">已开启</span>
                 </div>
-                <div class="chapter-title">第8章 尿的生成和排出</div>
+                <div class="chapter-title">第8章 尿的生成和排出 (102题)</div>
                 <div class="card-progress-container">
                     <div class="card-progress-text">
-                        <span>未开始</span>
-                        <span>0%</span>
+                        <span id="ch8-progress-text">已掌握 0 / 102</span>
+                        <span id="ch8-progress-pct">0%</span>
                     </div>
-                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                    <div class="card-progress-bar-bg">
+                        <div class="card-progress-bar" id="ch8-progress-bar"></div>
+                    </div>
                 </div>
-            </div>
+            </a>
 
             <!-- Chapter 9 -->
             <div class="chapter-card disabled">
@@ -522,6 +524,23 @@
             ch1Bar.style.width = `${ch1Pct}%`;
             if (ch1Pct === 100) ch1Bar.classList.add('finished');
 
+            // Chapter 8 Progress
+            const savedCh8 = localStorage.getItem('urinary_mastered');
+            let ch8Mastered = 0;
+            if (savedCh8) {
+                try {
+                    ch8Mastered = JSON.parse(savedCh8).length;
+                } catch(e) {}
+            }
+            const ch8Total = 102;
+            const ch8Pct = Math.round((ch8Mastered / ch8Total) * 100);
+            
+            document.getElementById('ch8-progress-text').innerText = `已掌握 ${ch8Mastered} / ${ch8Total}`;
+            document.getElementById('ch8-progress-pct').innerText = `${ch8Pct}%`;
+            const ch8Bar = document.getElementById('ch8-progress-bar');
+            ch8Bar.style.width = `${ch8Pct}%`;
+            if (ch8Pct === 100) ch8Bar.classList.add('finished');
+
             // Chapter 11 Progress
             const savedCh11 = localStorage.getItem('endocrine_mastered_v2');
             let ch11Mastered = 0;
@@ -540,8 +559,8 @@
             if (ch11Pct === 100) ch11Bar.classList.add('finished');
             
             // Global Statistics
-            const totalMastered = ch1Mastered + ch11Mastered;
-            const totalQuestions = ch1Total + ch11Total;
+            const totalMastered = ch1Mastered + ch8Mastered + ch11Mastered;
+            const totalQuestions = ch1Total + ch8Total + ch11Total;
             const globalPct = Math.round((totalMastered / totalQuestions) * 100);
             
             document.getElementById('global-progress-text').innerText = `已掌握 ${totalMastered} / ${totalQuestions} (${globalPct}%)`;

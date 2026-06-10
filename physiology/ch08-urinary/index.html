@@ -1,0 +1,3554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>生理学 · 尿的生成和排出提纲带背</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --accent: #8b5cf6;
+            --border: #334155;
+            --green: #10b981;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK SC", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 50px;
+        }
+        
+        header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 20px;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .header-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-home-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .back-home-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: rgba(255,255,255,0.05);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.4s ease;
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+        
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .search-box {
+            display: flex;
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            align-items: center;
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            flex: 1;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+        }
+        
+        .filter-row::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab-btn, .filter-select {
+            background-color: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+        
+        .filter-select {
+            background-color: rgba(30, 41, 59, 0.8);
+            color: var(--text-color);
+            outline: none;
+        }
+        
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .action-btn:hover, .action-btn:active {
+            background-color: rgba(255,255,255,0.05);
+            color: white;
+        }
+        
+        .container {
+            max-width: 768px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        
+        .qa-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        
+        .qa-card.mastered {
+            border-color: rgba(16, 185, 129, 0.3);
+            background-color: rgba(30, 41, 59, 0.6);
+            opacity: 0.8;
+        }
+        
+        .card-header {
+            padding: 12px 16px 8px 16px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+        
+        .sec-badge {
+            background-color: rgba(139, 92, 246, 0.15);
+            color: #c084fc;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-easy { background-color: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .badge-medium { background-color: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .badge-hard { background-color: rgba(239, 68, 68, 0.15); color: #f87171; }
+        
+        .badge-high { background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; }
+        .badge-mod { background-color: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; }
+        .badge-low { background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; }
+        
+        .mastered-label {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        
+        .mastered-label input {
+            accent-color: var(--green);
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+        
+        .card-question {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+        
+        .q-text {
+            font-size: 0.98rem;
+            line-height: 1.5;
+            font-weight: 600;
+            color: #fff;
+            padding-right: 15px;
+        }
+        
+        .toggle-icon {
+            color: var(--text-muted);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .qa-card.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .card-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #0b0f19;
+            border-top: 1px solid transparent;
+        }
+        
+        .qa-card.expanded .card-answer {
+            border-top-color: var(--border);
+        }
+        
+        .img-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            padding: 10px;
+            align-items: center;
+            background-color: #0b0f19;
+        }
+        
+        .img-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            min-height: 60px;
+        }
+        
+        .img-wrapper img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .img-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @media (max-width: 480px) {
+            header { padding: 10px 15px; }
+            .container { padding: 0 10px; }
+            .q-text { font-size: 0.92rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <div class="header-title-row">
+                <a href="../../index.html" class="back-home-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    返回主页
+                </a>
+                <h1>生理学 · 尿的生成和排出提纲带背</h1>
+            </div>
+            <button class="action-btn" onclick="resetProgress()">重置状态</button>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-text" id="progress-text">已掌握 0 / 0 (0%)</div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索问题关键字..." oninput="filterCards()">
+            </div>
+            
+            <div class="filter-row">
+                <button class="tab-btn active" onclick="filterSection('all')">全部章节</button>
+<button class="tab-btn" onclick="filterSection('8.1 泌尿概述')">8.1 泌尿概述</button>
+<button class="tab-btn" onclick="filterSection('8.2 肾小球滤过')">8.2 肾小球滤过</button>
+<button class="tab-btn" onclick="filterSection('8.3 小管物质转运与调节')">8.3 小管物质转运与调节</button>
+            </div>
+            
+            <div class="actions-row">
+                <select class="filter-select" id="diff-filter" onchange="filterCards()">
+                    <option value="all">全部难度</option>
+                    <option value="I级">I级 (简单)</option>
+                    <option value="II级">II级 (中等)</option>
+                    <option value="III级">III级 (较难)</option>
+                </select>
+                
+                <select class="filter-select" id="imp-filter" onchange="filterCards()">
+                    <option value="all">全部重要度</option>
+                    <option value="A">A级 (极重要)</option>
+                    <option value="B">B级 (重要)</option>
+                    <option value="C">C级 (一般)</option>
+                </select>
+                
+                <button class="action-btn" id="toggle-all-btn" onclick="toggleAllAnswers()">全部展开</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" id="cards-container">
+        
+        <div class="qa-card" data-id="q1" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q1')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q1')">
+                <div class="q-text">1 球旁器的组成及各自功能？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q1">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q1_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q2" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q2')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q2')">
+                <div class="q-text">2 肾脏的内分泌细胞及分泌的物质有哪些？分别行使什么功能？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q2">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q2_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q3" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q3')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q3')">
+                <div class="q-text">3 肾单位的组成及各自的功能？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q3">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q3_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q4" data-section="8.1 泌尿概述" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q4')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q4')">
+                <div class="q-text">4 尿生成 and 排出的基本过程是什么？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q4">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q4_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q5" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q5')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q5')">
+                <div class="q-text">5 皮质肾单位和髓质肾单位在位置、数量、大小、入出球动脉、毛细血管等方面的比较？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q5">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q5_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q6" data-section="8.1 泌尿概述" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q6')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q6')">
+                <div class="q-text">6 肾清除率的概念是什么？(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q6">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q6_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q7" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q7')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q7')">
+                <div class="q-text">7 血细胞、多种血浆蛋白、菊粉、肌酐、对氨基马尿酸、葡萄糖、Na+和水分别的清除率是多少？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q7">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q7_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q8" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q8')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q8')">
+                <div class="q-text">8 菊粉、对氨基马尿酸和碘瑞特的清除率分别有何生理意义？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q8">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q8_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q9" data-section="8.1 泌尿概述" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q9')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q9')">
+                <div class="q-text">9 常考物质清除率与GFR的比较及其意义（如大于/小于GFR分别代表什么）？(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q9">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q9_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q10" data-section="8.1 泌尿概述" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q10')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q10')">
+                <div class="q-text">10 清除率、滤过分数、肾血流量的计算公式是什么？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q10">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q10_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q11" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q11')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q11')">
+                <div class="q-text">11 临床上少尿和无尿的数值标准是多少？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q11">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q11_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q12" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q12')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q12')">
+                <div class="q-text">12 肾小球肾炎、心衰的滤过分数分别如何变化？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q12">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q12_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q13" data-section="8.1 泌尿概述" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q13')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q13')">
+                <div class="q-text">13 无溶质水（自由水）清除率反映了什么？(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q13">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q13_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q14" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q14')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q14')">
+                <div class="q-text">14 尿液高渗、尿液低渗时自由水清除率 CH2O 的值分别是怎样的？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q14">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q14_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q15" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q15')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q15')">
+                <div class="q-text">15 测定肾清除率的临床意义有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q15">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q15_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q16" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q16')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q16')">
+                <div class="q-text">16 肾血流量调节的神经调节机制是怎样的？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q16">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q16_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q17" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q17')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q17')">
+                <div class="q-text">17 体液调节中，哪些物质收缩肾血管，哪些物质舒张肾血管？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q17">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q17_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q18" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q18')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q18')">
+                <div class="q-text">18 肾灌注压在什么范围内能通过自身调节保持肾血流量和GFR相对稳定？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q18">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q18_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q19" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q19')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q19')">
+                <div class="q-text">19 肾脏自身调节的机制有哪些？调节机制和效应是什么？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q19">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q19_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q20" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q20')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q20')">
+                <div class="q-text">20 串联：双肾动脉狭窄时为什么禁用 ACEI/ARB？其机制是什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q20">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q20_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q21" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q21')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q21')">
+                <div class="q-text">21 串联：当肾动脉灌注压 < 70mmHg 时，GFR如何变化？可导致什么结果？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q21">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q21_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q22" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q22')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q22')">
+                <div class="q-text">22 串联：达格列净的作用机制及其对肾小球功能的影响？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q22">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q22_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q23" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q23')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q23')">
+                <div class="q-text">23 串联：严重高血糖和摄入高蛋白对 GFR 和肾血流量有何影响？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q23">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q23_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q24" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q24')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q24')">
+                <div class="q-text">24 传入神经受损（如腰骶部脊髓结核）可以导致何种排尿功能障碍？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q24">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q24_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q25" data-section="8.1 泌尿概述" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q25')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q25')">
+                <div class="q-text">25 骶髓受损或传出神经受损可导致何种排尿功能障碍？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q25">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q25_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q26" data-section="8.1 泌尿概述" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.1 泌尿概述</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q26')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q26')">
+                <div class="q-text">26 高位脊髓受损在脊休克期间和脊休克过后，尿量和排尿有何变化？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q26">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q26_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q27" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q27')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q27')">
+                <div class="q-text">1 滤过膜由哪几层构成？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q27">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q27_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q28" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q28')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q28')">
+                <div class="q-text">2 滤过膜机械屏障功能最强的是哪一层？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q28">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q28_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q29" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q29')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q29')">
+                <div class="q-text">3 滤过膜的电荷屏障带有什么电荷？主要由什么物质构成？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q29">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q29_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q30" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q30')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q30')">
+                <div class="q-text">4 等电点（PI）的概念是什么？(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q30">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q30_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q31" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q31')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q31')">
+                <div class="q-text">5 在 PI > pH、PI = pH、PI < pH 情况下，蛋白质分子分别带有什么电荷？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q31">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q31_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q32" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q32')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q32')">
+                <div class="q-text">6 肾病患者（如肾小球肾炎）出现蛋白尿的病理基础和原因是什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q32">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q32_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q33" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q33')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q33')">
+                <div class="q-text">7 肾小球滤过的概念是什么？(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q33">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q33_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q34" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q34')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q34')">
+                <div class="q-text">8 肾小球滤过率（GFR）是指单侧还是双侧肾脏？正常值是多少？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q34">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q34_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q35" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q35')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q35')">
+                <div class="q-text">9 生理学中与体表面积（1.73 m²）相关的生理指标有哪些？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q35">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q35_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q36" data-section="8.2 肾小球滤过" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q36')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q36')">
+                <div class="q-text">10 肾小球有效滤过压（EFP）的计算公式是什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q36">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q36_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q37" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q37')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q37')">
+                <div class="q-text">11 什么是滤过平衡？在滤过过程中囊内压、毛细血管血压、血浆胶体渗透压如何变化？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q37">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q37_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q38" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q38')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q38')">
+                <div class="q-text">12 若有效滤过压降低，滤过平衡点、有效滤过面积如何变化？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q38">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q38_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q39" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q39')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q39')">
+                <div class="q-text">13 肾小球有效滤过压的影响因素有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q39">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q39_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q40" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q40')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q40')">
+                <div class="q-text">14 剧烈运动、应激、缓进型高血压、尿路结石、肿瘤压迫、蛋白管型、大量输液、肝功能受损等分别如何影响GFR？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q40">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q40_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q41" data-section="8.2 肾小球滤过" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q41')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q41')">
+                <div class="q-text">15 肾小球滤过的影响因子中，肾血浆流量与毛细血管滤过系数Kf如何调节滤过率？(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q41">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q41_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q42" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q42')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q42')">
+                <div class="q-text">16 大失血、大量快速输液对肾血浆流量及 GFR 各有何影响？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q42">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q42_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q43" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q43')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q43')">
+                <div class="q-text">17 交感神经、CA、Ang II、大剂量VP、ET、腺苷、TXA2 等缩血管物质如何影响 Kf 和 GFR？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q43">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q43_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q44" data-section="8.2 肾小球滤过" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q44')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q44')">
+                <div class="q-text">18 肾小球肾炎是如何影响有效滤过面积、Kf 以及肾小球滤过率的？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q44">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q44_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q45" data-section="8.2 肾小球滤过" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.2 肾小球滤过</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q45')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q45')">
+                <div class="q-text">19 易错小结：肾交感神经兴奋导致尿量减少的四个核心机制是什么？(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q45">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q45_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q46" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q46')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q46')">
+                <div class="q-text">1 尿生成和排出的基本过程中，滤过、重吸收、分泌的部位分别在哪里？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q46">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q46_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q47" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q47')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q47')">
+                <div class="q-text">2 肾小管和集合管的基本走行和在皮质与髓质中的分布如何？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q47">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q47_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q48" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q48')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q48')">
+                <div class="q-text">3 人体双肾生成的原尿量和终尿量大约各是多少？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q48">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q48_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q49" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q49')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q49')">
+                <div class="q-text">4 球管平衡与管球反馈在调节方式、作用、维持何种稳定及机制方面的比较？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q49">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q49_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q50" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q50')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q50')">
+                <div class="q-text">5 近端小管球管平衡的机制是什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q50">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q50_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q51" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q51')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q51')">
+                <div class="q-text">6 肾小管泌氨的生理意义是什么？泌氨方式取决于什么？氨的解毒途径？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q51">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q51_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q52" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q52')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q52')">
+                <div class="q-text">7 近端小管前半段和后半段分别重吸收 Na+ 和水的比例、途径及方式？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q52">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q52_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q53" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q53')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q53')">
+                <div class="q-text">8 近端小管重吸收葡萄糖和氨基酸的比例、转运体及吸收方式？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q53">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q53_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q54" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q54')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q54')">
+                <div class="q-text">9 什么是肾糖阈？其正常数值 and 生理意义是什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q54">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q54_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q55" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q55')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q55')">
+                <div class="q-text">10 糖尿病患者产生尿糖的机制是什么？其滤过葡萄糖量和重吸收葡萄糖量如何变化？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q55">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q55_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q56" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q56')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q56')">
+                <div class="q-text">11 化疗患者产生尿糖的机制是什么？近端小管葡萄糖转运体发生了何种改变？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q56">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q56_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q57" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q57')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q57')">
+                <div class="q-text">12 渗透性利尿的机制是什么？常见的生理 and 临床例子有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q57">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q57_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q58" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q58')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q58')">
+                <div class="q-text">13 渗透性利尿破坏了肾小管重吸收的什么基本关系？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q58">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q58_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q59" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q59')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q59')">
+                <div class="q-text">14 重吸收 HCO3- 与重吸收 Na+、分泌 H+、分泌 NH4+/NH3 的偶联关系是什么？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q59">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q59_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q60" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q60')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q60')">
+                <div class="q-text">15 重吸收 HCO3- 以什么化学形式进行？需要什么关键酶？其速度与 Cl- 相比如何？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q60">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q60_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q61" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q61')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q61')">
+                <div class="q-text">16 肾小管分泌 H+ 的主要跨膜转运方式是什么？近端小管以何种方式为主？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q61">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q61_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q62" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q62')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q62')">
+                <div class="q-text">17 肾小管分泌 NH4+/NH3 的跨膜转运方式是什么？近端小管与集合管分泌 NH4+/NH3 的方式有何区别？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q62">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q62_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q63" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q63')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q63')">
+                <div class="q-text">18 终尿中排出的 K+ 主要来源于何处？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q63">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q63_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q64" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q64')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q64')">
+                <div class="q-text">19 易错小结：近端小管对葡萄糖、氨基酸、HCO3-、水、Na+、Cl-、尿素的重吸收比例各是多少？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q64">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q64_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q65" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q65')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q65')">
+                <div class="q-text">20 调节终尿的 Na+、K+ 和水重吸收与分泌的关键部位在哪里？分别由哪些细胞行使？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q65">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q65_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q66" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q66')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q66')">
+                <div class="q-text">21 集合管的主细胞和闰细胞分别具有什么跨膜物质转运功能？两者在Na+、K+、H+转运上有什么区别？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q66">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q66_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q67" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q67')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q67')">
+                <div class="q-text">22 集合管分泌 K+ 的调节和影响因素有哪些？各因素如何影响 K+ 的分泌？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q67">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q67_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q68" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q68')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q68')">
+                <div class="q-text">23 串联：为什么酸中毒常伴有高钾血症，碱中毒伴有低钾血症？什么是“反常性酸性尿/碱性尿”？其产生的机制分别是什么？(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q68">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q68_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q69" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q69')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q69')">
+                <div class="q-text">24 串联：为什么大量输入库存血会引起高钾血症？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q69">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q69_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q70" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q70')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q70')">
+                <div class="q-text">25 串联：为什么低钾血症患者在补钾后血钾仍不改善？此时应考虑补充什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q70">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q70_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q71" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q71')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q71')">
+                <div class="q-text">26 调节尿生成的三个主要体液调节系统是什么？各行使什么基本调节效应？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q71">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q71_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q72" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q72')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q72')">
+                <div class="q-text">27 肾交感神经兴奋如何调节尿的生成？其对肾血流量、GFR 以及肾小管重吸收有何作用？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q72">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q72_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q73" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q73')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q73')">
+                <div class="q-text">28 尿生成体液调节的靶点主要分布在哪里？(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q73">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q73_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q74" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q74')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q74')">
+                <div class="q-text">29 RAAS 系统的启动刺激是什么？肾素是由什么细胞分泌的？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q74">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q74_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q75" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q75')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q75')">
+                <div class="q-text">30 血管紧张素 II（Ang II）对肾小管的重吸收有什么调节作用？它是如何影响毛细血管血压和血浆胶体渗透压的？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q75">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q75_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q76" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q76')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q76')">
+                <div class="q-text">31 醛固酮的化学本质是什么？它在集合管的主细胞上起什么作用？其发挥效应的跨膜蛋白载体有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q76">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q76_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q77" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q77')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q77')">
+                <div class="q-text">32 调节和刺激醛固酮释放和分泌的影响因素有哪些？最重要的是什么？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q77">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q77_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q78" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q78')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q78')">
+                <div class="q-text">33 串联：原发性醛固酮增多症和 Liddle 综合征在临床表现上有何相似与区别？如何进行药物治疗？(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q78">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q78_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q79" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q79')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q79')">
+                <div class="q-text">34 抗利尿激素（ADH/VP）的来源、本质及合成和释放部位是什么？它的基本生理功能有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q79">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q79_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q80" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q80')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q80')">
+                <div class="q-text">35 ADH 在集合管主细胞抗利尿的分子作用机制是什么？它与何种受体结合？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q80">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q80_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q81" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q81')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q81')">
+                <div class="q-text">36 调节 ADH 释放和分泌的影响因素有哪些？最敏感和最重要的分别是什么？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q81">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q81_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q82" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q82')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q82')">
+                <div class="q-text">37 大量出汗、高热、严重呕吐或腹泻时，尿量如何变化？其机制是什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q82">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q82_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q83" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q83')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q83')">
+                <div class="q-text">38 什么是水利尿？其产生的机制是什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q83">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q83_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q84" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q84')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q84')">
+                <div class="q-text">39 核心对比：ADH 与醛固酮在维持目标、化学本质、受体、主要生理作用、受体拮抗剂等方面的异同？(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q84">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q84_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q85" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q85')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q85')">
+                <div class="q-text">40 刺激心房钠尿肽（ANP）释放和分泌的影响因素有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q85">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q85_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q86" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q86')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q86')">
+                <div class="q-text">41 ANP 降低尿量、增加 Na+ 和水排出的主要机制和靶器官作用是什么？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q86">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q86_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q87" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q87')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q87')">
+                <div class="q-text">42 尿液浓缩和稀释的调节对象是什么？(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q87">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q87_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q88" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q88')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q88')">
+                <div class="q-text">43 终尿浓缩和稀释需要满足的三个条件是什么？肾髓质高渗梯度在外髓部和内髓部分别由什么溶质形成？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q88">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q88_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q88_2.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q89" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q89')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q89')">
+                <div class="q-text">44 肾髓质组织间液高渗梯度建立和形成的溶质基础是什么？外髓和内髓有何区别？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q89">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q89_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q89_2.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q90" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q90')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q90')">
+                <div class="q-text">45 直小血管在肾髓质组织间液高渗梯度的维持中起什么作用？其结构特点是什么？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q90">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q90_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q91" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q91')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q91')">
+                <div class="q-text">46 区分：形成/建立高渗梯度的因素与维持高渗梯度的结构分别是什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q91">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q91_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q92" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q92')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q92')">
+                <div class="q-text">47 ADH 对终尿的浓缩和稀释起什么调节作用？(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q92">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q92_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q93" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q93')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q93')">
+                <div class="q-text">48 什么是“逆流倍增”？肾髓质高渗梯度是如何由皮质向内髓逐渐增加的？(II B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q93">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q93_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q94" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q94')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q94')">
+                <div class="q-text">49 逆流倍增和逆流交换的过程中，降支细段、升支细段、升支粗段对水、Na+、Cl-、尿素的通透性分别如何？(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q94">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q94_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q95" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="B">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-mod">B级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q95')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q95')">
+                <div class="q-text">50 调节终尿浓缩和稀释的关键部位在哪里？(I B)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q95">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q95_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q96" data-section="8.3 小管物质转运与调节" data-diff="I级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-easy">I级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q96')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q96')">
+                <div class="q-text">51 逆流倍增建立高渗梯度的最重要起始动力是什么？(I A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q96">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q96_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q97" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q97')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q97')">
+                <div class="q-text">52 肾髓质组织间液高渗梯度形成的重要因素和转运体有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q97">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q97_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q98" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q98')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q98')">
+                <div class="q-text">53 影响髓质间液高渗形成的物理、解剖及营养因素有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q98">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q98_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q99" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q99')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q99')">
+                <div class="q-text">54 袢利尿剂、营养不良、肾血流速度明显下降、髓袢短、直小血管血流增快、尿崩症等如何影响肾脏浓缩稀释功能？(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q99">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q99_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q100" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q100')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q100')">
+                <div class="q-text">55 影响髓质间液高渗维持的因素有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q100">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q100_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q101" data-section="8.3 小管物质转运与调节" data-diff="II级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-medium">II级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q101')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q101')">
+                <div class="q-text">56 影响集合管对水的通透性的因素有哪些？(II A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q101">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q101_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="qa-card" data-id="q102" data-section="8.3 小管物质转运与调节" data-diff="III级" data-imp="A">
+            <div class="card-header">
+                <span class="sec-badge">8.3 小管物质转运与调节</span>
+                <span class="badge badge-hard">III级</span>
+                <span class="badge badge-high">A级重要</span>
+                <label class="mastered-label">
+                    <input type="checkbox" class="mastered-chk" onchange="toggleMastered('q102')">
+                    <span>已掌握</span>
+                </label>
+            </div>
+            <div class="card-question" onclick="toggleAnswer('q102')">
+                <div class="q-text">57 专题串联：常用利尿药（袢利尿剂、噻嗪类、螺内酯、氨苯蝶啶、阿米洛利、托伐普坦）的作用部位、主要分子机制、排出物变化及对尿液浓缩稀释功能的影响？(III A)</div>
+                <div class="toggle-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                </div>
+            </div>
+            <div class="card-answer" id="ans-q102">
+                <div class="img-container">
+                    
+            <div class="img-wrapper">
+                <div class="img-loader"></div>
+                <img src="images/q102_1.png" alt="讲义原图答案" loading="lazy" onload="hideLoader(this)" onerror="showError(this)">
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        let masteredIds = new Set();
+        let currentSection = 'all';
+        let allExpanded = false;
+        const storageKey = 'urinary_mastered';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem(storageKey);
+            if (saved) {
+                try {
+                    const arr = JSON.parse(saved);
+                    masteredIds = new Set(arr);
+                } catch(e) {}
+            }
+            
+            document.querySelectorAll('.qa-card').forEach(card => {
+                const id = card.getAttribute('data-id');
+                const chk = card.querySelector('.mastered-chk');
+                if (masteredIds.has(id)) {
+                    card.classList.add('mastered');
+                    chk.checked = true;
+                }
+            });
+            
+            updateProgress();
+        });
+
+        function toggleAnswer(id) {
+            const card = document.querySelector(`.qa-card[data-id="${id}"]`);
+            const answer = document.getElementById(`ans-${id}`);
+            if (!card || !answer) return;
+            
+            if (card.classList.contains('expanded')) {
+                answer.style.maxHeight = '0px';
+                card.classList.remove('expanded');
+            } else {
+                card.classList.add('expanded');
+                answer.style.maxHeight = 'none';
+                const fullHeight = answer.scrollHeight;
+                answer.style.maxHeight = '0px';
+                answer.offsetHeight;
+                answer.style.maxHeight = fullHeight + 'px';
+                
+                setTimeout(() => {
+                    if (card.classList.contains('expanded')) {
+                        answer.style.maxHeight = 'none';
+                    }
+                }, 350);
+            }
+        }
+
+        function hideLoader(img) {
+            img.style.opacity = '1';
+            const loader = img.previousElementSibling;
+            if (loader) loader.style.display = 'none';
+        }
+
+        function showError(img) {
+            const loader = img.previousElementSibling;
+            if (loader) loader.style.display = 'none';
+            img.style.display = 'none';
+            
+            if (img.parentNode.querySelector('.img-error-msg')) return;
+            
+            const errDiv = document.createElement('div');
+            errDiv.className = 'img-error-msg';
+            errDiv.innerHTML = '<div style="color: #ef4444; font-size: 0.88rem; padding: 20px; text-align: center; border: 1px dashed rgba(239,68,68,0.3); border-radius: 6px; background: rgba(239,68,68,0.05); margin: 10px;">图片加载失败<br><span style="font-size: 0.75rem; color: #94a3b8; margin-top: 4px; display: block;">可能原因：您正在使用 localhost 并且本地服务被关闭。<br>解决方式：直接双击打开该 HTML 本地文件即可。</span></div>';
+            img.parentNode.appendChild(errDiv);
+        }
+
+        function toggleMastered(id) {
+            const card = document.querySelector(`.qa-card[data-id="${id}"]`);
+            const chk = card.querySelector('.mastered-chk');
+            if (!card) return;
+            
+            if (chk.checked) {
+                card.classList.add('mastered');
+                masteredIds.add(id);
+            } else {
+                card.classList.remove('mastered');
+                masteredIds.delete(id);
+            }
+            
+            localStorage.setItem(storageKey, JSON.stringify(Array.from(masteredIds)));
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = document.querySelectorAll('.qa-card').length;
+            const mastered = masteredIds.size;
+            const pct = total > 0 ? Math.round((mastered / total) * 100) : 0;
+            
+            document.getElementById('progress-bar').style.width = pct + '%';
+            document.getElementById('progress-text').innerText = `已掌握 ${mastered} / ${total} (${pct}%)`;
+        }
+
+        function resetProgress() {
+            if (confirm('确定要清除所有已掌握记录吗？')) {
+                masteredIds.clear();
+                localStorage.removeItem(storageKey);
+                document.querySelectorAll('.qa-card').forEach(card => {
+                    card.classList.remove('mastered');
+                    card.querySelector('.mastered-chk').checked = false;
+                });
+                updateProgress();
+            }
+        }
+
+        function filterSection(sec) {
+            currentSection = sec;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText === sec || (sec === 'all' && btn.innerText === '全部章节')) {
+                    btn.classList.add('active');
+                }
+            });
+            filterCards();
+        }
+
+        function filterCards() {
+            const qQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            const diffFilter = document.getElementById('diff-filter').value;
+            const impFilter = document.getElementById('imp-filter').value;
+            
+            document.querySelectorAll('.qa-card').forEach(card => {
+                const sec = card.getAttribute('data-section');
+                const diff = card.getAttribute('data-diff');
+                const imp = card.getAttribute('data-imp');
+                const qText = card.querySelector('.q-text').innerText.toLowerCase();
+                
+                let visible = true;
+                if (currentSection !== 'all' && sec !== currentSection) visible = false;
+                if (diffFilter !== 'all' && diff !== diffFilter) visible = false;
+                if (impFilter !== 'all' && imp !== impFilter) visible = false;
+                if (qQuery.length > 0 && !qText.includes(qQuery)) visible = false;
+                
+                card.style.display = visible ? 'block' : 'none';
+            });
+        }
+
+        function toggleAllAnswers() {
+            allExpanded = !allExpanded;
+            const btn = document.getElementById('toggle-all-btn');
+            btn.innerText = allExpanded ? '全部收起' : '全部展开';
+            
+            document.querySelectorAll('.qa-card').forEach(card => {
+                if (card.style.display === 'none') return;
+                
+                const id = card.getAttribute('data-id');
+                const answer = document.getElementById(`ans-${id}`);
+                const isExpanded = card.classList.contains('expanded');
+                
+                if (allExpanded && !isExpanded) {
+                    card.classList.add('expanded');
+                    answer.style.maxHeight = 'none';
+                    const fullHeight = answer.scrollHeight;
+                    answer.style.maxHeight = '0px';
+                    answer.offsetHeight;
+                    answer.style.maxHeight = fullHeight + 'px';
+                    setTimeout(() => {
+                        if (card.classList.contains('expanded')) answer.style.maxHeight = 'none';
+                    }, 350);
+                } else if (!allExpanded && isExpanded) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    answer.offsetHeight;
+                    answer.style.maxHeight = '0px';
+                    card.classList.remove('expanded');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
