@@ -1116,7 +1116,12 @@
                     } else if (res.status === 401) {
                         return { success: false, message: '账号或应用密码不正确' };
                     } else {
-                        return { success: false, message: `连接失败，状态码: ${res.status}` };
+                        let errMsg = `连接失败，状态码: ${res.status}`;
+                        try {
+                            const txt = await res.text();
+                            if (txt && txt.length < 200) errMsg += `\n中转站返回: ${txt}`;
+                        } catch(e) {}
+                        return { success: false, message: errMsg };
                     }
                 } catch (e) {
                     console.error(e);
