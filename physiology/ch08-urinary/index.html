@@ -5052,14 +5052,16 @@
             },
             
             getRequestUrl(config) {
+                let proxy = config.proxy.trim();
+                
+                // 留空时使用本站内置反代接口（同源请求，无需跨域）
+                if (!proxy) return '/api/webdav';
+                
                 let serverUrl = config.serverUrl.trim();
                 if (!serverUrl.endsWith('/')) {
                     serverUrl += '/';
                 }
                 const fileUrl = serverUrl + 'med_study_progress.json';
-                
-                let proxy = config.proxy.trim();
-                if (!proxy) return fileUrl;
                 
                 if (proxy.endsWith('?')) {
                     return proxy + fileUrl;

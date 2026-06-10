@@ -1067,14 +1067,16 @@
             
             // 拼接请求 URL
             getRequestUrl(config) {
+                let proxy = config.proxy.trim();
+                
+                // 留空时使用本站内置反代接口（同源请求，无需跨域）
+                if (!proxy) return '/api/webdav';
+                
                 let serverUrl = config.serverUrl.trim();
                 if (!serverUrl.endsWith('/')) {
                     serverUrl += '/';
                 }
                 const fileUrl = serverUrl + 'med_study_progress.json';
-                
-                let proxy = config.proxy.trim();
-                if (!proxy) return fileUrl;
                 
                 if (proxy.endsWith('?')) {
                     return proxy + fileUrl;
@@ -1530,8 +1532,8 @@
 
                 <div class="input-group">
                     <label class="input-label">CORS 跨域代理地址 (选填)</label>
-                    <input type="text" id="sync-proxy" class="input-field" placeholder="如 https://corsproxy.io/?">
-                    <div class="input-desc">因浏览器跨域限制，若直连坚果云失败，请配置跨域代理（推荐配置免激活直接可用的代理：<code>https://corsproxy.io/?</code>）。留空为直连。</div>
+                    <input type="text" id="sync-proxy" class="input-field" placeholder="留空即可，系统已内置中转">
+                    <div class="input-desc">系统已内置坚果云中转接口，<strong>留空即可正常使用</strong>。如需使用自定义代理，可填入代理地址。</div>
                 </div>
                 
                 <div class="modal-actions">
