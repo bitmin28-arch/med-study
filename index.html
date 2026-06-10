@@ -1401,72 +1401,84 @@
         }
 
         async function saveSyncSettings() {
-            const email = document.getElementById('sync-email').value.trim();
-            const password = document.getElementById('sync-password').value.trim();
-            const proxy = document.getElementById('sync-proxy').value.trim();
-            
-            if (!email || !password) {
-                alert('请输入坚果云账号及应用密码！');
-                return;
+            try {
+                const email = document.getElementById('sync-email').value.trim();
+                const password = document.getElementById('sync-password').value.trim();
+                const proxy = document.getElementById('sync-proxy').value.trim();
+                
+                if (!email || !password) {
+                    alert('请输入坚果云账号及应用密码！');
+                    return;
+                }
+                
+                const tempConfig = {
+                    email,
+                    password,
+                    proxy,
+                    serverUrl: 'https://dav.jianguoyun.com/dav/'
+                };
+                
+                updateSyncStatusUI('syncing');
+                
+                const testResult = await WebDAVSync.testConnection(tempConfig);
+                if (!testResult.success) {
+                    alert('保存失败，连接测试未通过：\n' + testResult.message);
+                    updateSyncStatusUI('error', '测试未通过');
+                    return;
+                }
+                
+                localStorage.setItem('webdav_email', email);
+                localStorage.setItem('webdav_password', password);
+                localStorage.setItem('webdav_proxy', proxy);
+                
+                if (!testResult.exist) {
+                    const local = ProgressManager.getLocal();
+                    local.updatedAt = Date.now();
+                    await WebDAVSync.push(local);
+                    ProgressManager.saveLocal(local);
+                }
+                
+                alert('同步配置保存成功并已启用！🎉');
+                closeSyncModal();
+                syncProcess();
+            } catch (e) {
+                console.error(e);
+                alert('保存并启用失败，发生非预期错误：\n' + (e.message || e));
+                updateSyncStatusUI('error', '启用失败');
             }
-            
-            const tempConfig = {
-                email,
-                password,
-                proxy,
-                serverUrl: 'https://dav.jianguoyun.com/dav/'
-            };
-            
-            updateSyncStatusUI('syncing');
-            
-            const testResult = await WebDAVSync.testConnection(tempConfig);
-            if (!testResult.success) {
-                alert('保存失败，连接测试未通过：\n' + testResult.message);
-                updateSyncStatusUI('error', '测试未通过');
-                return;
-            }
-            
-            localStorage.setItem('webdav_email', email);
-            localStorage.setItem('webdav_password', password);
-            localStorage.setItem('webdav_proxy', proxy);
-            
-            if (!testResult.exist) {
-                const local = ProgressManager.getLocal();
-                local.updatedAt = Date.now();
-                await WebDAVSync.push(local);
-                ProgressManager.saveLocal(local);
-            }
-            
-            alert('同步配置保存成功并已启用！🎉');
-            closeSyncModal();
-            syncProcess();
         }
 
         async function testSyncConnection() {
-            const email = document.getElementById('sync-email').value.trim();
-            const password = document.getElementById('sync-password').value.trim();
-            const proxy = document.getElementById('sync-proxy').value.trim();
-            
-            if (!email || !password) {
-                alert('请输入账号及应用密码！');
-                return;
-            }
-            
-            const tempConfig = {
-                email,
-                password,
-                proxy,
-                serverUrl: 'https://dav.jianguoyun.com/dav/'
-            };
-            
-            updateSyncStatusUI('syncing');
-            
-            const testResult = await WebDAVSync.testConnection(tempConfig);
-            if (testResult.success) {
-                alert('连接测试成功！🎉\n云端备份文件状态: ' + (testResult.exist ? '已存在' : '尚未创建 (保存后将自动创建)'));
-                updateSyncStatusUI('success', '测试成功');
-            } else {
-                alert('连接测试失败 ❌\n' + testResult.message);
+            try {
+                const email = document.getElementById('sync-email').value.trim();
+                const password = document.getElementById('sync-password').value.trim();
+                const proxy = document.getElementById('sync-proxy').value.trim();
+                
+                if (!email || !password) {
+                    alert('请输入账号及应用密码！');
+                    return;
+                }
+                
+                const tempConfig = {
+                    email,
+                    password,
+                    proxy,
+                    serverUrl: 'https://dav.jianguoyun.com/dav/'
+                };
+                
+                updateSyncStatusUI('syncing');
+                
+                const testResult = await WebDAVSync.testConnection(tempConfig);
+                if (testResult.success) {
+                    alert('连接测试成功！🎉\n云端备份文件状态: ' + (testResult.exist ? '已存在' : '尚未创建 (保存后将自动创建)'));
+                    updateSyncStatusUI('success', '测试成功');
+                } else {
+                    alert('连接测试失败 ❌\n' + testResult.message);
+                    updateSyncStatusUI('error', '测试失败');
+                }
+            } catch (e) {
+                console.error(e);
+                alert('测试连接失败，发生非预期错误：\n' + (e.message || e));
                 updateSyncStatusUI('error', '测试失败');
             }
         }
