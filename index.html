@@ -266,6 +266,157 @@
             box-shadow: 0 0 5px var(--green-glow);
         }
 
+        /* 仪表盘新版样式 */
+        .dashboard-panel {
+            max-width: 600px;
+            margin: 20px auto 0 auto;
+            background: rgba(30, 41, 59, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: left;
+        }
+
+        .dashboard-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .dashboard-title-row h2 {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .global-stats-badge {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .stat-box {
+            background: rgba(15, 23, 42, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 10px 4px;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .stat-box:hover {
+            transform: translateY(-1px);
+            border-color: rgba(96, 165, 250, 0.15);
+        }
+
+        .stat-num {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 2px;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .global-progress-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .stats-header-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-container-new {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-new {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--green));
+            border-radius: 4px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .chapters-compare-panel {
+            border-top: 1px dashed rgba(255, 255, 255, 0.06);
+            padding-top: 14px;
+        }
+
+        .compare-title {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .compare-item {
+            margin-bottom: 10px;
+        }
+        .compare-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .compare-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            margin-bottom: 4px;
+        }
+
+        .compare-bar-bg {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.04);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .compare-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            transition: width 0.5s ease-out;
+        }
+        
+        .bar-ch1 { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .bar-ch8 { background: linear-gradient(90deg, #8b5cf6, #d946ef); }
+        .bar-ch11 { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+
         @media (max-width: 600px) {
             h1 { font-size: 1.35rem; }
             .grid-layout { grid-template-columns: 1fr; }
@@ -278,13 +429,64 @@
         <h1>医学提纲带背自测系统</h1>
         <div class="subtitle">基于记忆卡片与主动回想的西综高效率背诵方案</div>
         
-        <div class="global-stats-card">
-            <div class="stats-header">
-                <span class="stats-title">生理学总复习进度</span>
-                <span class="stats-pct" id="global-progress-text">已掌握 0 / 92 (0%)</span>
+        <!-- 新版复习进度看板 -->
+        <div class="dashboard-panel">
+            <div class="dashboard-title-row">
+                <h2>📊 复习进度看板</h2>
+                <div class="global-stats-badge" id="global-pct-badge">总掌握 0%</div>
             </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar" id="global-progress-bar"></div>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-num" id="stat-total-mastered">0</div>
+                    <div class="stat-label">已攻克 (题)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num" id="stat-total-left">224</div>
+                    <div class="stat-label">待温习 (题)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num" id="stat-total-all">224</div>
+                    <div class="stat-label">题库总量 (题)</div>
+                </div>
+            </div>
+            
+            <div class="global-progress-wrapper">
+                <div class="stats-header-text">
+                    <span>生理学全局掌握度</span>
+                    <span id="global-progress-text-new">已掌握 0 / 224 (0%)</span>
+                </div>
+                <div class="progress-bar-container-new">
+                    <div class="progress-bar-new" id="global-progress-bar-new"></div>
+                </div>
+            </div>
+            
+            <div class="chapters-compare-panel">
+                <div class="compare-title">分章掌握度对比</div>
+                
+                <div class="compare-item">
+                    <div class="compare-info">
+                        <span class="compare-name">第1章 绪论</span>
+                        <span class="compare-val" id="compare-ch1-pct">0%</span>
+                    </div>
+                    <div class="compare-bar-bg"><div class="compare-bar bar-ch1" id="compare-ch1-bar"></div></div>
+                </div>
+                
+                <div class="compare-item">
+                    <div class="compare-info">
+                        <span class="compare-name">第8章 尿的生成和排出</span>
+                        <span class="compare-val" id="compare-ch8-pct">0%</span>
+                    </div>
+                    <div class="compare-bar-bg"><div class="compare-bar bar-ch8" id="compare-ch8-bar"></div></div>
+                </div>
+                
+                <div class="compare-item">
+                    <div class="compare-info">
+                        <span class="compare-name">第11章 内分泌</span>
+                        <span class="compare-val" id="compare-ch11-pct">0%</span>
+                    </div>
+                    <div class="compare-bar-bg"><div class="compare-bar bar-ch11" id="compare-ch11-bar"></div></div>
+                </div>
             </div>
         </div>
     </header>
@@ -561,14 +763,27 @@
             // Global Statistics
             const totalMastered = ch1Mastered + ch8Mastered + ch11Mastered;
             const totalQuestions = ch1Total + ch8Total + ch11Total;
-            const globalPct = Math.round((totalMastered / totalQuestions) * 100);
+            const globalPct = totalQuestions > 0 ? Math.round((totalMastered / totalQuestions) * 100) : 0;
             
-            document.getElementById('global-progress-text').innerText = `已掌握 ${totalMastered} / ${totalQuestions} (${globalPct}%)`;
-            const globalBar = document.getElementById('global-progress-bar');
-            globalBar.style.width = `${globalPct}%`;
-            if (globalPct === 100) {
-                globalBar.style.background = 'var(--green)';
-            }
+            // Render new stat widgets
+            document.getElementById('stat-total-mastered').innerText = totalMastered;
+            document.getElementById('stat-total-left').innerText = totalQuestions - totalMastered;
+            document.getElementById('stat-total-all').innerText = totalQuestions;
+            document.getElementById('global-pct-badge').innerText = `总掌握 ${globalPct}%`;
+            
+            document.getElementById('global-progress-text-new').innerText = `已掌握 ${totalMastered} / ${totalQuestions} (${globalPct}%)`;
+            const globalBarNew = document.getElementById('global-progress-bar-new');
+            globalBarNew.style.width = `${globalPct}%`;
+            
+            // Render chapter breakdown bars
+            document.getElementById('compare-ch1-pct').innerText = `${ch1Pct}%`;
+            document.getElementById('compare-ch1-bar').style.width = `${ch1Pct}%`;
+            
+            document.getElementById('compare-ch8-pct').innerText = `${ch8Pct}%`;
+            document.getElementById('compare-ch8-bar').style.width = `${ch8Pct}%`;
+            
+            document.getElementById('compare-ch11-pct').innerText = `${ch11Pct}%`;
+            document.getElementById('compare-ch11-bar').style.width = `${ch11Pct}%`;
         });
     </script>
 </body>
