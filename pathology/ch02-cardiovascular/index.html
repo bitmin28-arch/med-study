@@ -346,6 +346,31 @@
             display: none;
         }
         @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+        
+        .action-btn-toggle {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+        .action-btn-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .action-btn-toggle.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.45);
+            color: #60a5fa;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -405,10 +430,9 @@
     </header>
 
     <div class="container" id="cards-container">
-        <!-- 病理学本章提纲尚待录入，展示空状态及快速浏览大图按钮 -->
         <div class="empty-tips">
             <div class="empty-tips-title">💡 本章自测提纲正在建设中</div>
-            <div>我们已同步上线了天天师兄的精编版思维导图与笔记（共 25 页）</div>
+            <div>我们已同步上线了天天师兄的精编版思维导图（共 5 页）</div>
             <div>建议您点击下方按钮或右上角“思维导图”开始浏览。</div>
             <button class="empty-tips-btn" onclick="openMindmap()">📚 立即浏览本章思维导图</button>
         </div>
@@ -477,7 +501,7 @@
         // ==========================================
         // 思维导图灯箱交互与自适应缩放平移控制逻辑
         // ==========================================
-        const mapImages = ["images/page_39.png?v=1781183759", "images/page_40.png?v=1781183759", "images/page_41.png?v=1781183759", "images/page_42.png?v=1781183759", "images/page_43.png?v=1781183759", "images/page_44.png?v=1781183759", "images/page_45.png?v=1781183759", "images/page_46.png?v=1781183759", "images/page_47.png?v=1781183759", "images/page_48.png?v=1781183759", "images/page_49.png?v=1781183759", "images/page_50.png?v=1781183759", "images/page_51.png?v=1781183759", "images/page_52.png?v=1781183759", "images/page_53.png?v=1781183759", "images/page_54.png?v=1781183759", "images/page_55.png?v=1781183759", "images/page_56.png?v=1781183759", "images/page_57.png?v=1781183759", "images/page_58.png?v=1781183759", "images/page_59.png?v=1781183759", "images/page_60.png?v=1781183759", "images/page_61.png?v=1781183759", "images/page_62.png?v=1781183759", "images/page_63.png?v=1781183759"];
+        const mapImages = ["images/page_40.png?v=1781187646", "images/page_45.png?v=1781187646", "images/page_49.png?v=1781187646", "images/page_57.png?v=1781187646", "images/page_63.png?v=1781187646"];
         let zoom = 1;
         let panX = 0;
         let panY = 0;
