@@ -3,293 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>病理学 · 肿瘤</title>
+    <title>病理学 · 肿瘤提纲带背</title>
     <style>
         :root {
             --bg-color: #0b0f19;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --border-color: rgba(255, 255, 255, 0.08);
+            --card-bg: #1e293b;
             --text-color: #f1f5f9;
             --text-muted: #94a3b8;
-            --primary: #8b5cf6;
-            --primary-glow: rgba(139, 92, 246, 0.3);
-            --accent: #3b82f6;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --accent: #8b5cf6;
+            --border: #334155;
+            --green: #10b981;
         }
-
+        
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
         }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK SC", sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+            padding-bottom: 50px;
         }
-
-        /* 顶部导航 */
+        
         header {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(15, 23, 42, 0.9) 100%);
+            position: sticky;
+            top: 0;
+            background-color: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 14px 20px;
-            position: fixed;
-            top: 0; left: 0; right: 0;
+            border-bottom: 1px solid var(--border);
+            padding: 15px 20px;
             z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-
-        .header-row {
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .header-title-row {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            max-width: 1000px;
-            margin: 0 auto;
             gap: 12px;
         }
 
-        .back-btn {
+        .back-home-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            padding: 7px 14px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: rgba(255, 255, 255, 0.03);
-            transition: all 0.2s ease;
+            gap: 4px;
+            transition: all 0.2s;
         }
 
-        .back-btn:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
+        .back-home-btn:hover {
+            background: rgba(255,255,255,0.1);
         }
 
         h1 {
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #a78bfa, #818cf8);
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-align: center;
-            flex: 1;
         }
-
-        .top-action-btn {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: #fff;
-            border: none;
-            padding: 7px 16px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px var(--primary-glow);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .top-action-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px var(--primary-glow);
-            filter: brightness(1.1);
-        }
-
-        /* 页面中央引导区域 */
-        main {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 100px 20px 40px 20px;
-            max-width: 800px;
-            margin: 0 auto;
+        
+        .progress-container {
             width: 100%;
+            background-color: rgba(255,255,255,0.05);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 15px;
         }
-
-        .info-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 40px 30px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            width: 100%;
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.4s ease;
+            box-shadow: 0 0 8px var(--primary-glow);
         }
-
-        .info-icon {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .info-title {
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 12px;
-        }
-
-        .info-desc {
-            font-size: 0.95rem;
+        
+        .progress-text {
+            font-size: 0.8rem;
             color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 30px;
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 10px;
         }
-
-        .large-action-btn {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: #fff;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 6px 20px var(--primary-glow);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .large-action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--primary-glow);
-            filter: brightness(1.1);
-        }
-
-        /* 思维导图全屏灯箱 */
-        .mindmap-modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0; top: 0;
-            width: 100vw; height: 100vh;
-            background-color: rgba(3, 7, 18, 0.97);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        
+        .controls {
+            display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            gap: 10px;
         }
-
-        .modal-top-bar {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.9);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 20px;
+        
+        .search-box {
             display: flex;
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
             align-items: center;
-            justify-content: space-between;
-            z-index: 2010;
         }
-
-        .modal-title-text {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #f1f5f9;
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            flex: 1;
+            font-size: 0.9rem;
+            outline: none;
         }
-
-        .modal-controls {
+        
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .filter-row {
             display: flex;
-            align-items: center;
             gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none;
         }
-
-        .modal-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: #cbd5e1;
-            border: 1px solid var(--border-color);
+        
+        .filter-row::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab-btn, .filter-select {
+            background-color: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+        
+        .filter-select {
+            background-color: rgba(30, 41, 59, 0.8);
+            color: var(--text-color);
+            outline: none;
+        }
+        
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s;
-            user-select: none;
         }
-        .modal-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.2);
+        
+        .action-btn:hover, .action-btn:active {
+            background-color: rgba(255,255,255,0.05);
+            color: white;
         }
-        .modal-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
+        
+        .container {
+            max-width: 768px;
+            margin: 20px auto;
+            padding: 0 15px;
         }
-
-        .modal-page-info {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            min-width: 80px;
+        
+        /* 空状态占位提示样式 */
+        .empty-tips {
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            padding: 40px 20px;
             text-align: center;
+            color: var(--text-muted);
+            background: rgba(30, 41, 59, 0.2);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+        
+        .empty-tips-title {
+            font-size: 1.1rem;
             font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .empty-tips-btn {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.2);
+        }
+        .empty-tips-btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
         }
 
-        .modal-close-btn {
-            background: none;
-            border: none;
+        @media (max-width: 480px) {
+            header { padding: 10px 15px; }
+            .container { padding: 0 10px; }
+        }
+        
+        /* 思维导图 Modal 样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(3, 7, 18, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
             color: #94a3b8;
-            font-size: 1.8rem;
+            font-size: 35px;
             font-weight: bold;
             cursor: pointer;
             transition: color 0.2s;
-            line-height: 1;
+            z-index: 1010;
         }
-        .modal-close-btn:hover {
-            color: #ef4444;
+        .modal-close:hover {
+            color: #f3f4f6;
         }
-
+        .modal-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 95%;
+            height: 90%;
+            max-width: 1200px;
+            position: relative;
+        }
+        .modal-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            z-index: 1005;
+        }
+        .modal-btn {
+            background-color: #1e293b;
+            color: #f3f4f6;
+            border: 1px solid #334155;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .modal-btn:hover {
+            background-color: #334155;
+            border-color: #475569;
+        }
+        .modal-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .modal-page-num {
+            color: #94a3b8;
+            font-size: 0.88rem;
+        }
         .modal-viewport {
             flex: 1;
             width: 100%;
             overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid #1e293b;
+            background-color: #030712;
             position: relative;
             cursor: grab;
-            background-color: #030712;
         }
         .modal-viewport:active {
             cursor: grabbing;
         }
-
         #mindmap-img {
             position: absolute;
-            transform-origin: 0 0;
             max-width: none;
             max-height: none;
+            transform-origin: 0 0;
+            transition: transform 0.05s ease-out;
             user-select: none;
             -webkit-user-drag: none;
         }
-
+        
         .loading-spinner {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             width: 40px; height: 40px;
             border: 3px solid rgba(255, 255, 255, 0.05);
-            border-top-color: #8b5cf6;
+            border-top-color: #3b82f6;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            z-index: 2005;
+            z-index: 1003;
+            display: none;
         }
         @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
     </style>
@@ -297,88 +351,180 @@
 <body>
 
     <header>
-        <div class="header-row">
-            <a href="../../index.html" class="back-btn">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                返回主页
-            </a>
-            <h1>病理学 · 肿瘤</h1>
-            <button class="top-action-btn" onclick="openMindmap()">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                浏览思维导图
-            </button>
+        <div class="header-top">
+            <div class="header-title-row">
+                <a href="../../index.html" class="back-home-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    返回主页
+                </a>
+                <h1>病理学 · 肿瘤提纲带背</h1>
+                
+                <button class="back-home-btn" onclick="openMindmap()" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15)); border-color: rgba(59, 130, 246, 0.4); color: #fff;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    思维导图
+                </button>
+            </div>
+            <button class="action-btn" onclick="resetProgress()">重置状态</button>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-text" id="progress-text">已掌握 0 / 0 (0%)</div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索问题关键字..." oninput="filterCards()">
+            </div>
+            
+            <div class="filter-row">
+                <button class="tab-btn active" onclick="filterSection('all')">全部章节</button>
+            </div>
+            
+            <div class="actions-row">
+                <select class="filter-select" id="diff-filter" onchange="filterCards()">
+                    <option value="all">全部难度</option>
+                    <option value="I级">I级 (简单)</option>
+                    <option value="II级">II级 (中等)</option>
+                    <option value="III级">III级 (较难)</option>
+                </select>
+                
+                <select class="filter-select" id="imp-filter" onchange="filterCards()">
+                    <option value="all">全部重要度</option>
+                    <option value="A">A级 (极重要)</option>
+                    <option value="B">B级 (重要)</option>
+                    <option value="C">C级 (一般)</option>
+                </select>
+                
+                <button class="action-btn-toggle" id="star-filter-btn" onclick="toggleStarFilter()">⭐️ 仅看星标</button>
+                <button class="action-btn-toggle" id="eb-filter-btn" onclick="toggleEbFilter()">🕒 今日待复习</button>
+                
+                <button class="action-btn" id="toggle-all-btn" onclick="toggleAllAnswers()">全部展开</button>
+            </div>
         </div>
     </header>
 
-    <main>
-        <div class="info-card">
-            <span class="info-icon">📚</span>
-            <h2 class="info-title">本章自测卡片筹备中</h2>
-            <p class="info-desc">
-                本章自测题目提纲正在整理校对中，稍后发布。<br>
-                我们已同步上线天天师兄的<strong>精编版思维导图与笔记（共 4 页）</strong>，包含所有的知识要点。建议您点击下方按钮开始浏览学习。
-            </p>
-            <button class="large-action-btn" onclick="openMindmap()">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: middle;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                立即浏览思维导图与笔记
-            </button>
+    <div class="container" id="cards-container">
+        <!-- 病理学本章提纲尚待录入，展示空状态及快速浏览大图按钮 -->
+        <div class="empty-tips">
+            <div class="empty-tips-title">💡 本章自测提纲正在建设中</div>
+            <div>我们已同步上线了天天师兄的精编版思维导图与笔记（共 4 页）</div>
+            <div>建议您点击下方按钮或右上角“思维导图”开始浏览。</div>
+            <button class="empty-tips-btn" onclick="openMindmap()">📚 立即浏览本章思维导图</button>
         </div>
-    </main>
-
-    <!-- 思维导图查看灯箱 -->
-    <div id="mindmap-modal" class="mindmap-modal">
-        <div class="modal-top-bar">
-            <span class="modal-title-text">肿瘤 · 精编笔记</span>
+    </div>
+    
+    <!-- 思维导图灯箱 HTML -->
+    <div id="mindmap-modal" class="modal">
+        <span class="modal-close" onclick="closeMindmap()">&times;</span>
+        <div class="modal-content-wrapper">
             <div class="modal-controls">
-                <button class="modal-btn" id="prev-btn" onclick="changePage(-1)">上一页</button>
-                <span class="modal-page-info" id="page-info">1 / 4</span>
-                <button class="modal-btn" id="next-btn" onclick="changePage(1)">下一页</button>
-                <button class="modal-btn" onclick="resetView()">适应屏幕</button>
+                <button class="modal-btn" id="prev-map-btn" onclick="changeMap(-1)">上一张</button>
+                <span class="modal-page-num" id="map-page-num">1 / 1</span>
+                <button class="modal-btn" id="next-map-btn" onclick="changeMap(1)">下一张</button>
+                <button class="modal-btn" onclick="resetZoom()">1:1 重置</button>
             </div>
-            <button class="modal-close-btn" onclick="closeMindmap()">&times;</button>
-        </div>
-        <div class="modal-viewport" id="viewport">
-            <div class="loading-spinner" id="spinner"></div>
-            <img id="mindmap-img" src="" alt="思维导图" draggable="false">
+            <div class="modal-viewport" id="map-viewport">
+                <div class="loading-spinner" id="spinner"></div>
+                <img id="mindmap-img" src="" alt="思维导图" draggable="false">
+            </div>
         </div>
     </div>
 
     <script>
-        const pages = ["images/page_127.png?v=1781183023", "images/page_128.png?v=1781183023", "images/page_129.png?v=1781183023", "images/page_130.png?v=1781183023"];
-        let currentPage = 0;
-        let zoom = 1, panX = 0, panY = 0;
-        let isDragging = false, startX = 0, startY = 0;
+        // WebDAV 备用空对象，防止 sync 脚本抛出未定义异常
+        window.WebDAVSync = {
+            isEnabled() { return false; },
+            getConfig() { return null; }
+        };
+        
+        let masteredIds = new Set();
+        let starredIds = new Set();
+        let ebbinghausDict = {};
+        
+        let currentSection = 'all';
+        let allExpanded = false;
+        let starFilterActive = false;
+        let ebFilterActive = false;
+        
+        const storageKey = 'pathology_ch07-oncology_mastered';
+        const starredKey = storageKey.replace('_mastered', '_starred');
+        const ebbinghausKey = storageKey.replace('_mastered', '_ebbinghaus');
 
-        const modal = document.getElementById('mindmap-modal');
-        const viewport = document.getElementById('viewport');
+        window.addEventListener('DOMContentLoaded', () => {
+            updateProgress();
+        });
+
+        function updateProgress() {
+            const total = document.querySelectorAll('.qa-card').length;
+            const mastered = masteredIds.size;
+            const pct = total > 0 ? Math.round((mastered / total) * 100) : 0;
+            
+            document.getElementById('progress-bar').style.width = pct + '%';
+            document.getElementById('progress-text').innerText = `已掌握 ${mastered} / ${total} (${pct}%)`;
+        }
+
+        function resetProgress() {
+            alert("本章自测卡片暂未发布，无需重置状态。");
+        }
+
+        function toggleStarFilter() {}
+        function toggleEbFilter() {}
+        function filterSection(sec) {}
+        function filterCards() {}
+        function toggleAllAnswers() {}
+        
+        // ==========================================
+        // 思维导图灯箱交互与自适应缩放平移控制逻辑
+        // ==========================================
+        const mapImages = ["images/page_127.png?v=1781183759", "images/page_128.png?v=1781183759", "images/page_129.png?v=1781183759", "images/page_130.png?v=1781183759"];
+        let zoom = 1;
+        let panX = 0;
+        let panY = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let currentMapIdx = 0;
+
+        const viewport = document.getElementById('map-viewport');
         const img = document.getElementById('mindmap-img');
         const spinner = document.getElementById('spinner');
 
         function openMindmap() {
-            modal.style.display = 'flex';
-            currentPage = 0;
-            showPage();
+            if (mapImages.length === 0) return;
+            document.getElementById('mindmap-modal').style.display = 'flex';
+            currentMapIdx = 0;
+            updateMapDisplay();
         }
 
         function closeMindmap() {
-            modal.style.display = 'none';
+            document.getElementById('mindmap-modal').style.display = 'none';
         }
 
-        function updateTransform() {
-            img.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
-        }
-
-        function showPage() {
+        function updateMapDisplay() {
+            if (mapImages.length === 0) return;
             spinner.style.display = 'block';
-            img.src = pages[currentPage];
-            document.getElementById('page-info').innerText = `第 ${currentPage + 1} / ${pages.length} 页`;
-            document.getElementById('prev-btn').disabled = currentPage === 0;
-            document.getElementById('next-btn').disabled = currentPage === pages.length - 1;
+            img.src = mapImages[currentMapIdx];
+            document.getElementById('map-page-num').innerText = `${currentMapIdx + 1} / ${mapImages.length}`;
+            document.getElementById('prev-map-btn').disabled = currentMapIdx === 0;
+            document.getElementById('next-map-btn').disabled = currentMapIdx === mapImages.length - 1;
+            
+            zoom = 1;
+            panX = 0;
+            panY = 0;
+            img.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
             
             img.onload = function() {
                 spinner.style.display = 'none';
                 fitToScreen();
             };
+        }
+
+        function changeMap(dir) {
+            currentMapIdx += dir;
+            if (currentMapIdx < 0) currentMapIdx = 0;
+            if (currentMapIdx >= mapImages.length) currentMapIdx = mapImages.length - 1;
+            updateMapDisplay();
         }
 
         function fitToScreen() {
@@ -397,16 +543,15 @@
             updateTransform();
         }
 
-        function resetView() { fitToScreen(); }
-
-        function changePage(dir) {
-            currentPage += dir;
-            if (currentPage < 0) currentPage = 0;
-            if (currentPage >= pages.length) currentPage = pages.length - 1;
-            showPage();
+        function resetZoom() {
+            fitToScreen();
         }
 
-        // 鼠标拖拽
+        function updateTransform() {
+            img.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+        }
+
+        // 鼠标拖拽平移
         viewport.addEventListener('mousedown', (e) => {
             if (e.button !== 0) return;
             isDragging = true;
@@ -414,13 +559,17 @@
             startY = e.clientY - panY;
             e.preventDefault();
         });
+        
         window.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
             panX = e.clientX - startX;
             panY = e.clientY - startY;
             updateTransform();
         });
-        window.addEventListener('mouseup', () => { isDragging = false; });
+        
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
 
         // 滚轮缩放
         viewport.addEventListener('wheel', (e) => {
@@ -431,14 +580,20 @@
             const my = e.clientY - rect.top;
             const ix = (mx - panX) / zoom;
             const iy = (my - panY) / zoom;
-            zoom *= (e.deltaY < 0) ? factor : (1 / factor);
+            
+            if (e.deltaY < 0) {
+                zoom *= factor;
+            } else {
+                zoom /= factor;
+            }
             zoom = Math.min(Math.max(zoom, 0.05), 10);
+            
             panX = mx - ix * zoom;
             panY = my - iy * zoom;
             updateTransform();
         }, { passive: false });
 
-        // 触摸手势
+        // 触摸手势平移缩放
         let lastTX = 0, lastTY = 0, pinchDist = 0, pinchZoom = 1;
         function getDist(t1, t2) {
             return Math.sqrt((t1.clientX - t2.clientX)**2 + (t1.clientY - t2.clientY)**2);
@@ -454,10 +609,13 @@
                 pinchZoom = zoom;
             }
         });
+        
         viewport.addEventListener('touchmove', (e) => {
             if (isDragging && e.touches.length === 1) {
-                panX += e.touches[0].clientX - lastTX;
-                panY += e.touches[0].clientY - lastTY;
+                const dx = e.touches[0].clientX - lastTX;
+                const dy = e.touches[0].clientY - lastTY;
+                panX += dx;
+                panY += dy;
                 lastTX = e.touches[0].clientX;
                 lastTY = e.touches[0].clientY;
                 updateTransform();
@@ -469,6 +627,7 @@
                 const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
                 const ix = (mx - panX) / zoom;
                 const iy = (my - panY) / zoom;
+                
                 zoom = nz;
                 panX = mx - ix * zoom;
                 panY = my - iy * zoom;
@@ -476,13 +635,17 @@
             }
             e.preventDefault();
         }, { passive: false });
-        viewport.addEventListener('touchend', () => { isDragging = false; });
+        
+        viewport.addEventListener('touchend', () => {
+            isDragging = false;
+        });
 
-        // 键盘翻页
+        // 键盘左右方向键及 Esc 关闭键
         document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('mindmap-modal');
             if (modal.style.display === 'flex') {
-                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changePage(-1);
-                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changePage(1);
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeMap(-1);
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeMap(1);
                 if (e.key === 'Escape') closeMindmap();
             }
         });
