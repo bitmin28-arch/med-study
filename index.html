@@ -744,7 +744,7 @@
             <div class="global-progress-wrapper">
                 <div class="stats-header-text">
                     <span>生理学全局掌握度</span>
-                    <span id="global-progress-text-new">已掌握 0 / 224 (0%)</span>
+                    <span id="global-progress-text-new">已掌握 0 / 273 (0%)</span>
                 </div>
                 <div class="progress-bar-container-new">
                     <div class="progress-bar-new" id="global-progress-bar-new"></div>
@@ -856,10 +856,10 @@
                     <span class="chapter-num">Chapter 04</span>
                     <span class="status-badge status-active">已开启</span>
                 </div>
-                <div class="chapter-title">第4章 血液循环 (33题)</div>
+                <div class="chapter-title">第4章 血液循环 (49题)</div>
                 <div class="card-progress-container">
                     <div class="card-progress-text">
-                        <span id="ch4-progress-text">已掌握 0 / 33</span>
+                        <span id="ch4-progress-text">已掌握 0 / 49</span>
                         <span id="ch4-progress-pct">0%</span>
                     </div>
                     <div class="card-progress-bar-bg">
@@ -1168,7 +1168,7 @@
                     ch4Mastered = JSON.parse(savedCh4).length;
                 } catch(e) {}
             }
-            const ch4Total = 33;
+            const ch4Total = 49;
             const ch4Pct = Math.round((ch4Mastered / ch4Total) * 100);
             
             document.getElementById('ch4-progress-text').innerText = `已掌握 ${ch4Mastered} / ${ch4Total}`;
