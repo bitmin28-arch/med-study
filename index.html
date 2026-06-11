@@ -438,6 +438,7 @@
         .bar-ch1 { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
         .bar-ch8 { background: linear-gradient(90deg, #8b5cf6, #d946ef); }
         .bar-ch11 { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+        .bar-ch4 { background: linear-gradient(90deg, #ec4899, #f43f5e); }
 
         @media (max-width: 600px) {
             h1 { font-size: 1.35rem; }
@@ -776,6 +777,14 @@
                     </div>
                     <div class="compare-bar-bg"><div class="compare-bar bar-ch11" id="compare-ch11-bar"></div></div>
                 </div>
+                
+                <div class="compare-item">
+                    <div class="compare-info">
+                        <span class="compare-name">第4章 血液循环</span>
+                        <span class="compare-val" id="compare-ch4-pct">0%</span>
+                    </div>
+                    <div class="compare-bar-bg"><div class="compare-bar bar-ch4" id="compare-ch4-bar"></div></div>
+                </div>
             </div>
         </div>
     </header>
@@ -841,21 +850,23 @@
                 </div>
             </div>
 
-            <!-- Chapter 4 -->
-            <div class="chapter-card disabled">
+            <!-- Chapter 4 (Active Chapter) -->
+            <a href="physiology/ch04-circulation/index.html" class="chapter-card active">
                 <div class="card-top">
                     <span class="chapter-num">Chapter 04</span>
-                    <span class="status-badge status-coming">待制作</span>
+                    <span class="status-badge status-active">已开启</span>
                 </div>
-                <div class="chapter-title">第4章 血液循环</div>
+                <div class="chapter-title">第4章 血液循环 (33题)</div>
                 <div class="card-progress-container">
                     <div class="card-progress-text">
-                        <span>未开始</span>
-                        <span>0%</span>
+                        <span id="ch4-progress-text">已掌握 0 / 33</span>
+                        <span id="ch4-progress-pct">0%</span>
                     </div>
-                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                    <div class="card-progress-bar-bg">
+                        <div class="card-progress-bar" id="ch4-progress-bar"></div>
+                    </div>
                 </div>
-            </div>
+            </a>
 
             <!-- Chapter 5 -->
             <div class="chapter-card disabled">
@@ -1148,15 +1159,32 @@
             const ch11Bar = document.getElementById('ch11-progress-bar');
             ch11Bar.style.width = `${ch11Pct}%`;
             if (ch11Pct === 100) ch11Bar.classList.add('finished');
+
+            // Chapter 4 Progress
+            const savedCh4 = localStorage.getItem('circulation_mastered');
+            let ch4Mastered = 0;
+            if (savedCh4) {
+                try {
+                    ch4Mastered = JSON.parse(savedCh4).length;
+                } catch(e) {}
+            }
+            const ch4Total = 33;
+            const ch4Pct = Math.round((ch4Mastered / ch4Total) * 100);
+            
+            document.getElementById('ch4-progress-text').innerText = `已掌握 ${ch4Mastered} / ${ch4Total}`;
+            document.getElementById('ch4-progress-pct').innerText = `${ch4Pct}%`;
+            const ch4Bar = document.getElementById('ch4-progress-bar');
+            ch4Bar.style.width = `${ch4Pct}%`;
+            if (ch4Pct === 100) ch4Bar.classList.add('finished');
             
             // Global Statistics
-            const totalMastered = ch1Mastered + ch8Mastered + ch11Mastered;
-            const totalQuestions = ch1Total + ch8Total + ch11Total;
+            const totalMastered = ch1Mastered + ch8Mastered + ch11Mastered + ch4Mastered;
+            const totalQuestions = ch1Total + ch8Total + ch11Total + ch4Total;
             const globalPct = totalQuestions > 0 ? Math.round((totalMastered / totalQuestions) * 100) : 0;
             
             // 计算全局收藏数
             let totalStarred = 0;
-            ['intro_starred', 'urinary_starred', 'endocrine_starred_v2'].forEach(key => {
+            ['intro_starred', 'urinary_starred', 'endocrine_starred_v2', 'circulation_starred'].forEach(key => {
                 const saved = localStorage.getItem(key);
                 if (saved) {
                     try {
@@ -1168,7 +1196,7 @@
             // 计算全局待复习数
             let totalDue = 0;
             const now = Date.now();
-            ['intro_ebbinghaus', 'urinary_ebbinghaus', 'endocrine_ebbinghaus_v2'].forEach(key => {
+            ['intro_ebbinghaus', 'urinary_ebbinghaus', 'endocrine_ebbinghaus_v2', 'circulation_ebbinghaus'].forEach(key => {
                 const saved = localStorage.getItem(key);
                 if (saved) {
                     try {
@@ -1213,6 +1241,9 @@
             
             document.getElementById('compare-ch11-pct').innerText = `${ch11Pct}%`;
             document.getElementById('compare-ch11-bar').style.width = `${ch11Pct}%`;
+            
+            document.getElementById('compare-ch4-pct').innerText = `${ch4Pct}%`;
+            document.getElementById('compare-ch4-bar').style.width = `${ch4Pct}%`;
 
             // 页面加载完成后，若配置了 WebDAV 则自动进行一次同步
             if (WebDAVSync.isEnabled()) {
@@ -1356,7 +1387,8 @@
             keys: [
                 'intro_mastered', 'intro_starred', 'intro_ebbinghaus',
                 'urinary_mastered', 'urinary_starred', 'urinary_ebbinghaus',
-                'endocrine_mastered_v2', 'endocrine_starred_v2', 'endocrine_ebbinghaus_v2'
+                'endocrine_mastered_v2', 'endocrine_starred_v2', 'endocrine_ebbinghaus_v2',
+                'circulation_mastered', 'circulation_starred', 'circulation_ebbinghaus'
             ],
             
             getLocal() {
