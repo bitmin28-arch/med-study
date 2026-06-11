@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>病理学 · 自身免疫病</title>
+    <title>病理学 · 泌尿系统疾病</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -302,7 +302,7 @@
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 返回主页
             </a>
-            <h1>病理学 · 自身免疫病</h1>
+            <h1>病理学 · 泌尿系统疾病</h1>
             <button class="top-action-btn" onclick="openMindmap()">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                 浏览思维导图
@@ -316,7 +316,7 @@
             <h2 class="info-title">本章自测卡片筹备中</h2>
             <p class="info-desc">
                 本章自测题目提纲正在整理校对中，稍后发布。<br>
-                我们已同步上线天天师兄的<strong>精编版思维导图与笔记（共 10 页）</strong>，包含所有的知识要点。建议您点击下方按钮开始浏览学习。
+                我们已同步上线天天师兄的<strong>精编版思维导图与笔记（共 14 页）</strong>，包含所有的知识要点。建议您点击下方按钮开始浏览学习。
             </p>
             <button class="large-action-btn" onclick="openMindmap()">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: middle;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
@@ -328,10 +328,10 @@
     <!-- 思维导图查看灯箱 -->
     <div id="mindmap-modal" class="mindmap-modal">
         <div class="modal-top-bar">
-            <span class="modal-title-text">自身免疫病 · 精编笔记</span>
+            <span class="modal-title-text">泌尿系统疾病 · 精编笔记</span>
             <div class="modal-controls">
                 <button class="modal-btn" id="prev-btn" onclick="changePage(-1)">上一页</button>
-                <span class="modal-page-info" id="page-info">1 / 10</span>
+                <span class="modal-page-info" id="page-info">1 / 14</span>
                 <button class="modal-btn" id="next-btn" onclick="changePage(1)">下一页</button>
                 <button class="modal-btn" onclick="resetView()">适应屏幕</button>
             </div>
@@ -344,7 +344,7 @@
     </div>
 
     <script>
-        const pages = ["images/page_103.png?v=1781183021", "images/page_104.png?v=1781183021", "images/page_105.png?v=1781183021", "images/page_106.png?v=1781183021", "images/page_107.png?v=1781183021", "images/page_108.png?v=1781183021", "images/page_109.png?v=1781183021", "images/page_110.png?v=1781183021", "images/page_111.png?v=1781183021", "images/page_112.png?v=1781183021"];
+        const pages = ["images/page_113.png?v=1781183023", "images/page_114.png?v=1781183023", "images/page_115.png?v=1781183023", "images/page_116.png?v=1781183023", "images/page_117.png?v=1781183023", "images/page_118.png?v=1781183023", "images/page_119.png?v=1781183023", "images/page_120.png?v=1781183023", "images/page_121.png?v=1781183023", "images/page_122.png?v=1781183023", "images/page_123.png?v=1781183023", "images/page_124.png?v=1781183023", "images/page_125.png?v=1781183023", "images/page_126.png?v=1781183023"];
         let currentPage = 0;
         let zoom = 1, panX = 0, panY = 0;
         let isDragging = false, startX = 0, startY = 0;

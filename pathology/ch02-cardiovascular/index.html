@@ -2,174 +2,376 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>病理学 · 心血管系统疾病</title>
-    <meta name="description" content="病理学 · 心血管系统疾病 - 天天师兄思维导图精编版">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #030712;
-            color: #e2e8f0;
-            min-height: 100vh;
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-color: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #8b5cf6;
+            --primary-glow: rgba(139, 92, 246, 0.3);
+            --accent: #3b82f6;
         }
-        
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* 顶部导航 */
         header {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(15, 23, 42, 0.92) 100%);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(15, 23, 42, 0.9) 100%);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding: 14px 20px;
             position: fixed;
             top: 0; left: 0; right: 0;
             z-index: 100;
         }
-        
+
         .header-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             gap: 12px;
         }
-        
+
         .back-btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
             text-decoration: none;
-            color: #94a3b8;
+            color: var(--text-muted);
             font-size: 0.85rem;
-            padding: 6px 12px;
+            padding: 7px 14px;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03);
-            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.2s ease;
         }
+
         .back-btn:hover {
             color: #fff;
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
         }
-        
+
         h1 {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.15rem;
+            font-weight: 700;
             background: linear-gradient(135deg, #a78bfa, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-align: center;
             flex: 1;
         }
-        
-        .nav-controls {
+
+        .top-action-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px var(--primary-glow);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px var(--primary-glow);
+            filter: brightness(1.1);
+        }
+
+        /* 页面中央引导区域 */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+        }
+
+        .info-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .info-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .info-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .large-action-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 20px var(--primary-glow);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .large-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--primary-glow);
+            filter: brightness(1.1);
+        }
+
+        /* 思维导图全屏灯箱 */
+        .mindmap-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background-color: rgba(3, 7, 18, 0.97);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-top-bar {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 2010;
+        }
+
+        .modal-title-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .modal-controls {
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
-        .nav-btn {
-            background: rgba(30, 41, 59, 0.8);
-            color: #94a3b8;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 0.82rem;
+
+        .modal-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s;
             user-select: none;
         }
-        .nav-btn:hover { background: #334155; border-color: #475569; color: #fff; }
-        .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-        
-        .page-info {
-            color: #94a3b8;
+        .modal-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .modal-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .modal-page-info {
             font-size: 0.85rem;
-            min-width: 70px;
+            color: var(--text-muted);
+            min-width: 80px;
             text-align: center;
+            font-weight: 600;
         }
-        
-        .viewport {
-            position: fixed;
-            top: 65px; left: 0; right: 0; bottom: 0;
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        .modal-close-btn:hover {
+            color: #ef4444;
+        }
+
+        .modal-viewport {
+            flex: 1;
+            width: 100%;
             overflow: hidden;
+            position: relative;
             cursor: grab;
-            background: #030712;
+            background-color: #030712;
         }
-        .viewport:active { cursor: grabbing; }
-        
-        #page-container {
+        .modal-viewport:active {
+            cursor: grabbing;
+        }
+
+        #mindmap-img {
             position: absolute;
             transform-origin: 0 0;
-            display: inline-block;
-        }
-        
-        #page-img {
-            display: block;
             max-width: none;
             max-height: none;
             user-select: none;
             -webkit-user-drag: none;
         }
-        
+
         .loading-spinner {
-            position: fixed;
+            position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 36px; height: 36px;
-            border: 3px solid rgba(255,255,255,0.05);
-            border-top-color: #a78bfa;
+            width: 40px; height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.05);
+            border-top-color: #8b5cf6;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            z-index: 50;
+            z-index: 2005;
         }
         @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
     </style>
 </head>
 <body>
+
     <header>
         <div class="header-row">
             <a href="../../index.html" class="back-btn">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                返回
+                返回主页
             </a>
             <h1>病理学 · 心血管系统疾病</h1>
-            <div class="nav-controls">
-                <button class="nav-btn" id="prev-btn" onclick="changePage(-1)">上一页</button>
-                <span class="page-info" id="page-info">1 / 25</span>
-                <button class="nav-btn" id="next-btn" onclick="changePage(1)">下一页</button>
-                <button class="nav-btn" onclick="resetView()">适应</button>
-            </div>
+            <button class="top-action-btn" onclick="openMindmap()">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                浏览思维导图
+            </button>
         </div>
     </header>
 
-    <div class="viewport" id="viewport">
-        <div id="page-container">
-            <img id="page-img" src="" alt="病理笔记" draggable="false">
+    <main>
+        <div class="info-card">
+            <span class="info-icon">📚</span>
+            <h2 class="info-title">本章自测卡片筹备中</h2>
+            <p class="info-desc">
+                本章自测题目提纲正在整理校对中，稍后发布。<br>
+                我们已同步上线天天师兄的<strong>精编版思维导图与笔记（共 25 页）</strong>，包含所有的知识要点。建议您点击下方按钮开始浏览学习。
+            </p>
+            <button class="large-action-btn" onclick="openMindmap()">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: middle;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                立即浏览思维导图与笔记
+            </button>
+        </div>
+    </main>
+
+    <!-- 思维导图查看灯箱 -->
+    <div id="mindmap-modal" class="mindmap-modal">
+        <div class="modal-top-bar">
+            <span class="modal-title-text">心血管系统疾病 · 精编笔记</span>
+            <div class="modal-controls">
+                <button class="modal-btn" id="prev-btn" onclick="changePage(-1)">上一页</button>
+                <span class="modal-page-info" id="page-info">1 / 25</span>
+                <button class="modal-btn" id="next-btn" onclick="changePage(1)">下一页</button>
+                <button class="modal-btn" onclick="resetView()">适应屏幕</button>
+            </div>
+            <button class="modal-close-btn" onclick="closeMindmap()">&times;</button>
+        </div>
+        <div class="modal-viewport" id="viewport">
+            <div class="loading-spinner" id="spinner"></div>
+            <img id="mindmap-img" src="" alt="思维导图" draggable="false">
         </div>
     </div>
-    <div class="loading-spinner" id="spinner"></div>
 
     <script>
-        const pages = ["images/page_39.png?v=1781182243", "images/page_40.png?v=1781182243", "images/page_41.png?v=1781182243", "images/page_42.png?v=1781182243", "images/page_43.png?v=1781182243", "images/page_44.png?v=1781182243", "images/page_45.png?v=1781182243", "images/page_46.png?v=1781182243", "images/page_47.png?v=1781182243", "images/page_48.png?v=1781182243", "images/page_49.png?v=1781182243", "images/page_50.png?v=1781182243", "images/page_51.png?v=1781182243", "images/page_52.png?v=1781182243", "images/page_53.png?v=1781182243", "images/page_54.png?v=1781182243", "images/page_55.png?v=1781182243", "images/page_56.png?v=1781182243", "images/page_57.png?v=1781182243", "images/page_58.png?v=1781182243", "images/page_59.png?v=1781182243", "images/page_60.png?v=1781182243", "images/page_61.png?v=1781182243", "images/page_62.png?v=1781182243", "images/page_63.png?v=1781182243"];
+        const pages = ["images/page_39.png?v=1781183015", "images/page_40.png?v=1781183015", "images/page_41.png?v=1781183015", "images/page_42.png?v=1781183015", "images/page_43.png?v=1781183015", "images/page_44.png?v=1781183015", "images/page_45.png?v=1781183015", "images/page_46.png?v=1781183015", "images/page_47.png?v=1781183015", "images/page_48.png?v=1781183015", "images/page_49.png?v=1781183015", "images/page_50.png?v=1781183015", "images/page_51.png?v=1781183015", "images/page_52.png?v=1781183015", "images/page_53.png?v=1781183015", "images/page_54.png?v=1781183015", "images/page_55.png?v=1781183015", "images/page_56.png?v=1781183015", "images/page_57.png?v=1781183015", "images/page_58.png?v=1781183015", "images/page_59.png?v=1781183015", "images/page_60.png?v=1781183015", "images/page_61.png?v=1781183015", "images/page_62.png?v=1781183015", "images/page_63.png?v=1781183015"];
         let currentPage = 0;
         let zoom = 1, panX = 0, panY = 0;
         let isDragging = false, startX = 0, startY = 0;
 
+        const modal = document.getElementById('mindmap-modal');
         const viewport = document.getElementById('viewport');
-        const container = document.getElementById('page-container');
-        const img = document.getElementById('page-img');
+        const img = document.getElementById('mindmap-img');
         const spinner = document.getElementById('spinner');
 
+        function openMindmap() {
+            modal.style.display = 'flex';
+            currentPage = 0;
+            showPage();
+        }
+
+        function closeMindmap() {
+            modal.style.display = 'none';
+        }
+
         function updateTransform() {
-            container.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+            img.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
         }
 
         function showPage() {
             spinner.style.display = 'block';
             img.src = pages[currentPage];
-            document.getElementById('page-info').innerText = `${currentPage + 1} / ${pages.length}`;
+            document.getElementById('page-info').innerText = `第 ${currentPage + 1} / ${pages.length} 页`;
             document.getElementById('prev-btn').disabled = currentPage === 0;
             document.getElementById('next-btn').disabled = currentPage === pages.length - 1;
             
@@ -187,7 +389,7 @@
             
             const scaleX = vpW / imgW;
             const scaleY = vpH / imgH;
-            zoom = Math.min(scaleX, scaleY) * 0.98;
+            zoom = Math.min(scaleX, scaleY) * 0.96;
             if (zoom < 0.05) zoom = 0.5;
             
             panX = (vpW - imgW * zoom) / 2;
@@ -223,7 +425,7 @@
         // 滚轮缩放
         viewport.addEventListener('wheel', (e) => {
             e.preventDefault();
-            const factor = 1.1;
+            const factor = 1.15;
             const rect = viewport.getBoundingClientRect();
             const mx = e.clientX - rect.left;
             const my = e.clientY - rect.top;
@@ -278,11 +480,12 @@
 
         // 键盘翻页
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changePage(-1);
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changePage(1);
+            if (modal.style.display === 'flex') {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changePage(-1);
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changePage(1);
+                if (e.key === 'Escape') closeMindmap();
+            }
         });
-
-        showPage();
     </script>
 </body>
 </html>
