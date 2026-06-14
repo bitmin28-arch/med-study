@@ -436,6 +436,7 @@
         }
         
         .bar-ch1 { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .bar-ch2 { background: linear-gradient(90deg, #10b981, #34d399); }
         .bar-ch8 { background: linear-gradient(90deg, #8b5cf6, #d946ef); }
         .bar-ch11 { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
         .bar-ch4 { background: linear-gradient(90deg, #ec4899, #f43f5e); }
@@ -764,6 +765,22 @@
                 
                 <div class="compare-item">
                     <div class="compare-info">
+                        <span class="compare-name">第2章 细胞的基本功能</span>
+                        <span class="compare-val" id="compare-ch2-pct">0%</span>
+                    </div>
+                    <div class="compare-bar-bg"><div class="compare-bar bar-ch2" id="compare-ch2-bar"></div></div>
+                </div>
+                
+                <div class="compare-item">
+                    <div class="compare-info">
+                        <span class="compare-name">第2章 细胞的基本功能</span>
+                        <span class="compare-val" id="compare-ch2-pct">0%</span>
+                    </div>
+                    <div class="compare-bar-bg"><div class="compare-bar bar-ch2" id="compare-ch2-bar"></div></div>
+                </div>
+                
+                <div class="compare-item">
+                    <div class="compare-info">
                         <span class="compare-name">第8章 尿的生成和排出</span>
                         <span class="compare-val" id="compare-ch8-pct">0%</span>
                     </div>
@@ -818,21 +835,23 @@
                 </div>
             </a>
 
-            <!-- Chapter 2 -->
-            <div class="chapter-card disabled">
+            <!-- Chapter 2 (Active Chapter) -->
+            <a href="physiology/ch02-cell-function/index.html" class="chapter-card active">
                 <div class="card-top">
                     <span class="chapter-num">Chapter 02</span>
-                    <span class="status-badge status-coming">待制作</span>
+                    <span class="status-badge status-active">已开启</span>
                 </div>
-                <div class="chapter-title">第2章 细胞的基本功能</div>
+                <div class="chapter-title">第2章 细胞的基本功能 (48题)</div>
                 <div class="card-progress-container">
                     <div class="card-progress-text">
-                        <span>未开始</span>
-                        <span>0%</span>
+                        <span id="ch2-progress-text">已掌握 0 / 48</span>
+                        <span id="ch2-progress-pct">0%</span>
                     </div>
-                    <div class="card-progress-bar-bg"><div class="card-progress-bar" style="width: 0%"></div></div>
+                    <div class="card-progress-bar-bg">
+                        <div class="card-progress-bar" id="ch2-progress-bar"></div>
+                    </div>
                 </div>
-            </div>
+            </a>
 
             <!-- Chapter 3 -->
             <div class="chapter-card disabled">
@@ -856,10 +875,10 @@
                     <span class="chapter-num">Chapter 04</span>
                     <span class="status-badge status-active">已开启</span>
                 </div>
-                <div class="chapter-title">第4章 血液循环 (76题)</div>
+                <div class="chapter-title">第4章 血液循环 (120题)</div>
                 <div class="card-progress-container">
                     <div class="card-progress-text">
-                        <span id="ch4-progress-text">已掌握 0 / 76</span>
+                        <span id="ch4-progress-text">已掌握 0 / 120</span>
                         <span id="ch4-progress-pct">0%</span>
                     </div>
                     <div class="card-progress-bar-bg">
@@ -1189,6 +1208,23 @@
             const ch1Bar = document.getElementById('ch1-progress-bar');
             ch1Bar.style.width = `${ch1Pct}%`;
             if (ch1Pct === 100) ch1Bar.classList.add('finished');
+            
+            // Chapter 2 Progress
+            const savedCh2 = localStorage.getItem('cell_function_mastered');
+            let ch2Mastered = 0;
+            if (savedCh2) {
+                try {
+                    ch2Mastered = JSON.parse(savedCh2).length;
+                } catch(e) {}
+            }
+            const ch2Total = 48;
+            const ch2Pct = Math.round((ch2Mastered / ch2Total) * 100);
+            
+            document.getElementById('ch2-progress-text').innerText = `已掌握 ${ch2Mastered} / ${ch2Total}`;
+            document.getElementById('ch2-progress-pct').innerText = `${ch2Pct}%`;
+            const ch2Bar = document.getElementById('ch2-progress-bar');
+            ch2Bar.style.width = `${ch2Pct}%`;
+            if (ch2Pct === 100) ch2Bar.classList.add('finished');
 
             // Chapter 8 Progress
             const savedCh8 = localStorage.getItem('urinary_mastered');
@@ -1232,7 +1268,7 @@
                     ch4Mastered = JSON.parse(savedCh4).length;
                 } catch(e) {}
             }
-            const ch4Total = 76;
+            const ch4Total = 120;
             const ch4Pct = Math.round((ch4Mastered / ch4Total) * 100);
             
             document.getElementById('ch4-progress-text').innerText = `已掌握 ${ch4Mastered} / ${ch4Total}`;
@@ -1242,8 +1278,8 @@
             if (ch4Pct === 100) ch4Bar.classList.add('finished');
             
             // Global Statistics
-            const totalMastered = ch1Mastered + ch8Mastered + ch11Mastered + ch4Mastered;
-            const totalQuestions = ch1Total + ch8Total + ch11Total + ch4Total;
+            const totalMastered = ch1Mastered + ch2Mastered + ch8Mastered + ch11Mastered + ch4Mastered;
+            const totalQuestions = ch1Total + ch2Total + ch8Total + ch11Total + ch4Total;
             const globalPct = totalQuestions > 0 ? Math.round((totalMastered / totalQuestions) * 100) : 0;
             
             // 计算全局收藏数
@@ -1299,6 +1335,9 @@
             // Render chapter breakdown bars
             document.getElementById('compare-ch1-pct').innerText = `${ch1Pct}%`;
             document.getElementById('compare-ch1-bar').style.width = `${ch1Pct}%`;
+            
+            document.getElementById('compare-ch2-pct').innerText = `${ch2Pct}%`;
+            document.getElementById('compare-ch2-bar').style.width = `${ch2Pct}%`;
             
             document.getElementById('compare-ch8-pct').innerText = `${ch8Pct}%`;
             document.getElementById('compare-ch8-bar').style.width = `${ch8Pct}%`;
@@ -1450,6 +1489,7 @@
         const ProgressManager = {
             keys: [
                 'intro_mastered', 'intro_starred', 'intro_ebbinghaus',
+                'cell_function_mastered', 'cell_function_starred', 'cell_function_ebbinghaus',
                 'urinary_mastered', 'urinary_starred', 'urinary_ebbinghaus',
                 'endocrine_mastered_v2', 'endocrine_starred_v2', 'endocrine_ebbinghaus_v2',
                 'circulation_mastered', 'circulation_starred', 'circulation_ebbinghaus'
